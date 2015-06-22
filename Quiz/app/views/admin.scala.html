@@ -1,0 +1,23 @@
+<html>
+
+<head>
+<title>LearnMore</title>
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
+
+@import views.html.adminView._;
+
+</head>
+
+<body>
+	<header>
+		@adminHeader()
+	</header>
+	
+	<content>
+		This is admin site.
+	</content>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+@(form: Form[forms.LoginForm])
+
+<html>
+<head>
+<title>LearnMore</title>
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+</head>
+<body>
+	<header>
+		<a href="@routes.StartController.redirect" id="logo"><span>Quiz</span>App</a>
+	</header>
+
+	<h1>LearnMore - <span class="motto">@Messages("app.motto")</span></h1>
+
+	<div class="container">
+		
+		@helper.form(routes.LoginController.authenticate) {
+		<h2>@Messages("login.signin")</h2>
+
+		@if(flash.contains("failure") != null) {
+		<div>@flash.get("failure")</div>
+		} 
+		
+		<p>
+			<input class="loginTextBox loginBoxFont" type="text" name="usernameOrEmail" placeholder="@Messages("login.usernameoremail")" value="@form("email").value">
+		</p>
+		<p>
+			<input class="loginTextBox loginBoxFont" type="password" name="password" placeholder="@Messages("login.password")">
+		</p>
+		<p>
+			<button class="center loginBtn loginBtnFont" type="submit">@Messages("login")</button>
+		</p>
+		}
+	</div>
+
+
+</body>
+</html>
