@@ -1,0 +1,17 @@
+app.motto = What you know is never enough.
+
+navigation.home=Home
+navigation.questions=Questions
+navigation.profile=Profile
+navigation.logout=Logout
+
+login=Login
+login.signin=Sign in
+login.username=Username
+login.usernameoremail=Username or email
+login.password=Password
+
+login.error.values=Please fill in all values
+login.error.username=Username doesn't exist
+login.error.password=Password is incorrect
+

@@ -1,0 +1,65 @@
+h1 {
+	color: #B8B8B8;
+	font-size: 2.5em;
+	position: absolute;
+	top: 10%;
+	left: 30%;
+}
+
+h2 {
+	color: #fff;
+	font-size: 1.7em;
+	font-style: italic;
+	text-shadow: -1px 0 #6FE371, 0 1px #6FE371, 1px 0 #6FE371, 0 -1px #6FE371;
+}
+
+.motto {
+	color: #fff;
+	font-style: italic;
+	text-shadow: -1px 0 #6FE371, 0 1px #6FE371, 1px 0 #6FE371, 0 -1px #6FE371;
+}
+
+.center {
+	position: relative;
+	left: 35%;
+}
+
+.container {
+	position: absolute;
+	/* border: 2px solid #FF0007; testing purpose only */
+	top: 25%;
+	left: 40%;
+}
+
+.loginTextBox {
+	border-radius: 25px;
+	border: 2px solid #6FE371;
+	padding: 20px;
+}
+
+.loginTextBox:hover {
+	border: 2px solid #2EAB30;
+}
+
+.loginBtn {
+	background-color: #6FE371;
+	border-radius: 25px;
+	border: 2px solid #6FE371;
+	width: 100px;
+	height: 40px;
+}
+
+.loginBtn:hover {
+	background-color: #2EAB30;
+	border: 2px solid #2EAB30;
+}
+
+.loginBtnFont {
+	color: #fff;
+	font-size: 1.2em;
+}
+
+.loginBoxFont {
+	font-size: 1.6em;
+	font-style: italic;
+}
