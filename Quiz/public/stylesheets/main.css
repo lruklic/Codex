@@ -1,5 +1,9 @@
 body {
+	background: -moz-linear-gradient(top, #CCC 0%, #728EAA 150%); /* firefox */
+	/* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#25303C), color-stop(100%,#728EAA)); /* webkit */
+	
 	background-color: #ccfe81;
+	font-family: sans-serif;
 	margin: 0;
 	padding: 0;
 }

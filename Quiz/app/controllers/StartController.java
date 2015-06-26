@@ -1,8 +1,9 @@
 package controllers;
 
+import forms.QuestionForm;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import views.html.admin;
 
 /**
@@ -26,7 +27,7 @@ public class StartController extends Controller {
 		} else {
 			switch(type) {
 			case "ADMIN":
-				return ok(admin.render());
+				return ok(admin.render(Form.form(QuestionForm.class)));
 			}
 		}
 		

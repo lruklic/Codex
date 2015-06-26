@@ -1,3 +1,5 @@
+/* Header css tags */
+
 header {
 	background-color: #444;
 	height: 100px;
@@ -43,4 +45,31 @@ header {
   background-color: #fff;
   color: #444;
   cursor: default;
+}
+
+/* Questions css tags */
+
+textarea {
+	font-family: sans-serif;
+}
+
+.question ul {
+	margin: 0;
+	padding: 0;
+}
+
+.question li {
+	display: inline-block;
+}
+
+.question .grade, .subject {
+	padding-left: 30px;
+}
+
+.difficulty {
+	padding-left: 30px;
+}
+
+#difficulty {
+	background-color: #8CFA70;
 }

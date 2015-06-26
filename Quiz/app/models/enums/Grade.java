@@ -1,4 +1,4 @@
-package enums;
+package models.enums;
 
 /**
  * Enum that specifies for which school grade and program is question aimed at.

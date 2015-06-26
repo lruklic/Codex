@@ -1,4 +1,4 @@
-package enums;
+package models.enums;
 
 /**
  * Enum that represents subjects that are taught in school.
