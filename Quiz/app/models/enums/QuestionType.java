@@ -1,4 +1,4 @@
-package enums;
+package models.enums;
 
 /**
  * Enum that defines quiz question types.

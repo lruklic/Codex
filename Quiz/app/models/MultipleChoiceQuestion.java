@@ -6,24 +6,26 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
- * Question with only two options (TRUE or FALSE). Correct answer is contained in <code>answer</code>
- * field, with 1 symbolizing TRUE and 0 symbolizing FALSE.
+ * Question with multiple options.
  * 
  * @author Luka Ruklic
  *
  */
 
 @Entity
-@Table(name = "truefalsequestion")
+@Table(name = "multiplechoicequestion")
 @PrimaryKeyJoinColumn(name="id")
-public class TrueFalseQuestion extends Question {
+public class MultipleChoiceQuestion extends Question {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name = "answer")
-	public  Boolean answer;
+	@Column(name = "correctAnswer")
+	public String correctAnswer;
+	
+	@Column(name = "incorrectAnswers")
+	public String incorrectAnswers;
 
 }

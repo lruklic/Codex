@@ -16,9 +16,9 @@ import play.mvc.Result;
 import services.model.UserService;
 import views.html.admin;
 import views.html.login;
-import views.html.index;
 import enums.AuthReply;
 import forms.LoginForm;
+import forms.QuestionForm;
 
 /**
  * Controller that handles login attempts.
@@ -72,7 +72,7 @@ public class LoginController extends Controller {
 				session("email", loginForm.get().usernameOrEmail);
 				session("type", user.userType.toString());
 				if (user.userType.equals(UserType.ADMIN)) {
-					return ok(admin.render());
+					return redirect(controllers.routes.AdminController.adminPage());
 				} else {
 					// else user.render();
 				}

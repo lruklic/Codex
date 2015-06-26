@@ -8,9 +8,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-import enums.Grade;
-import enums.QuestionType;
-import enums.Subject;
+import models.enums.Grade;
+import models.enums.QuestionType;
+import models.enums.Subject;
 
 /**
  * <p>Question <code>class</code> represents quiz questions contained in the application.</p>
