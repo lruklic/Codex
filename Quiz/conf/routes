@@ -11,7 +11,8 @@ POST	/login						controllers.LoginController.authenticate()
 GET		/logout						controllers.LoginController.logout()
 
 # Question
-POST	/question					controllers.QuestionController.submit()
+GET		/question/chapters/:grade/:subject		controllers.QuestionController.getChapters(grade: String, subject: String)
+POST	/question								controllers.QuestionController.submit()
 
 # Test data fill
 GET		/data						controllers.TestDataController.fill()

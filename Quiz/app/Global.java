@@ -1,13 +1,18 @@
+import akka.actor.ActorSystem.Settings;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import controllers.LoginController;
+import controllers.QuestionController;
 import controllers.TestDataController;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import services.model.QuestionService;
 import services.model.UserService;
+import services.model.impl.QuestionServiceImpl;
 import services.model.impl.UserServiceImpl;
 
 
@@ -34,8 +39,10 @@ public class Global extends GlobalSettings {
 				
 				requestStaticInjection(TestDataController.class);
 				requestStaticInjection(LoginController.class);
+				requestStaticInjection(QuestionController.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
+				bind(QuestionService.class).to(QuestionServiceImpl.class);
 			}
 			
 		});

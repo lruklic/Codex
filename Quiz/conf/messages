@@ -1,4 +1,4 @@
-app.motto = What you know is never enough.
+app.motto = Ignorance is bliss, but knowledge is power.
 
 navigation.home=Home
 navigation.questions=Questions
@@ -20,14 +20,26 @@ question.input=Question Input
 question.type=Question Type
 question.grade=Grade
 question.subject=Subject
+question.chapter=Subject chapter
 question.content=Subject content
 question.difficulty=Difficulty
 question.correct=Correct Answer
 question.incorrect=Incorrect Answer
 
 question.multiple.number=# of answers
+question.submit=Submit
 
 MULTIPLE_CHOICE=Multiple choice
 YES_NO=True/False
 INPUT_ANSWER=Input Answer
 
+GIMN_1ST=First grade
+GIMN_2ND=Second grade
+GIMN_3RD=Third grade
+GIMN_4TH=Fourth grade
+
+HISTORY=History
+BIOLOGY=Biology
+
+INTRO_TO_HISTORY=Intro to history
+EASTERN_CIVILIZATIONS=Eastern civilizations

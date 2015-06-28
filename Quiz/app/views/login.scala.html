@@ -1,11 +1,16 @@
 @(form: Form[forms.LoginForm])
 
+@import views.html.init._;
+
+<!DOCTYPE html>
 <html>
+
 <head>
-<title>LearnMore</title>
-<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	@head()
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+</head>
+
 </head>
 <body>
 	<header>
@@ -30,9 +35,10 @@
 			<input class="loginTextBox loginBoxFont" type="password" name="password" placeholder="@Messages("login.password")">
 		</p>
 		<p>
-			<button class="center loginBtn loginBtnFont" type="submit">@Messages("login")</button>
+			<button class="loginBtn loginBtnFont" type="submit">@Messages("login")</button>
 		</p>
 		}
+		
 	</div>
 
 

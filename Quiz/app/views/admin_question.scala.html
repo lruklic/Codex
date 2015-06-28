@@ -1,0 +1,126 @@
+@(form: Form[forms.QuestionForm]) 
+
+@import views.html.adminView._;
+@import views.html.init._;
+@import enums._;
+
+<html>
+<head>
+@head()
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/admin.js")"></script>
+</head>
+
+@multipleChoiceForm = {
+	<div class="multiple">
+		<p>
+		<label>@Messages("question.multiple.number"):</label>
+		<input type="number" name="multipleNumber" id="multipleNumber" min="3" max="6" value="3"/>
+		</p>
+		
+		<label>@Messages("question.correct"): </label><input type="text" name="correct" id="correct" />
+		<div class="multiple-incorrect">
+			<p class="incorrect-1"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-1" id="incorrect-1" /></p>
+			<p class="incorrect-2"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-2" id="incorrect-2" /></p>
+			<p class="incorrect-3"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-3" id="incorrect-3" /></p>
+			<p class="incorrect-4"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-4" id="incorrect-4" /></p>
+			<p class="incorrect-5"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-5" id="incorrect-5" /></p>
+		</div>
+	</div>
+}
+
+@trueFalseForm = {
+	<div class="true-false">
+		<div class="onoffswitch">
+    		<input type="checkbox" class="onoffswitch-checkbox" name="trueFalse" id="myonoffswitch" checked>
+    		<label class="onoffswitch-label" for="myonoffswitch">
+       		<span class="onoffswitch-inner"></span>
+       		<span class="onoffswitch-switch"></span>
+    		</label>
+		</div>
+	</div>
+}
+
+@inputAnswerForm = {
+	<div class="input-answer">
+		<p>
+		<label>@Messages("question.correct"): </label><input type="text" name="input-correct" id="input-correct" />
+		</p>
+	</div>
+}
+
+
+
+<body>
+	<header> @adminHeader() </header>
+
+	<content>
+	<div class="question container">
+		@helper.form(routes.QuestionController.submit) {
+		<fieldset>
+			<legend>@Messages("question.input")</legend>
+			<p><label>@Messages("question.text")</label></p>
+			<textarea name="questionText" rows="4" cols="50" /></textarea>
+			
+			<ul class="question">
+				<li class="question qType">
+					<p><label>@Messages("question.type")</label></p>
+					<select name="questionType" id="qType"> 
+					@for(qType <- QuestionType.values()){
+						<option value= "@qType">@Messages(qType.toString())</option> 
+					}
+					</select>
+				</li>
+				<li class="question grade">
+					<p><label>@Messages("question.grade")</label></p>
+					<select class="chapter-trigger" name="grade" id="grade"> 
+					@for(grade <- Grade.values()){
+						<option value="@grade">@Messages(grade.toString())</option> 
+					}
+					</select>
+				</li>
+				<li class="question difficulty">
+					<p><label>@Messages("question.difficulty")</label></p>
+					<input class="difficulty-input" type="number" id="difficulty" min="1" max="5" value="1" maxlength="1" />
+				</li>
+			</ul>
+			
+			<ul class="question">
+				<li class="question subject">
+					<p><label>@Messages("question.subject")</label></p>
+					<select class="chapter-trigger" name="subject" id="subject"> 
+					@for(subject <- Subject.values()){
+						<option value="@subject">@Messages(subject.toString())</option> 
+					}
+					</select>
+				</li>
+				<li class="question chapter">
+					<p><label>@Messages("question.chapter")</label></p>
+					<select class="chapter" multiple name="chapters[]" id="chapter"> 
+					@for((chapter, l) <- Chapter.values().zipWithIndex){
+						<option id="check-@l" value="@chapter.grade-@chapter.subject-@chapter">@Messages(chapter.toString())</option>
+					}
+					</select>
+				</li>
+				<li class="question subjectContent">
+					<p><label>@Messages("question.content")</label></p>
+					<input class="subjectContent-input" name="subjectContent" type="text" id="subjectContent" />
+				</li>
+			</ul>
+
+			@multipleChoiceForm
+			
+			@trueFalseForm
+			
+			@inputAnswerForm
+		
+			<p>
+				<button class="center loginBtn loginBtnFont" type="submit">@Messages("question.submit")</button>
+			</p>
+		</fieldset>
+		}
+	</div>
+	</content>
+</body>
+
+</html>

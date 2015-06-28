@@ -13,6 +13,36 @@ public enum Subject {
 	
 	GEOGRAPHY,
 	
-	BIOLOGY
+	BIOLOGY,
+	
+	MATHEMATICS,
+	
+	PHYSICS,
+	
+	CHEMISTRY,
+	
+	LOGICS,
+	
+	PHILOSOPHY,
+	
+	SOCIOLOGY,
+	
+	ETHICS,
+	
+	MUSIC,
+	
+	ART,
+	
+	ENGLISH,
+	
+	CROATIAN_LITERATURE,
+	
+	CROATIAN_GRAMMAR,
+	
+	LATIN,
+	
+	POLITICS,
+	
+	RELIGION
 
 }

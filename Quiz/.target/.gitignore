@@ -1,5 +1,5 @@
 /controllers/
-/views/
-/enums/
-/forms/
 /models/
+/views/
+/forms/
+/services/

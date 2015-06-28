@@ -4,7 +4,7 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.admin;
+import views.html.admin_question;
 import forms.QuestionForm;
 
 /**
@@ -23,7 +23,7 @@ public class AdminController extends Controller {
 	 * @return rendered login.scala.html view
 	 */
 	public static Result adminPage() {
-		return ok(admin.render(Form.form(QuestionForm.class)));
+		return ok(admin_question.render(Form.form(QuestionForm.class)));
 	}
 
 }
