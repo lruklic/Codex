@@ -9,20 +9,24 @@ package models.enums;
 
 public enum Grade {
 	/**
-	 * Fourth grade of gimnasium program.
+	 * First grade of gymnasium program.
 	 */
-	GIMN_4TH,
+	GIMN_1ST,
 	/**
-	 * Third grade of gimnasium program.
-	 */
-	GIMN_3RD,
-	/**
-	 * Second grade of gimnasium program.
+	 * Second grade of gymnasium program.
 	 */
 	GIMN_2ND,
 	/**
-	 * First grade of gimnasium program.
+	 * Third grade of gymnasium program.
 	 */
-	GIMN_1ST
+	GIMN_3RD,
+	/**
+	 * Fourth grade of gymnasium program.
+	 */
+	GIMN_4TH,
+	/**
+	 * Enum that indicates question contains facts from multiple different grades.
+	 */
+	GRAD_EXAM
 
 }

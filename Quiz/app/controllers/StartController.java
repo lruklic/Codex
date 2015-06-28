@@ -4,7 +4,7 @@ import forms.QuestionForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.admin;
+import views.html.admin_question;
 
 /**
  * Controller that is called when user attempts to access /, top application domain (i.e. localhost:9000/).
@@ -27,7 +27,7 @@ public class StartController extends Controller {
 		} else {
 			switch(type) {
 			case "ADMIN":
-				return ok(admin.render(Form.form(QuestionForm.class)));
+				return ok(admin_question.render(Form.form(QuestionForm.class)));	// TODO send to admin home
 			}
 		}
 		

@@ -14,11 +14,9 @@ import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.UserService;
-import views.html.admin;
 import views.html.login;
 import enums.AuthReply;
 import forms.LoginForm;
-import forms.QuestionForm;
 
 /**
  * Controller that handles login attempts.
