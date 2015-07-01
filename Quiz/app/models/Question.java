@@ -83,20 +83,13 @@ public class Question extends BaseModel {
 	 * @param difficulty
 	 * @param admin
 	 */
-	public Question(String questionText, QuestionType questionType, Grade grade, Subject subject, List<String> chapters,
+	public Question(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
 			String subjectContent, int difficulty, Admin admin) {
 		this.questionText = questionText;
 		this.questionType = questionType;
 		this.grade = grade;
 		this.subject = subject;
-		
-		StringBuilder sb = new StringBuilder();
-		for (String c : chapters) {
-			sb.append(c);
-			sb.append(";");
-		}
-		
-		this.chapters = sb.toString();
+		this.chapters = chapters;
 		this.subjectContent = subjectContent;
 		this.difficulty = difficulty;
 		this.admin = admin;

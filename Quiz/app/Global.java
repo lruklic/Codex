@@ -4,8 +4,10 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import controllers.AdminController;
 import controllers.LoginController;
 import controllers.QuestionController;
+import controllers.StartController;
 import controllers.TestDataController;
 import play.Application;
 import play.GlobalSettings;
@@ -40,6 +42,8 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(TestDataController.class);
 				requestStaticInjection(LoginController.class);
 				requestStaticInjection(QuestionController.class);
+				requestStaticInjection(StartController.class);
+				requestStaticInjection(AdminController.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
 				bind(QuestionService.class).to(QuestionServiceImpl.class);

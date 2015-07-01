@@ -11,14 +11,16 @@ POST	/login						controllers.LoginController.authenticate()
 GET		/logout						controllers.LoginController.logout()
 
 # Question
-GET		/question/chapters/:grade/:subject		controllers.QuestionController.getChapters(grade: String, subject: String)
+# GET		/question/chapters/:grade/:subject		controllers.QuestionController.getChapters(grade: String, subject: String)
 POST	/question								controllers.QuestionController.submit()
+GET		/question/edit/:id						controllers.QuestionController.edit(id: Long)
 
 # Test data fill
 GET		/data						controllers.TestDataController.fill()
 
 # Admin
-GET		/adminPage					controllers.AdminController.adminPage()
+GET		/adminHome					controllers.AdminController.adminHome()
+GET		/adminQuestion				controllers.AdminController.adminQuestion()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

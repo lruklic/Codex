@@ -24,7 +24,7 @@ public class BaseModel implements Serializable {
 	private static final long serialVersionUID = 9127819341547937253L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue
 	@Column(name="id", unique = true, nullable = false)
 	public Long id;
 

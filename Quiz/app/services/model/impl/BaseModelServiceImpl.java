@@ -1,5 +1,6 @@
 package services.model.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -38,7 +39,7 @@ public abstract class BaseModelServiceImpl<T extends BaseModel> implements BaseM
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		return (List<T>) JPA.em().createQuery("from " + clazz.getName()).getResultList();
+		return (List<T>) JPA.em().createQuery("from " + clazz.getName() + " order by id").getResultList();
 	}
 
 	@Override
@@ -58,6 +59,14 @@ public abstract class BaseModelServiceImpl<T extends BaseModel> implements BaseM
 		JPA.em().remove(instance);
 		JPA.em().flush();
 		return instance;
+	}
+	
+	protected List<T> findAllOrEmpty(List<T> findAllList) {
+		if (findAllList == null) {
+			return new ArrayList<T>();
+		} else {
+			return findAllList;
+		}
 	}
 	
 	/**

@@ -1,10 +1,15 @@
+@(adminName: String) 
+
 <div class="nav">
 	<ul>
-		<img class="logo" src="@routes.Assets.at("images/demoLogo.jpg")" alt="LearnMore">
-        <li class="home"><a href="#">@Messages("navigation.home")</a></li>
-        <li class="questions"><a href="#">@Messages("navigation.questions")</a></li>
+        <li class="home"><a href="@routes.AdminController.adminHome">@Messages("navigation.home")</a></li>
+        <li class="questions"><a href="@routes.AdminController.adminQuestion">@Messages("navigation.questions")</a></li>
         <li class="profile"><a href="#">@Messages("navigation.profile")</a></li>
         <li class="logout"><a href="@routes.LoginController.logout">@Messages("navigation.logout")</a></li>
      </ul>
 </div>
+
+<label class="hello">@Messages("admin.header.hello"), <label class="hello-name">@adminName</label> </label>
+
+
 

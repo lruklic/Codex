@@ -27,6 +27,6 @@ public enum Grade {
 	/**
 	 * Enum that indicates question contains facts from multiple different grades.
 	 */
-	GRAD_EXAM
+	GRADE_EXAM
 
 }

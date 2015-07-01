@@ -11,9 +11,15 @@ import models.User;
 
 public interface UserService extends BaseModelService<User> {
 
+	/**
+	 * Find user by email. Every email is unique.
+	 * 
+	 * @param email  
+	 * @return
+	 */
 	public User findByEmail(String email);
 	
 	public User findByUsername(String username);
 	
-	public User findByUsernameOrPassword(String credential);
+	public User findByUsernameOrEmail(String credential);
 }

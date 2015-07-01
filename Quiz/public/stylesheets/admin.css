@@ -46,11 +46,51 @@ header {
   color: #444;
   cursor: default;
 }
+.hello {
+	float: right;
+	color: white;
+	float: right;
+	margin: 10px;
+}
 
-/* Questions css tags */
+.hello-name {
+	font-style: italic;
+	font-weight: bold;
+}
+
+/* Questions list css tags*/
+
+table, th, td {
+	background-color: white;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.table-questionText {
+	width: 400px;
+}
+
+.table-chapters {
+	width: 300px;
+}
+
+.table-questionType, .table-subject{
+	width: 150px;
+}
+
+/* Questions input css tags */
+
+fieldset {
+	width: 600px;
+}
 
 textarea {
 	font-family: sans-serif;
+}
+
+.chapter {
+	width: 150px;
+	height: 80px;
 }
 
 .question ul {

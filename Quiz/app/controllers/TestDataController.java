@@ -35,7 +35,7 @@ public class TestDataController extends Controller {
 		admin.firstName = "Kruno";
 		admin.lastName = "Kolak";
 		admin.username = "kkolak";
-		admin.passwordHash = "81dc9bdb52d04dc20036dbd8313ed055";
+		admin.passwordHash = "dad0a739142bdbfe7d3a8d549e173143";
 		admin.email = "kolak.kruno@gmail.com";
 		admin.userType = UserType.ADMIN;
 		admin.questionsAdded = 0;
