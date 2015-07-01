@@ -1,4 +1,4 @@
-@(form: Form[forms.QuestionForm]) 
+@(form: Form[forms.QuestionForm], adminName: String, id: Long) 
 
 @import views.html.adminView._;
 @import views.html.init._;
@@ -9,6 +9,7 @@
 @head()
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/admin.js")"></script>
+
 </head>
 
 @multipleChoiceForm = {
@@ -18,13 +19,13 @@
 		<input type="number" name="multipleNumber" id="multipleNumber" min="3" max="6" value="3"/>
 		</p>
 		
-		<label>@Messages("question.correct"): </label><input type="text" name="correct" id="correct" />
+		<label>@Messages("question.correct"): </label><input type="text" name="multipleCorrect" id="correct" />
 		<div class="multiple-incorrect">
-			<p class="incorrect-1"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-1" id="incorrect-1" /></p>
-			<p class="incorrect-2"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-2" id="incorrect-2" /></p>
-			<p class="incorrect-3"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-3" id="incorrect-3" /></p>
-			<p class="incorrect-4"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-4" id="incorrect-4" /></p>
-			<p class="incorrect-5"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect-5" id="incorrect-5" /></p>
+			<p class="incorrect-1"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-1" /></p>
+			<p class="incorrect-2"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-2" /></p>
+			<p class="incorrect-3"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-3" /></p>
+			<p class="incorrect-4"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-4" /></p>
+			<p class="incorrect-5"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-5" /></p>
 		</div>
 	</div>
 }
@@ -32,7 +33,7 @@
 @trueFalseForm = {
 	<div class="true-false">
 		<div class="onoffswitch">
-    		<input type="checkbox" class="onoffswitch-checkbox" name="trueFalse" id="myonoffswitch" checked>
+    		<input type="checkbox" class="onoffswitch-checkbox" name="trueFalse" id="myonoffswitch" @if(form("trueFalse").value == "on") {checked}>
     		<label class="onoffswitch-label" for="myonoffswitch">
        		<span class="onoffswitch-inner"></span>
        		<span class="onoffswitch-switch"></span>
@@ -44,7 +45,7 @@
 @inputAnswerForm = {
 	<div class="input-answer">
 		<p>
-		<label>@Messages("question.correct"): </label><input type="text" name="input-correct" id="input-correct" />
+		<label>@Messages("question.correct"): </label><input type="text" name="inputCorrect" id="input-correct" value='@form("inputCorrect").value' />
 		</p>
 	</div>
 }
@@ -52,45 +53,48 @@
 
 
 <body>
-	<header> @adminHeader() </header>
+	<header> @adminHeader(adminName) </header>
 
 	<content>
 	<div class="question container">
 		@helper.form(routes.QuestionController.submit) {
 		<fieldset>
+			<input type="hidden" name="id" value=@id />
+			<input type="hidden" name="editChapters" value='@form("chapters").value' />
+			
 			<legend>@Messages("question.input")</legend>
 			<p><label>@Messages("question.text")</label></p>
-			<textarea name="questionText" rows="4" cols="50" /></textarea>
+			<textarea name="questionText" rows="4" cols="50"/>@form("questionText").value</textarea>
 			
 			<ul class="question">
 				<li class="question qType">
 					<p><label>@Messages("question.type")</label></p>
-					<select name="questionType" id="qType"> 
+					<select name="questionType" id="qType" value='@form("questionType").value'> 
 					@for(qType <- QuestionType.values()){
-						<option value= "@qType">@Messages(qType.toString())</option> 
+						<option value="@qType" @if(form("questionType").value != null && form("questionType").value == qType.toString()) {selected="selected"}>@Messages(qType.toString())</option> 
 					}
 					</select>
 				</li>
 				<li class="question grade">
 					<p><label>@Messages("question.grade")</label></p>
-					<select class="chapter-trigger" name="grade" id="grade"> 
+					<select class="chapter-trigger" name="grade" id="grade" value='@form("grade").value'> 
 					@for(grade <- Grade.values()){
-						<option value="@grade">@Messages(grade.toString())</option> 
+						<option value="@grade" @if(form("grade").value != null && form("grade").value == grade.toString()) {selected="selected"}> @Messages(grade.toString())</option> 
 					}
 					</select>
 				</li>
 				<li class="question difficulty">
 					<p><label>@Messages("question.difficulty")</label></p>
-					<input class="difficulty-input" type="number" id="difficulty" min="1" max="5" value="1" maxlength="1" />
+					<input class="difficulty-input" type="number" name="difficulty" id="difficulty" min="1" max="5" value='@form("difficulty").value' />
 				</li>
 			</ul>
 			
 			<ul class="question">
 				<li class="question subject">
 					<p><label>@Messages("question.subject")</label></p>
-					<select class="chapter-trigger" name="subject" id="subject"> 
+					<select class="chapter-trigger" name="subject" id="subject" value='@form("subject").value'> 
 					@for(subject <- Subject.values()){
-						<option value="@subject">@Messages(subject.toString())</option> 
+						<option value="@subject" @if(form("subject").value != null && form("subject").value == subject.toString()) {selected="selected"}>@Messages(subject.toString())</option> 
 					}
 					</select>
 				</li>
@@ -98,13 +102,17 @@
 					<p><label>@Messages("question.chapter")</label></p>
 					<select class="chapter" multiple name="chapters[]" id="chapter"> 
 					@for((chapter, l) <- Chapter.values().zipWithIndex){
-						<option id="check-@l" value="@chapter.grade-@chapter.subject-@chapter">@Messages(chapter.toString())</option>
+						
+						<option id="check-@l" value="@chapter.grade-@chapter.subject-@chapter" @if(form("chapter").value != null && form("chapter").value == chapter.toString()) {selected="selected"}>
+							@Messages(chapter.toString())
+						</option>
+						@chapter.toString()
 					}
 					</select>
 				</li>
 				<li class="question subjectContent">
 					<p><label>@Messages("question.content")</label></p>
-					<input class="subjectContent-input" name="subjectContent" type="text" id="subjectContent" />
+					<input class="subjectContent-input" name="subjectContent" type="text" id="subjectContent" value='@form("subjectContent").value' />
 				</li>
 			</ul>
 

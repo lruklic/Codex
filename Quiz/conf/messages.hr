@@ -1,0 +1,83 @@
+app.name = Codex
+app.motto = Ignorance is bliss, but knowledge is power.
+
+navigation.home=Početna
+navigation.questions=Pitanja
+navigation.profile=Profil
+navigation.logout=Odjava
+
+login=Prijava
+login.signin=Prijavi se
+login.username=Korisničko ime
+login.usernameoremail=Korisničko ime ili e-mail
+login.password=Lozinka
+
+login.error.values=Molimo Vas da popunite sva polja
+login.error.username=Korisničko ime ne postoji
+login.error.password=Lozinka nije ispravna
+
+questions=Pitanja
+question.text=Tekst pitanja
+question.input=Unos pitanja
+question.type=Vrsta pitanja
+question.grade=Razred
+question.subject=Predmet
+question.chapter=Poglavlje
+question.chapter.multiple=Više poglavlja
+question.content=Sadržaj pitanja
+question.difficulty=Težina
+question.correct=Točan odgovor
+question.incorrect=Pogrešan odgovor
+question.multiple.number=Broj pitanja
+question.submit=Pošalji
+question.submitter=Pošiljatelj
+question.edit=Uredi
+
+admin.header.hello=Pozdrav
+
+MULTIPLE_CHOICE=Višestruki odabir
+YES_NO=Točno/netočno
+INPUT_ANSWER=Unesi odgovor
+
+GIMN_1ST=Prvi razred
+GIMN_2ND=Drugi razred
+GIMN_3RD=Treći razred
+GIMN_4TH=Četvrti razred
+GRADE_EXAM=Za Maturu
+
+HISTORY=Povijest
+BIOLOGY=Biologija
+CROATIAN_LITERATURE=Hrvatski: književnost
+
+INTRO_TO_HISTORY=Uvod u povijest
+ANCIENT_HISTORY=Prapovijest
+EASTERN_CIVILIZATIONS=Narodi starog istoka
+OLD_GREECE=Stari Grci
+ROME_KINGS=Rim: doba kraljeva i Republika
+ROME_EMPIRE=Rim: carstvo
+
+LYRICS=Lirika
+EPICS=Epika
+DRAMA=Drama
+CLASSICAL_LITERATURE=Klasična književnost
+MEDIEVAL_LITERATURE=Srednjovjekovna književnost
+
+EARLY_RENAISSANCE=Predrenesansa
+RENAISSANCE=Renesansa
+BAROQUE=Barok
+CLASSICISM=Klasicizam
+ROMANTICISM=Romantizam
+
+PROTOREALISM=Protorealizam
+REALISM=Realizam
+MODERNISM=Modernizam
+MODERN=Moderna
+
+VANGUARD=Avangarda
+FIRST_PERIOD=I. razdoblje
+EXPRESSIONISM=Ekspresionizam
+SECOND_PERIOD=II. razdoblje
+SECOND_MODERN=Druga moderna
+CONTEMPORARY_LITERATURE=Suvremena književnost
+INTRO_TO_BIOLOGY=Uvod u biologiju
+

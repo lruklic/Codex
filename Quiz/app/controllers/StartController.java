@@ -1,10 +1,12 @@
 package controllers;
 
-import forms.QuestionForm;
-import play.data.Form;
+import com.google.inject.Inject;
+
+import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.admin_question;
+import services.model.QuestionService;
+import views.html.admin_home;
 
 /**
  * Controller that is called when user attempts to access /, top application domain (i.e. localhost:9000/).
@@ -15,19 +17,23 @@ import views.html.admin_question;
  *
  */
 
+@Transactional
 public class StartController extends Controller {
+	
+	@Inject
+	public static QuestionService questionService;
 	
 	public static Result redirect() {
 		
-		String email = session("email");
 		String type = session("type");
+		String firstName = session("firstName");
 		
 		if(type == null) {
 			return redirect(controllers.routes.LoginController.login());
 		} else {
 			switch(type) {
 			case "ADMIN":
-				return ok(admin_question.render(Form.form(QuestionForm.class)));	// TODO send to admin home
+				return ok(admin_home.render(firstName, questionService.findAll()));
 			}
 		}
 		

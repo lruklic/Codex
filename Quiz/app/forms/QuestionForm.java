@@ -1,12 +1,18 @@
 package forms;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import factories.QuestionFactory;
 import models.Admin;
 import models.Question;
 import models.enums.Grade;
 import models.enums.QuestionType;
 import models.enums.Subject;
+import models.questions.InputAnswerQuestion;
+import models.questions.MultipleChoiceQuestion;
+import models.questions.TrueFalseQuestion;
 import play.data.validation.Constraints.Required;
 
 /**
@@ -19,10 +25,12 @@ import play.data.validation.Constraints.Required;
 
 public class QuestionForm {
 	
+	public String id;
+	
 	@Required
 	public String questionText;
 	
-	@Required
+	@Required 
 	public QuestionType questionType;
 	
 	@Required
@@ -38,30 +46,59 @@ public class QuestionForm {
 	
 	public int numberOfAnswers;
 	
-	public String correctAnswer; 
+	public String multipleCorrect;
+	
+	public String inputCorrect;
 	
 	public List<String>	chapters;
 	
-	public List<String> incorrectAnswers;
+	public List<String> incorrect;
 	
-	public void setIncorrectAnswers(String ... incorrectAnswersForm) {
-		for (String incorrect : incorrectAnswersForm) {
-			incorrectAnswers.add(incorrect);
-		}
-	}
+	public String trueFalse;
 	
 	public Question createQuestion(Admin admin) {
-		Question question = null;
 		
-		switch(questionType) {
-			case MULTIPLE_CHOICE:
-				 
+		Question question = QuestionFactory.createQuestion(this, admin);
+		
+		// TODO add try-catch?
+		if(id != null && !id.equals("/")) {
+			question.id = Long.parseLong(id);
 		}
-		question = new Question(questionText, questionType, grade, subject, chapters, subjectContent, difficulty, admin);
-		
-		
+
 		
 		return question;
+	}
+	
+	public void fillForm(Question question) {
+		
+		this.questionText = question.questionText;
+		this.questionType = question.questionType;
+		this.grade = question.grade;
+		this.subject = question.subject;
+		this.subjectContent = question.subjectContent;
+		this.difficulty = question.difficulty;
+		
+		if (question.chapters != null) {
+			List<String> chaptersList = Arrays.asList(question.chapters.split(";"));
+			this.chapters = chaptersList;
+		}
+
+		switch(questionType) {
+			case MULTIPLE_CHOICE:
+				break;
+			case YES_NO:
+				if (((TrueFalseQuestion) question).answer) {
+					trueFalse = "on";
+				} else {
+					trueFalse = "off";
+				}
+				break;
+			case INPUT_ANSWER:
+				this.inputCorrect = ((InputAnswerQuestion) question).answer;
+				break;
+		}
+		
+		
 	}
 
 }

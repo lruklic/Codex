@@ -61,16 +61,17 @@ public class LoginController extends Controller {
 			flash("failure", Messages.get("login.error.values"));
 			return ok(login.render(Form.form(LoginForm.class)));
 		} else {
-			User user = userService.findByUsernameOrPassword(loginForm.get().usernameOrEmail);
+			User user = userService.findByUsernameOrEmail(loginForm.get().usernameOrEmail);
 			AuthReply passwordOk = passwordOk(user, loginForm.get().password);
 
 			switch (passwordOk) {
 			case LOGIN_OK:
 				session().clear();
-				session("email", loginForm.get().usernameOrEmail);
+				session("credential", loginForm.get().usernameOrEmail);
+				session("firstName", user.firstName);
 				session("type", user.userType.toString());
 				if (user.userType.equals(UserType.ADMIN)) {
-					return redirect(controllers.routes.AdminController.adminPage());
+					return redirect(controllers.routes.AdminController.adminHome());
 				} else {
 					// else user.render();
 				}

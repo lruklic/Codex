@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.List;
-
 import models.Admin;
 import models.Question;
 import models.User;
@@ -19,6 +17,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.QuestionService;
 import services.model.UserService;
+import views.html.admin_home;
+import views.html.admin_question;
 import forms.QuestionForm;
 
 /**
@@ -36,18 +36,19 @@ public class QuestionController extends Controller {
 	
 	@Inject
 	public static QuestionService questionService;
-
+	
+	/**
+	 * Mapped to POST method under adminQuestion
+	 * @return
+	 */
+	
 	public static Result submit() {
 		Form<QuestionForm> questionForm = Form.form(QuestionForm.class).bindFromRequest();
 		
-		String email = session().get("email");
-		User user = userService.findByEmail(email);
-		if (user == null) {
-			user = userService.findByUsername(email);
-		}
+		User user = getCurrentUser();
 		
 		if(questionForm.hasErrors()) {
-			// do something
+			return ok(admin_home.render(session().get("firstName"), questionService.findAll()));
 		}
 		
 		Question question = null;
@@ -55,11 +56,39 @@ public class QuestionController extends Controller {
 			 question = questionForm.get().createQuestion((Admin) user);	// if there are any errors, .get() will throw IllegalStateException: no value
 		}
 		
-		// List<String> chapters = questionForm.get().chapters;
+		questionService.save(question);
 
-		return ok(); 
+		return ok(admin_home.render(user.firstName, questionService.findAll())); 
 	}
 
+	
+	public static Result edit(Long id) {
+		
+		// TODO deadbolt or some other handler to disable attempts for non-admin users to change question values
+		
+		User user = getCurrentUser();
+		
+		Question question = questionService.findById(id);
+		
+		QuestionForm qf = new QuestionForm();
+		qf.fillForm(question);
+		
+		Form<QuestionForm> form = Form.form(QuestionForm.class).fill(qf);
+		
+		return ok(admin_question.render(form, user.firstName, question.id));
+		
+	}
+	
+	/**
+	 * Method that gets current user for session.
+	 * @return current user
+	 */
+	private static User getCurrentUser() {
+		String credential = session().get("credential");
+		User user = userService.findByUsernameOrEmail(credential);
+		return user;
+	}
+	
 	public static Result getChapters(String grade, String subject) {
 		JsonNode json = Json.toJson(Chapter.getByGradeAndSubject(Grade.valueOf(grade), Subject.valueOf(subject)));
 		return ok();
