@@ -14,6 +14,7 @@ GET		/logout						controllers.LoginController.logout()
 # GET		/question/chapters/:grade/:subject		controllers.QuestionController.getChapters(grade: String, subject: String)
 POST	/question								controllers.QuestionController.submit()
 GET		/question/edit/:id						controllers.QuestionController.edit(id: Long)
+GET		/question/delete/:id					controllers.QuestionController.delete(id: Long)
 
 # Test data fill
 GET		/data						controllers.TestDataController.fill()

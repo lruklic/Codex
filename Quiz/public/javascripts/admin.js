@@ -14,9 +14,17 @@ function initAdmin() {
 	}
 	
 	// If difficulty is not set, set it to 1 (redundant?)
-	var test = $('#difficulty').val();
 	if($('#difficulty').val() === "") {
 		$('#difficulty').val(1);
+	}
+	
+	if($('#multipleNumber').val() === "") {
+		$('#multipleNumber').val(3);
+	} else {
+		var numberOfAnswers = $('#multipleNumber').val();
+		for (var int = 1; int < numberOfAnswers; int++) {
+	    	$('.incorrect-'+int).show();
+		}
 	}
 	
 	// Set Question Type based on current question

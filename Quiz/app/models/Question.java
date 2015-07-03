@@ -42,6 +42,9 @@ public class Question extends BaseModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Column(name="lastEdited")
+	public Long lastEdited;
+	
 	@Column(name = "questionText", length = 500)
 	public String questionText;
 	
@@ -85,6 +88,7 @@ public class Question extends BaseModel {
 	 */
 	public Question(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
 			String subjectContent, int difficulty, Admin admin) {
+		this.lastEdited = System.currentTimeMillis();
 		this.questionText = questionText;
 		this.questionType = questionType;
 		this.grade = grade;

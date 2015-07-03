@@ -54,6 +54,7 @@ public class QuestionController extends Controller {
 		Question question = null;
 		if (user instanceof Admin) {
 			 question = questionForm.get().createQuestion((Admin) user);	// if there are any errors, .get() will throw IllegalStateException: no value
+			 question.lastEdited = System.currentTimeMillis();
 		}
 		
 		questionService.save(question);
@@ -76,6 +77,19 @@ public class QuestionController extends Controller {
 		Form<QuestionForm> form = Form.form(QuestionForm.class).fill(qf);
 		
 		return ok(admin_question.render(form, user.firstName, question.id));
+		
+	}
+	
+	public static Result delete(Long id) {
+		
+		// TODO deadbolt or some other handler to disable attempts for non-admin users to change question values
+		
+		User user = getCurrentUser();
+		
+		Question question = questionService.findById(id);
+		questionService.delete(question);
+		
+		return ok(admin_home.render(user.firstName, questionService.findAll()));
 		
 	}
 	

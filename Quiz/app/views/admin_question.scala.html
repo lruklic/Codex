@@ -16,16 +16,16 @@
 	<div class="multiple">
 		<p>
 		<label>@Messages("question.multiple.number"):</label>
-		<input type="number" name="multipleNumber" id="multipleNumber" min="3" max="6" value="3"/>
+		<input type="number" name="multipleNumber" id="multipleNumber" min="3" max="6" value='@form("numberOfAnswers").value'/>
 		</p>
 		
-		<label>@Messages("question.correct"): </label><input type="text" name="multipleCorrect" id="correct" />
+		<label>@Messages("question.correct"): </label><input type="text" name="multipleCorrect" id="correct" value='@form("multipleCorrect").value'/>
 		<div class="multiple-incorrect">
-			<p class="incorrect-1"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-1" /></p>
-			<p class="incorrect-2"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-2" /></p>
-			<p class="incorrect-3"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-3" /></p>
-			<p class="incorrect-4"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-4" /></p>
-			<p class="incorrect-5"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-5" /></p>
+			<p class="incorrect-1"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-1" value='@form("incorrect[0]").value()'/></p>
+			<p class="incorrect-2"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-2" value='@form("incorrect[1]").value()'/></p>
+			<p class="incorrect-3"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-3" value='@form("incorrect[2]").value()'/></p>
+			<p class="incorrect-4"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-4" value='@form("incorrect[3]").value()'/></p>
+			<p class="incorrect-5"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-5" value='@form("incorrect[4]").value()'/></p>
 		</div>
 	</div>
 }
@@ -102,11 +102,9 @@
 					<p><label>@Messages("question.chapter")</label></p>
 					<select class="chapter" multiple name="chapters[]" id="chapter"> 
 					@for((chapter, l) <- Chapter.values().zipWithIndex){
-						
 						<option id="check-@l" value="@chapter.grade-@chapter.subject-@chapter" @if(form("chapter").value != null && form("chapter").value == chapter.toString()) {selected="selected"}>
 							@Messages(chapter.toString())
 						</option>
-						@chapter.toString()
 					}
 					</select>
 				</li>
