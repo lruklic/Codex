@@ -65,7 +65,6 @@ public class QuestionForm {
 			question.id = Long.parseLong(id);
 		}
 
-		
 		return question;
 	}
 	
@@ -85,6 +84,10 @@ public class QuestionForm {
 
 		switch(questionType) {
 			case MULTIPLE_CHOICE:
+				MultipleChoiceQuestion mq = ((MultipleChoiceQuestion)question);
+				this.multipleCorrect = mq.correctAnswer;
+				this.numberOfAnswers = mq.getNumberOfAnswers();
+				this.incorrect = mq.getIncorrectAnswers();
 				break;
 			case YES_NO:
 				if (((TrueFalseQuestion) question).answer) {

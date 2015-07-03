@@ -16,6 +16,10 @@ login.error.values=Molimo Vas da popunite sva polja
 login.error.username=Korisničko ime ne postoji
 login.error.password=Lozinka nije ispravna
 
+tooltip.question.edit=Uredi ovo pitanje
+tooltip.question.explanation=Dodaj objašnjenje odgovora za ovo pitanje
+tooltip.question.delete=Obriši ovo pitanje
+
 questions=Pitanja
 question.text=Tekst pitanja
 question.input=Unos pitanja
@@ -28,7 +32,7 @@ question.content=Sadržaj pitanja
 question.difficulty=Težina
 question.correct=Točan odgovor
 question.incorrect=Pogrešan odgovor
-question.multiple.number=Broj pitanja
+question.multiple.number=Broj mogućih odgovora
 question.submit=Pošalji
 question.submitter=Pošiljatelj
 question.edit=Uredi
