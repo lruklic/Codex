@@ -5,11 +5,11 @@ function initAdmin() {
 	var editChapters = $('[name=editChapters]').val();
 	
 	// Default question type is multiple choice
-	$(".true-false").hide();
-	$(".input-answer").hide();
+	$(".true_false").hide();
+	$(".input_answer").hide();
 	
 	// Default number of answers is set to 3
-	for (var int = 3; int < 6; int++) {
+	for (var int = 2; int < 5; int++) {
     	$('.incorrect-'+int).hide();
 	}
 	
@@ -62,24 +62,20 @@ function initAdmin() {
 }
 
 function setQuestionType() {
-	var qType = $("#qType").val();
-	switch(qType) {
-		case "MULTIPLE_CHOICE":
-			$(".multiple").show();
-			$(".true-false").hide();
-			$(".input-answer").hide();
-			break;
-		case "YES_NO":
-			$(".true-false").show();
-			$(".multiple").hide();
-			$(".input-answer").hide();
-			break;
-		case "INPUT_ANSWER":
-			$(".input-answer").show();
-			$(".multiple").hide();
-			$(".true-false").hide();
-			break;
+	var qType = $("#qType").val().toLowerCase();
+	
+	$(".numberOfAnswers").hide();
+	$(".multiple_choice").hide();
+	$(".multiple_answer").hide();
+	$(".true_false").hide();
+	$(".input_answer").hide();
+
+	if (qType === "multiple_choice" || qType === "multiple_answer") {
+		$(".numberOfAnswers").show();
+		questionNumberChange();
 	}
+	$("."+qType).show();
+	
 }
 
 function changeDifficultyColor() {
@@ -105,6 +101,47 @@ function changeDifficultyColor() {
 		
 	} else {
 		$('#difficulty').val(1);
+	}
+}
+
+function questionNumberChange() {
+	if ($.isNumeric($('#multipleNumber').val()) && $('#multipleNumber').val() < 7 && $('#multipleNumber').val() > 2) {
+		var numberOfAnswers = $('#multipleNumber').val();
+		
+		// case with Multiple Choice selected
+		if ($("#qType").val() === "MULTIPLE_CHOICE") {
+    		// Hide extra inputs
+    		for (var int = 2; int < 5; int++) {
+        		$('.incorrect-'+int).hide();
+			}
+    		// Dynamicly show input text boxes for incorrect answers
+    		for (var int = 2; int < numberOfAnswers-1; int++) {
+        		$('.incorrect-'+int).show();
+			}
+    		
+    	// case with Multiple Answer selected
+		} else {
+			// Hide extra inputs
+    		for (var int = 0; int < 6; int++) {
+        		$('.multiple-'+int).hide();
+			}
+    		// Dynamicly show input text boxes for answers
+    		for (var int = 0; int < numberOfAnswers; int++) {
+        		$('.multiple-'+int).show();
+			}
+			
+		}
+
+	} else {
+		$('#multipleNumber').val(3);
+		
+		// Hide extra inputs
+		for (var int = 2; int < 5; int++) {
+    		$('.incorrect-'+int).hide();
+		}
+		for (var int = 3; int < 6; int++) {
+    		$('.multiple-'+int).hide();
+		}
 	}
 }
 
@@ -152,25 +189,6 @@ $(document).ready(function(){
     
     // Method that creates or deletes incorrect answer input forms when number of answers is changed
     $('#multipleNumber').on('input',function(){
-    	if ($.isNumeric($('#multipleNumber').val()) && $('#multipleNumber').val() < 7 && $('#multipleNumber').val() > 2) {
-    		var numberOfAnswers = $('#multipleNumber').val();
-    		
-    		// Hide extra inputs
-    		for (var int = 3; int < 6; int++) {
-        		$('.incorrect-'+int).hide();
-			}
-    		
-    		// Dynamicly generate input text boxes for incorrect answers
-    		for (var int = 3; int < numberOfAnswers; int++) {
-        		$('.incorrect-'+int).show();
-			}
-    	} else {
-    		$('#multipleNumber').val(3);
-    		
-    		// Hide extra inputs
-    		for (var int = 3; int < 6; int++) {
-        		$('.incorrect-'+int).hide();
-			}
-    	}
+    	questionNumberChange();
     });
 }); 

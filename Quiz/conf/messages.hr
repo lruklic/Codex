@@ -21,6 +21,8 @@ tooltip.question.explanation=Dodaj objašnjenje odgovora za ovo pitanje
 tooltip.question.delete=Obriši ovo pitanje
 
 questions=Pitanja
+question.answers=Odgovori
+question.isCorrect=Točno?
 question.text=Tekst pitanja
 question.input=Unos pitanja
 question.type=Vrsta pitanja
@@ -39,9 +41,10 @@ question.edit=Uredi
 
 admin.header.hello=Pozdrav
 
-MULTIPLE_CHOICE=Višestruki odabir
-YES_NO=Točno/netočno
+MULTIPLE_CHOICE=Višestruki odabir - jedan točan
+TRUE_FALSE=Točno/netočno
 INPUT_ANSWER=Unesi odgovor
+MULTIPLE_ANSWER=Višestruki odabir - više točnih
 
 GIMN_1ST=Prvi razred
 GIMN_2ND=Drugi razred

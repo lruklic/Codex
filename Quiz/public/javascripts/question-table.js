@@ -4,24 +4,25 @@ $(document).ready(function(){
 	    var link = this;
 
 	    e.preventDefault();
+	    
+	    var href = link.href;
+	    var hrefArray = href.split("/");
+	    var hrefLen = hrefArray.length;
+	    
+	    var questionId = hrefArray[hrefLen-1];
+	    var trName = "question-"+questionId;
+	    var questionText = $("#"+trName + " > .table-questionText").html();
 
-	    $("<div>Are you sure you want to continue?</div>").dialog({
+	    $("<div>Jeste li sigurni da želite obrisati pitanje? <br><br> Id: "+questionId+"<br> Tekst: "+questionText+"</div>").dialog({
 	        buttons: {
-	            "Ok": function() {
+	            "U redu": function() {
 	                window.location = link.href;
 	            },
-	            "Cancel": function() {
+	            "Odustani": function() {
 	                $(this).dialog("close");
 	            }
 	        }
 	    });
 	});
-    
-//	$(".table-icon").hover(function(){
-//		$(this).animate({ margin: -10, width: "+=20", height: "+=20" });
-//	
-//	}, function(){
-//		$(this).animate({ margin: 0, width: "-=20", height: "-=20" });
-//	});
 	
 });

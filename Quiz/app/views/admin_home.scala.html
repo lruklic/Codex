@@ -25,7 +25,7 @@
 	</tr>
 	
 	@for(q <- questions) {
-	<tr>
+	<tr id="question-@q.id">
   		<td class="table-questionText">@q.questionText</td> 
   		<td class="table-questionType">@Messages(q.questionType.toString())</td>
   		<td class="table-subject">@Messages(q.subject.toString())</td>
@@ -37,13 +37,9 @@
   			}
   		<td class="table-difficulty">@q.difficulty</td>
   		<td class="table-submitter">@q.admin.username</td>
-  		<td>
-  			<div>
-  				<a class="table-icon" href="@routes.QuestionController.edit(q.id)"><img title="@Messages("tooltip.question.edit")" src="@routes.Assets.at("images/edit-icon.png")"/></a>
-  			</div>
-  		</td>
+  		<td><a class="table-icon" href="@routes.QuestionController.edit(q.id)"><img title="@Messages("tooltip.question.edit")" src="@routes.Assets.at("images/edit-icon.png")"/></a></td>
   		<td><a href="#"><img title="@Messages("tooltip.question.explanation")" src="@routes.Assets.at("images/explanation-icon.png")"/></a></td>
-  		<td><a class="delete-button" href="@routes.QuestionController.edit(q.id)"><img title="@Messages("tooltip.question.delete")" src="@routes.Assets.at("images/delete-icon.png")"/></a></td>
+  		<td><a class="delete-button" href="@routes.QuestionController.delete(q.id)"><img title="@Messages("tooltip.question.delete")" src="@routes.Assets.at("images/delete-icon.png")"/></a></td>
   	</tr>
   	} 
 
