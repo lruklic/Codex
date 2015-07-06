@@ -12,26 +12,31 @@
 
 </head>
 
+@numberOfAnswers = {
+	<p class="numberOfAnswers">
+	<label>@Messages("question.multiple.number"):</label>
+	<input type="number" name="multipleNumber" id="multipleNumber" value='@form("numberOfAnswers").value' />
+	</p>
+}
+
 @multipleChoiceForm = {
-	<div class="multiple">
-		<p>
-		<label>@Messages("question.multiple.number"):</label>
-		<input type="number" name="multipleNumber" id="multipleNumber" min="3" max="6" value='@form("numberOfAnswers").value'/>
-		</p>
+	<div class="multiple_choice">
 		
 		<label>@Messages("question.correct"): </label><input type="text" name="multipleCorrect" id="correct" value='@form("multipleCorrect").value'/>
 		<div class="multiple-incorrect">
-			<p class="incorrect-1"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-1" value='@form("incorrect[0]").value()'/></p>
-			<p class="incorrect-2"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-2" value='@form("incorrect[1]").value()'/></p>
-			<p class="incorrect-3"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-3" value='@form("incorrect[2]").value()'/></p>
-			<p class="incorrect-4"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-4" value='@form("incorrect[3]").value()'/></p>
-			<p class="incorrect-5"><label class="incorrect-label">@Messages("question.incorrect"): </label><input type="text" name="incorrect[]" id="incorrect-5" value='@form("incorrect[4]").value()'/></p>
+			
+			@for(i <- 0 to 4) {
+			<p class="incorrect-@i">
+				<label class="incorrect-label">@Messages("question.incorrect"): </label>
+				<input type="text" name="incorrect[]" id="incorrect-@i" value="@form("incorrect["+i+"]").value()"/>
+			</p>
+			}
 		</div>
 	</div>
 }
 
 @trueFalseForm = {
-	<div class="true-false">
+	<div class="true_false">
 		<div class="onoffswitch">
     		<input type="checkbox" class="onoffswitch-checkbox" name="trueFalse" id="myonoffswitch" @if(form("trueFalse").value == "on") {checked}>
     		<label class="onoffswitch-label" for="myonoffswitch">
@@ -43,10 +48,26 @@
 }
 
 @inputAnswerForm = {
-	<div class="input-answer">
+	<div class="input_answer">
 		<p>
 		<label>@Messages("question.correct"): </label><input type="text" name="inputCorrect" id="input-correct" value='@form("inputCorrect").value' />
 		</p>
+	</div>
+}
+
+@multipleAnswerForm = {
+	<div class="multiple_answer">
+		
+		<table>
+			<th> @Messages("question.answers") </th>
+			<th> @Messages("question.isCorrect") </th>
+			@for(i <- 0 to 5) {
+			<tr class="multiple-@i">
+				<td><input type="text" name="multiple[]" id="multiple-@i" value="@form("multiple["+i+"]").value()"/></td>
+				<td><input type="checkbox" name="multipleTrue[]" id="multipleTrue-@i" value=@i @if(form("multipleTrue["+i+"]").value() != "") {checked}/></td>
+			</tr>
+			} 
+		</table>
 	</div>
 }
 
@@ -114,11 +135,15 @@
 				</li>
 			</ul>
 
+			@numberOfAnswers
+
 			@multipleChoiceForm
 			
 			@trueFalseForm
 			
 			@inputAnswerForm
+			
+			@multipleAnswerForm
 		
 			<p>
 				<button class="center loginBtn loginBtnFont" type="submit">@Messages("question.submit")</button>

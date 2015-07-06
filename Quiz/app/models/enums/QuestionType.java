@@ -13,12 +13,17 @@ public enum QuestionType {
 	 */
 	MULTIPLE_CHOICE,
 	/**
+	 * Player chooses which anwers are correct from multiple offered answers.
+	 */
+	MULTIPLE_ANSWER,
+	/**
 	 * Player chooses if the question statement is TRUE or FALSE.
 	 */
-	YES_NO,
+	TRUE_FALSE,
 	/**
 	 * Player inputs answer in given textbox.
 	 */
 	INPUT_ANSWER
+
 	
 }

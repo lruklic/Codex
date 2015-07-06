@@ -37,6 +37,7 @@ admin.header.hello=Hello
 MULTIPLE_CHOICE=Multiple choice
 YES_NO=True/False
 INPUT_ANSWER=Input Answer
+MULTIPLE_ANSWERS=Multiple answers
 
 GIMN_1ST=First grade
 GIMN_2ND=Second grade

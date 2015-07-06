@@ -11,6 +11,7 @@ import models.enums.Grade;
 import models.enums.QuestionType;
 import models.enums.Subject;
 import models.questions.InputAnswerQuestion;
+import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
 import play.data.validation.Constraints.Required;
@@ -24,36 +25,69 @@ import play.data.validation.Constraints.Required;
  */
 
 public class QuestionForm {
-	
+	/**
+	 * Question id, hidden on form.
+	 */
 	public String id;
-	
+	/**
+	 * Question text, required for every question-
+	 */
 	@Required
 	public String questionText;
-	
+	/**
+	 * Question type, required for every question.
+	 */
 	@Required 
 	public QuestionType questionType;
-	
+	/**
+	 * Question grade, required for every question.
+	 */
 	@Required
 	public Grade grade;
-	
+	/**
+	 * Question subject, required for every question.
+	 */
 	@Required
 	public Subject subject;
-	
-	public String subjectContent;
-	
+	/**
+ 	 * Question difficulty from 1 to 5, required for every question.
+	 */
 	@Required
 	public int difficulty;
+	/**
+	 * Chapters for question.
+	 */
+	public List<String>	chapters;
+	/**
+	 * Question content.
+	 */
+	public String subjectContent;
 	
+	/**
+	 * Number of answers; relevant for MULTIPLE_CHOICE i MULTIPLE_ANSWER.
+	 */
 	public int numberOfAnswers;
 	
+	public List<String> multiple;
+	
+	public List<String> multipleTrue;
+	
+	/**
+	 * Correct answer; relevant for MULTIPLE_CHOICE.
+	 */
 	public String multipleCorrect;
-	
-	public String inputCorrect;
-	
-	public List<String>	chapters;
-	
+	/**
+	 * List of incorrect answers; relevant for MULTIPLE_CHOICE.
+	 */
 	public List<String> incorrect;
 	
+	/**
+	 * Answer for input question; relevant for INPUT_ANSWER.
+	 */
+	public String inputCorrect;
+	/**
+	 * True or false value; relevant for TRUE_FALSE.
+	 */
 	public String trueFalse;
 	
 	public Question createQuestion(Admin admin) {
@@ -89,7 +123,27 @@ public class QuestionForm {
 				this.numberOfAnswers = mq.getNumberOfAnswers();
 				this.incorrect = mq.getIncorrectAnswers();
 				break;
-			case YES_NO:
+			case MULTIPLE_ANSWER:
+				MultipleAnswerQuestion maq = ((MultipleAnswerQuestion) question);
+				
+				List<String> answers = new ArrayList<>(maq.getCorrectAnswers());
+				answers.removeAll(Arrays.asList("", null));
+				int correctAnswersSize = answers.size();
+				answers.addAll(maq.getIncorrectAnswers());
+				
+				this.numberOfAnswers = maq.getNumberOfAnswers();
+				this.multiple = answers;
+				
+				List<String> multipleTrue = new ArrayList<>();
+				for (int i = 0; i < correctAnswersSize; i++) {
+					multipleTrue.add(String.valueOf(i));
+				}
+				this.multipleTrue = multipleTrue;
+				
+				
+				// TODO fill form
+				break;
+			case TRUE_FALSE:
 				if (((TrueFalseQuestion) question).answer) {
 					trueFalse = "on";
 				} else {

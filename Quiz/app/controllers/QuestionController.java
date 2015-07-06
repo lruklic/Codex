@@ -56,7 +56,9 @@ public class QuestionController extends Controller {
 			 question = questionForm.get().createQuestion((Admin) user);	// if there are any errors, .get() will throw IllegalStateException: no value
 			 question.lastEdited = System.currentTimeMillis();
 		}
-		
+		if (question.id != null) {
+			questionService.delete(questionService.findById(question.id));
+		}
 		questionService.save(question);
 
 		return ok(admin_home.render(user.firstName, questionService.findAll())); 
@@ -87,6 +89,11 @@ public class QuestionController extends Controller {
 		User user = getCurrentUser();
 		
 		Question question = questionService.findById(id);
+		
+		if (question == null) {
+			return ok(admin_home.render(user.firstName, questionService.findAll()));
+		}
+		
 		questionService.delete(question);
 		
 		return ok(admin_home.render(user.firstName, questionService.findAll()));

@@ -1,11 +1,14 @@
 package factories;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import enums.AnswerType;
 import forms.QuestionForm;
 import models.Admin;
 import models.Question;
 import models.questions.InputAnswerQuestion;
+import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
 
@@ -35,7 +38,12 @@ public class QuestionFactory {
 				String incorrect = createIncorrectAnswers(form.incorrect);
 				return new MultipleChoiceQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
 						form.difficulty, currentAdmin, form.multipleCorrect, incorrect);
-			case YES_NO:
+			case MULTIPLE_ANSWER:
+				String multipleCorrect = createMultipleAnswersString(form.multiple, form.multipleTrue, AnswerType.CORRECT);
+				String multipleIncorrect = createMultipleAnswersString(form.multiple, form.multipleTrue, AnswerType.INCORRECT);
+				return new MultipleAnswerQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
+						form.difficulty, currentAdmin, multipleCorrect, multipleIncorrect);
+			case TRUE_FALSE:
 				Boolean trueFalse = false;
 				if (form.trueFalse != null) {
 					trueFalse = true;
@@ -87,8 +95,37 @@ public class QuestionFactory {
 		return sb.toString();
 	}
 	
-	private static boolean getTrueFalse() {
-		return true;
+	private static String createMultipleAnswersString(List<String> multiple, List<String> multipleTrue, AnswerType at) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		List<String> multipleTrueNoSlash = new ArrayList<>();
+		
+		if (multipleTrue != null) {
+			for (String mt : multipleTrue) {
+				multipleTrueNoSlash.add(mt.replaceAll("/", ""));		// why are / on the end?
+			}
+		}
+
+		for (int i = 0; i < multiple.size(); i++) {
+			if (at == AnswerType.CORRECT) {
+				if (multipleTrueNoSlash.contains(String.valueOf(i))) {
+					sb.append(multiple.get(i));
+					sb.append(";");
+				}
+			} else {
+				if (!multipleTrueNoSlash.contains(String.valueOf(i))) {
+					sb.append(multiple.get(i));
+					sb.append(";");
+				}
+			}
+		}
+		if (sb.length() == 0) {
+			return sb.toString();
+		} else {
+			return sb.toString().substring(0, sb.length()-1);
+		}
+
 	}
 	
 }

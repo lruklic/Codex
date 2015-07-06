@@ -8,6 +8,7 @@
 <head>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	@head()
+	<script type="text/javascript" src="@routes.Assets.at("/javascripts/login.js")"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
 </head>
 
@@ -29,10 +30,10 @@
 		} 
 		
 		<p>
-			<input class="loginTextBox loginBoxFont" type="text" name="usernameOrEmail" placeholder="@Messages("login.usernameoremail")" value="@form("email").value">
+			<input class="loginTextBox loginBoxFont" id="username" type="text" name="usernameOrEmail" placeholder="@Messages("login.usernameoremail")" value="@form("email").value">
 		</p>
 		<p>
-			<input class="loginTextBox loginBoxFont" type="password" name="password" placeholder="@Messages("login.password")">
+			<input class="loginTextBox loginBoxFont" id="password" type="password" name="password" placeholder="@Messages("login.password")">
 		</p>
 		<p>
 			<button class="loginBtn loginBtnFont" type="submit">@Messages("login")</button>
