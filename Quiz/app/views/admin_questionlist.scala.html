@@ -1,0 +1,47 @@
+@(adminName: String, questions: List[models.Question]) 
+
+@import views.html.adminView._;
+@import views.html.init._;
+
+<html>
+<head>
+@head()
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/question-table.js")"></script>
+</head>
+
+<body>
+	<header> @adminHeader(adminName) </header>
+	
+	<h2>@Messages("questions")</h2>
+	<table class="question-table">
+	<tr>
+		<th>@Messages("question.text")</th>
+		<th>@Messages("question.type")</th>
+		<th>@Messages("question.subject")</th>
+		<th>@Messages("question.chapter")</th>
+		<th>@Messages("question.difficulty")</th>
+		<th>@Messages("question.submitter")</th>
+	</tr>
+	
+	@for(q <- questions) {
+	<tr id="question-@q.id">
+  		<td class="table-questionText">@q.questionText</td> 
+  		<td class="table-questionType">@Messages(q.questionType.toString())</td>
+  		<td class="table-subject">@Messages(q.subject.toString())</td>
+  		<td class="table-chapters">
+  			@if(q.chapters != null && q.chapters.contains(";")) {
+  				@Messages("question.chapter.multiple")
+  			} else {
+  				@Messages(q.chapters)
+  			}
+  		<td class="table-difficulty">@q.difficulty</td>
+  		<td class="table-submitter">@q.admin.username</td>
+  		<td><a class="table-icon" href="@routes.QuestionController.edit(q.id)"><img title="@Messages("tooltip.question.edit")" src="@routes.Assets.at("images/edit-icon.png")"/></a></td>
+  		<td><a href="#"><img title="@Messages("tooltip.question.explanation")" src="@routes.Assets.at("images/explanation-icon.png")"/></a></td>
+  		<td><a class="delete-button" href="@routes.QuestionController.delete(q.id)"><img title="@Messages("tooltip.question.delete")" src="@routes.Assets.at("images/delete-icon.png")"/></a></td>
+  	</tr>
+  	} 
+
+	</table>
+</body>

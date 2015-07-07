@@ -1,0 +1,49 @@
+.news-panel {
+	position: relative;
+	padding-left: 50px;
+	width: 550px;
+}
+
+.novelty-box {
+	position: relative;
+	width: 550px;
+	height: 220px;
+	border-width: 2px;
+	border-style: groove;
+	border-color: #444;
+	background-color: #fff;
+	
+}
+
+.novelty-title {
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	padding-left: 20px;
+}
+
+.novelty-text {
+	font-family: Verdana, Geneva, sans-serif;
+	padding-left: 10px;
+}
+
+.novelty-datetime {
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	font-size: 0.875em;
+}
+
+.novelty-author {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+}
+
+.novelty-add {
+	position: absolute;
+	right: 0px;
+	padding-top: 30px;
+}
