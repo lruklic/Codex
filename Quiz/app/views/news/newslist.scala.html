@@ -1,0 +1,17 @@
+@(news: List[models.Novelty], clearanceLevel: Integer) 
+
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/news.css")">
+
+<div class="news-panel">
+	@for(n <- news) {
+		<div class="novelty-box">
+			<h2 class="novelty-title">@n.noveltyTitle</h2>
+			<div class="novelty-text">@Html(n.noveltyText)</div>
+			<div class="novelty-datetime">@n.getCreatedDateTime()</div>
+			<div class="novelty-author">@n.admin.getName()</div>
+		</div>
+	}
+	@if(clearanceLevel > 2) {
+		<a class="novelty-add" href="@routes.AdminController.adminHome">@Messages("news.add")</a>
+	}
+</div>

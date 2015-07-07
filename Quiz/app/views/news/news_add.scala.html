@@ -1,0 +1,21 @@
+@(adminName: String)
+
+@import views.html.init._;
+@import views.html.adminView._;
+
+<html>
+<head>
+@head()
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/admin.js")"></script>
+</head>
+
+<body>
+	<header> @adminHeader(adminName) </header>
+
+	<content>
+	
+	</content>
+</body>
+
+</html>
