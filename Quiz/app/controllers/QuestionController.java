@@ -3,22 +3,17 @@ package controllers;
 import models.Admin;
 import models.Question;
 import models.User;
-import models.enums.Chapter;
-import models.enums.Grade;
-import models.enums.Subject;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
 
 import play.data.Form;
 import play.db.jpa.Transactional;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.QuestionService;
 import services.model.UserService;
-import views.html.admin_home;
 import views.html.admin_question;
+import views.html.admin_questionlist;
 import forms.QuestionForm;
 
 /**
@@ -48,7 +43,7 @@ public class QuestionController extends Controller {
 		User user = getCurrentUser();
 		
 		if(questionForm.hasErrors()) {
-			return ok(admin_home.render(session().get("firstName"), questionService.findAll()));
+			return ok(admin_question.render(questionForm, user.firstName));
 		}
 		
 		Question question = null;
@@ -61,7 +56,7 @@ public class QuestionController extends Controller {
 		}
 		questionService.save(question);
 
-		return ok(admin_home.render(user.firstName, questionService.findAll())); 
+		return ok(admin_questionlist.render(user.firstName, questionService.findAll())); 
 	}
 
 	
@@ -76,9 +71,11 @@ public class QuestionController extends Controller {
 		QuestionForm qf = new QuestionForm();
 		qf.fillForm(question);
 		
+		qf.id = String.valueOf(question.id);
+		
 		Form<QuestionForm> form = Form.form(QuestionForm.class).fill(qf);
 		
-		return ok(admin_question.render(form, user.firstName, question.id));
+		return ok(admin_question.render(form, user.firstName));
 		
 	}
 	
@@ -91,12 +88,12 @@ public class QuestionController extends Controller {
 		Question question = questionService.findById(id);
 		
 		if (question == null) {
-			return ok(admin_home.render(user.firstName, questionService.findAll()));
+			return ok(admin_questionlist.render(user.firstName, questionService.findAll()));
 		}
 		
 		questionService.delete(question);
 		
-		return ok(admin_home.render(user.firstName, questionService.findAll()));
+		return ok(admin_questionlist.render(user.firstName, questionService.findAll()));
 		
 	}
 	
@@ -110,9 +107,9 @@ public class QuestionController extends Controller {
 		return user;
 	}
 	
-	public static Result getChapters(String grade, String subject) {
-		JsonNode json = Json.toJson(Chapter.getByGradeAndSubject(Grade.valueOf(grade), Subject.valueOf(subject)));
-		return ok();
-	}
+//	public static Result getChapters(String grade, String subject) {
+//		// JsonNode json = Json.toJson(Chapter.getByGradeAndSubject(Grade.valueOf(grade), Subject.valueOf(subject)));
+//		return ok();
+//	}
 	
 }

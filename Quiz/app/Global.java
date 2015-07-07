@@ -12,8 +12,10 @@ import controllers.TestDataController;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import services.model.NoveltyService;
 import services.model.QuestionService;
 import services.model.UserService;
+import services.model.impl.NoveltyServiceImpl;
 import services.model.impl.QuestionServiceImpl;
 import services.model.impl.UserServiceImpl;
 
@@ -47,6 +49,7 @@ public class Global extends GlobalSettings {
 				
 				bind(UserService.class).to(UserServiceImpl.class);
 				bind(QuestionService.class).to(QuestionServiceImpl.class);
+				bind(NoveltyService.class).to(NoveltyServiceImpl.class);
 			}
 			
 		});

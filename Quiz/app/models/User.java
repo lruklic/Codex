@@ -44,5 +44,9 @@ public class User extends BaseModel {
 
 	@Enumerated(EnumType.STRING)
 	public UserType userType;
+	
+	public String getName() {
+		return firstName + " " + lastName;
+	}
 
 }

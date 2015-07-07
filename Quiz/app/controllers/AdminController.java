@@ -6,9 +6,11 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import services.model.NoveltyService;
 import services.model.QuestionService;
 import views.html.admin_question;
 import views.html.admin_home;
+import views.html.admin_questionlist;
 import forms.QuestionForm;
 
 /**
@@ -24,8 +26,11 @@ public class AdminController extends Controller {
 	@Inject
 	public static QuestionService questionService;
 	
-	public static Result adminHome() {
-		return ok(admin_home.render(session().get("firstName"), questionService.findAll()));
+	@Inject
+	public static NoveltyService noveltyService;
+	
+	public static Result adminList() {
+		return ok(admin_questionlist.render(session().get("firstName"), questionService.findAll()));
 	}
 	
 	/**
@@ -34,7 +39,11 @@ public class AdminController extends Controller {
 	 * @return rendered login.scala.html view
 	 */
 	public static Result adminQuestion() {
-		return ok(admin_question.render(Form.form(QuestionForm.class), session().get("firstName"), null));
+		return ok(admin_question.render(Form.form(QuestionForm.class), session().get("firstName")));
+	}
+	
+	public static Result adminHome() {
+		return ok(admin_home.render(session().get("firstName"), Integer.parseInt(session().get("clearance")), noveltyService.findAll())); // TODO instead of findAll 
 	}
 
 }
