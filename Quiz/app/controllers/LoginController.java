@@ -3,6 +3,7 @@ package controllers;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import models.Admin;
 import models.User;
 import models.enums.UserType;
 
@@ -71,6 +72,7 @@ public class LoginController extends Controller {
 				session("firstName", user.firstName);
 				session("type", user.userType.toString());
 				if (user.userType.equals(UserType.ADMIN)) {
+					session("clearance", String.valueOf(((Admin) user).clearanceLevel));
 					return redirect(controllers.routes.AdminController.adminHome());
 				} else {
 					// else user.render();

@@ -3,8 +3,11 @@ app.motto = Ignorance is bliss, but knowledge is power.
 
 navigation.home=Početna
 navigation.questions=Pitanja
+navigation.questions.add=Dodaj novo pitanje
+navigation.questions.list=Prikaz pitanja
 navigation.profile=Profil
 navigation.logout=Odjava
+navigation.back=Nazad
 
 login=Prijava
 login.signin=Prijavi se
@@ -19,6 +22,9 @@ login.error.password=Lozinka nije ispravna
 tooltip.question.edit=Uredi ovo pitanje
 tooltip.question.explanation=Dodaj objašnjenje odgovora za ovo pitanje
 tooltip.question.delete=Obriši ovo pitanje
+
+news=Novosti
+news.add=Dodaj novu obavijest
 
 questions=Pitanja
 question.answers=Odgovori
@@ -86,5 +92,6 @@ EXPRESSIONISM=Ekspresionizam
 SECOND_PERIOD=II. razdoblje
 SECOND_MODERN=Druga moderna
 CONTEMPORARY_LITERATURE=Suvremena književnost
+
 INTRO_TO_BIOLOGY=Uvod u biologiju
 

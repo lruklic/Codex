@@ -17,5 +17,8 @@ public class Admin extends User {
 
 	@Column(name = "questions_added")
 	public int questionsAdded;
+	
+	@Column(name = "clearanceLevel")
+	public int clearanceLevel;
 
 }

@@ -94,9 +94,12 @@ public class QuestionForm {
 		
 		Question question = QuestionFactory.createQuestion(this, admin);
 		
-		// TODO add try-catch?
-		if(id != null && !id.equals("/")) {
-			question.id = Long.parseLong(id);
+		if(id != null) {
+			try {
+				question.id = Long.parseLong(id.replaceAll("/", ""));
+			} catch (NumberFormatException ex) {
+				// id is non existant, do something?
+			}
 		}
 
 		return question;

@@ -1,4 +1,4 @@
-@(form: Form[forms.QuestionForm], adminName: String, id: Long) 
+@(form: Form[forms.QuestionForm], adminName: String) 
 
 @import views.html.adminView._;
 @import views.html.init._;
@@ -80,7 +80,7 @@
 	<div class="question container">
 		@helper.form(routes.QuestionController.submit) {
 		<fieldset>
-			<input type="hidden" name="id" value=@id />
+			<input type="hidden" name="id" value=@form("id").value/>
 			<input type="hidden" name="editChapters" value='@form("chapters").value' />
 			
 			<legend>@Messages("question.input")</legend>

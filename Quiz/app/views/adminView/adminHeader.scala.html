@@ -1,11 +1,22 @@
 @(adminName: String) 
 
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/adminHeader.js")"></script>
+
 <div class="nav">
 	<ul>
-        <li class="home"><a href="@routes.AdminController.adminHome">@Messages("navigation.home")</a></li>
-        <li class="questions"><a href="@routes.AdminController.adminQuestion">@Messages("navigation.questions")</a></li>
-        <li class="profile"><a href="#">@Messages("navigation.profile")</a></li>
-        <li class="logout"><a href="@routes.LoginController.logout">@Messages("navigation.logout")</a></li>
+		<span class="nav-home">
+			<li class="home"><a href="@routes.AdminController.adminHome">@Messages("navigation.home")</a></li>
+        	<li class="questions"><a href="#">@Messages("navigation.questions")</a></li>
+        	<li class="profile"><a href="#">@Messages("navigation.profile")</a></li>
+        	<li class="logout"><a href="@routes.LoginController.logout">@Messages("navigation.logout")</a></li>
+		</span>
+		
+		<span class="nav-questions">
+			<li class="list"><a href="@routes.AdminController.adminList">@Messages("navigation.questions.list")</a></li>
+        	<li class="add"><a href="@routes.AdminController.adminQuestion">@Messages("navigation.questions.add")</a></li>
+        	<li class="back"><a href="#">@Messages("navigation.back")</a></li>
+		</span>
+
      </ul>
 </div>
 
