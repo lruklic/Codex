@@ -129,8 +129,4 @@ public class Question extends BaseModel {
 		this.chapters = sb.toString();
 	}
 	
-	
-	
-	
-	
 }

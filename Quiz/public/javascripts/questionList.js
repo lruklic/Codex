@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	$("#question-table").tablesorter();
+
 	$(".delete-button").on("click", function(e) {
 	    var link = this;
 

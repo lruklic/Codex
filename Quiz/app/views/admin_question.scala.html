@@ -14,24 +14,24 @@
 
 @numberOfAnswers = {
 	<p class="numberOfAnswers">
-	<label>@Messages("question.multiple.number"):</label>
-	<input type="number" name="multipleNumber" id="multipleNumber" value='@form("numberOfAnswers").value' />
+		<label>@Messages("question.multiple.number"):</label>
+		<input class="multiple-number" type="number" name="multipleNumber" id="multipleNumber" value='@form("numberOfAnswers").value' />
 	</p>
 }
 
 @multipleChoiceForm = {
 	<div class="multiple_choice">
-		
-		<label>@Messages("question.correct"): </label><input type="text" name="multipleCorrect" id="correct" value='@form("multipleCorrect").value'/>
-		<div class="multiple-incorrect">
-			
-			@for(i <- 0 to 4) {
-			<p class="incorrect-@i">
-				<label class="incorrect-label">@Messages("question.incorrect"): </label>
-				<input type="text" name="incorrect[]" id="incorrect-@i" value="@form("incorrect["+i+"]").value()"/>
-			</p>
-			}
+		<div class="multiple-row">
+			<label>@Messages("question.correct"): </label><input type="text" name="multipleCorrect" id="correct" value='@form("multipleCorrect").value'/>
 		</div>
+				
+		@for(i <- 0 to 4) {
+		<div class="multiple-row incorrect-@i">
+			<label class="incorrect-label">@Messages("question.incorrect"): </label>
+			<input type="text" name="incorrect[]" id="incorrect-@i" value="@form("incorrect["+i+"]").value()"/>
+		</div>
+		}
+		
 	</div>
 }
 
@@ -145,9 +145,7 @@
 			
 			@multipleAnswerForm
 		
-			<p>
-				<button class="center loginBtn loginBtnFont" type="submit">@Messages("question.submit")</button>
-			</p>
+			<button class="submit-button" type="submit">@Messages("question.submit")</button>
 		</fieldset>
 		}
 	</div>

@@ -1,20 +1,14 @@
 package controllers;
 
-import models.Admin;
-import models.Question;
 import models.User;
 
 import com.google.inject.Inject;
 
-import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.QuestionService;
 import services.model.UserService;
-import views.html.admin_question;
-import views.html.admin_questionlist;
-import forms.QuestionForm;
 
 /**
  * Controller that handles operations over questions.
