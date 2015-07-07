@@ -38,6 +38,7 @@ public class StartController extends Controller {
 			switch(type) {
 			case "ADMIN":
 				// TODO unauthorized attempt?
+				// error with session().get("clearance")
 				return ok(admin_home.render(firstName, Integer.parseInt(session().get("clearance")), noveltyService.findAll()));	// TODO instead of findAll send news by type and priority
 			}
 		}
