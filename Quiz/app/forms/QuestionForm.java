@@ -3,6 +3,7 @@ package forms;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
 
 import factories.QuestionFactory;
 import models.Admin;
@@ -10,6 +11,7 @@ import models.Question;
 import models.enums.Grade;
 import models.enums.QuestionType;
 import models.enums.Subject;
+import models.questions.ConnectCorrectQuestion;
 import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
@@ -90,6 +92,10 @@ public class QuestionForm {
 	 */
 	public String trueFalse;
 	
+	public List<String> termColumn1;
+	
+	public List<String> termColumn2;
+	
 	public Question createQuestion(Admin admin) {
 		
 		Question question = QuestionFactory.createQuestion(this, admin);
@@ -142,8 +148,7 @@ public class QuestionForm {
 					multipleTrue.add(String.valueOf(i));
 				}
 				this.multipleTrue = multipleTrue;
-				
-				
+							
 				// TODO fill form
 				break;
 			case TRUE_FALSE:
@@ -155,6 +160,20 @@ public class QuestionForm {
 				break;
 			case INPUT_ANSWER:
 				this.inputCorrect = ((InputAnswerQuestion) question).answer;
+				break;
+			case CONNECT_CORRECT:
+				List<String> termColumn1 = new ArrayList<>();
+				List<String> termColumn2 = new ArrayList<>();
+				ConnectCorrectQuestion ccq = ((ConnectCorrectQuestion) question);
+				for (Entry<String, String> entry : ccq.answerPairs.entrySet()) {
+					if (!entry.getKey().startsWith("EMPTY_STRING")) {
+						termColumn1.add(entry.getKey());
+					}
+					termColumn2.add(entry.getValue()); 
+				}
+				
+				this.termColumn1 = termColumn1;
+				this.termColumn2 = termColumn2;
 				break;
 		}
 		

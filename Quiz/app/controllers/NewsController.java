@@ -4,11 +4,15 @@ import models.User;
 
 import com.google.inject.Inject;
 
+import forms.NoveltyForm;
+import forms.QuestionForm;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.QuestionService;
 import services.model.UserService;
+import views.html.news.news_add;
 
 /**
  * Controller that handles operations over questions.
@@ -28,7 +32,7 @@ public class NewsController extends Controller {
 	
 	public static Result add() {
 		
-		return ok();
+		return ok(news_add.render(Form.form(NoveltyForm.class), session().get("firstName")));
 		
 	}
 	

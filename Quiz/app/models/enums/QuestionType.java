@@ -23,7 +23,11 @@ public enum QuestionType {
 	/**
 	 * Player inputs answer in given textbox.
 	 */
-	INPUT_ANSWER
+	INPUT_ANSWER,
+	/**
+	 * Player connects terms from one column with term other column.
+	 */
+	CONNECT_CORRECT
 
 	
 }

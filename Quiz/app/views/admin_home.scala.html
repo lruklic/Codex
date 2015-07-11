@@ -8,7 +8,7 @@
 <head>
 @head()
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
-<script type="text/javascript" src="@routes.Assets.at("/javascripts/question-table.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/question-table.js")"></script>
 </head>
 
 <body>
@@ -16,6 +16,6 @@
 	
 	<h1 class=""> @Messages("news") </h1>
 	
-	@newslist(news, clearanceLevel)
+	@news_list(news, clearanceLevel)
 	
 </body>

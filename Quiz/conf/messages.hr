@@ -48,9 +48,10 @@ question.edit=Uredi
 admin.header.hello=Pozdrav
 
 MULTIPLE_CHOICE=Višestruki odabir - jedan točan
+MULTIPLE_ANSWER=Višestruki odabir - više točnih
 TRUE_FALSE=Točno/netočno
 INPUT_ANSWER=Unesi odgovor
-MULTIPLE_ANSWER=Višestruki odabir - više točnih
+CONNECT_CORRECT=Poveži pojmove
 
 GIMN_1ST=Prvi razred
 GIMN_2ND=Drugi razred

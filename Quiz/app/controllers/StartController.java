@@ -7,7 +7,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.NoveltyService;
 import services.model.QuestionService;
-import views.html.admin_home;
 
 /**
  * Controller that is called when user attempts to access /, top application domain (i.e. localhost:9000/).
@@ -30,7 +29,6 @@ public class StartController extends Controller {
 	public static Result redirect() {
 		
 		String type = session("type");
-		String firstName = session("firstName");
 		
 		if(type == null) {
 			return redirect(controllers.routes.LoginController.login());
@@ -39,7 +37,8 @@ public class StartController extends Controller {
 			case "ADMIN":
 				// TODO unauthorized attempt?
 				// error with session().get("clearance")
-				return ok(admin_home.render(firstName, Integer.parseInt(session().get("clearance")), noveltyService.findAll()));	// TODO instead of findAll send news by type and priority
+				return redirect(routes.AdminController.adminHome());
+				//return ok(admin_home.render(firstName, Integer.parseInt(session().get("clearance")), noveltyService.findAll()));	// TODO instead of findAll send news by type and priority
 			}
 		}
 		

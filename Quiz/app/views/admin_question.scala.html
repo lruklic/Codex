@@ -8,7 +8,7 @@
 <head>
 @head()
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
-<script type="text/javascript" src="@routes.Assets.at("/javascripts/admin.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/questionInput.js")"></script>
 
 </head>
 
@@ -65,6 +65,22 @@
 			<tr class="multiple-@i">
 				<td><input type="text" name="multiple[]" id="multiple-@i" value="@form("multiple["+i+"]").value()"/></td>
 				<td><input type="checkbox" name="multipleTrue[]" id="multipleTrue-@i" value=@i @if(form("multipleTrue["+i+"]").value() != "") {checked}/></td>
+			</tr>
+			} 
+		</table>
+	</div>
+}
+
+@connectCorrect = {
+	<div class="connect_correct">
+	
+		<table>
+			<th> @Messages("question.1") </th>
+			<th> @Messages("question.2") </th>
+			@for(i <- 0 to 5) {
+			<tr class="connect-@i">
+				<td><input type="text" name="termColumn1[]" id="multiple-@i" value="@form("termColumn1["+i+"]").value()"/></td>
+				<td><input type="text" name="termColumn2[]" id="multipleTrue-@i" value="@form("termColumn2["+i+"]").value()"/></td>
 			</tr>
 			} 
 		</table>
@@ -144,6 +160,8 @@
 			@inputAnswerForm
 			
 			@multipleAnswerForm
+			
+			@connectCorrect
 		
 			<button class="submit-button" type="submit">@Messages("question.submit")</button>
 		</fieldset>
