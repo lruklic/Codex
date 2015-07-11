@@ -2,8 +2,8 @@ package models.enums;
 
 public enum NewsPriority {
 
-	NORMAL,
+	NORMAL_PRIORITY,
 	
-	HIGH
+	HIGH_PRIORITY
 	
 }

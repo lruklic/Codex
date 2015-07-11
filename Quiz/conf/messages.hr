@@ -24,7 +24,12 @@ tooltip.question.explanation=Dodaj objašnjenje odgovora za ovo pitanje
 tooltip.question.delete=Obriši ovo pitanje
 
 news=Novosti
+news.input=Unos novosti
 news.add=Dodaj novu obavijest
+news.title=Naslov
+news.text=Obavijest
+news.type=Vrsta
+news.priority=Prioritet
 
 questions=Pitanja
 question.answers=Odgovori
@@ -44,8 +49,16 @@ question.multiple.number=Broj mogućih odgovora
 question.submit=Pošalji
 question.submitter=Pošiljatelj
 question.edit=Uredi
+question.terms=Pojmovi
 
 admin.header.hello=Pozdrav
+
+FOR_USERS=Za korisnike
+FOR_ADMINS=Za administratore
+FOR_EVERYONE=Za sve
+
+NORMAL_PRIORITY=Normalan prioritet
+HIGH_PRIORITY=Visoki prioritet
 
 MULTIPLE_CHOICE=Višestruki odabir - jedan točan
 MULTIPLE_ANSWER=Višestruki odabir - više točnih

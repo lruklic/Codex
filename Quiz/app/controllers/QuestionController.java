@@ -43,7 +43,7 @@ public class QuestionController extends Controller {
 		User user = getCurrentUser();
 		
 		if(questionForm.hasErrors()) {
-			return ok(admin_question.render(questionForm, user.firstName));
+			return badRequest(admin_question.render(questionForm, user.firstName));
 		}
 		
 		Question question = null;
@@ -51,13 +51,12 @@ public class QuestionController extends Controller {
 			 question = questionForm.get().createQuestion((Admin) user);	// if there are any errors, .get() will throw IllegalStateException: no value
 			 question.lastEdited = System.currentTimeMillis();
 		}
-		if (question.id != null) {
-			questionService.delete(questionService.findById(question.id));
-		}
+//		if (question.id != null) {
+//			questionService.delete(questionService.findById(question.id));		// is this necessary?
+//		}
 		questionService.save(question);
 
 		return redirect(routes.AdminController.adminList());
-		// return ok(admin_questionlist.render(user.firstName, questionService.findAll())); 
 	}
 
 	

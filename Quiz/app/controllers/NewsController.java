@@ -1,17 +1,21 @@
 package controllers;
 
+import models.Admin;
+import models.Novelty;
 import models.User;
 
 import com.google.inject.Inject;
 
+import factories.NewsFactory;
 import forms.NoveltyForm;
-import forms.QuestionForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import services.model.NoveltyService;
 import services.model.QuestionService;
 import services.model.UserService;
+import views.html.admin_home;
 import views.html.news.news_add;
 
 /**
@@ -30,6 +34,9 @@ public class NewsController extends Controller {
 	@Inject
 	public static QuestionService questionService;
 	
+	@Inject
+	public static NoveltyService noveltyService;
+	
 	public static Result add() {
 		
 		return ok(news_add.render(Form.form(NoveltyForm.class), session().get("firstName")));
@@ -37,8 +44,21 @@ public class NewsController extends Controller {
 	}
 	
 	public static Result submit() {
-
-		return ok(); 
+		Form<NoveltyForm> boundForm = Form.form(NoveltyForm.class).bindFromRequest();
+		
+		if (boundForm.hasErrors()) {
+			// flash errors
+			return badRequest(news_add.render(boundForm, session().get("firstName")));
+		}
+		
+		NoveltyForm noveltyForm = boundForm.get();
+		
+		Novelty novelty = NewsFactory.createNews(noveltyForm, (Admin) getCurrentUser());		
+		// extract user fetch to new static class and use it in every current user fetch occasion?
+		
+		noveltyService.save(novelty);
+		
+		return redirect(routes.AdminController.adminHome()); 
 	}
 	
 	public static Result delete(Long id) {
