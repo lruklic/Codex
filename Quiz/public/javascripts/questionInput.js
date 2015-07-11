@@ -4,10 +4,6 @@ function initAdmin() {
 	var editId = $('[name=id]').val();
 	var editChapters = $('[name=editChapters]').val();
 	
-	// Default question type is multiple choice
-	$(".true_false").hide();
-	$(".input_answer").hide();
-	
 	// Default number of answers is set to 3
 	for (var int = 2; int < 5; int++) {
     	$('.incorrect-'+int).hide();
@@ -39,17 +35,21 @@ function initAdmin() {
 		isEdit = true;
 	}
 	
+	chapterChange();
+	
+	// Set chapters based on current grade and subject
 	for (int = 0; int < numberOfChapters; int++) {
 		var chapter = $("#check-"+int).val();
 		var chapterValues = chapter.split('-');
 		var currentChapters = editChapters.replace(/\[|\]| /g, "").split(',');
 		
-		if (chapterValues[0] !== "GIMN_1ST" || chapterValues[1] !== $("#subject").val()) {
+		if (chapterValues[0] !== $("#grade").val() || chapterValues[1] !== $("#subject").val()) {	// why gimn_1st
 			$("#check-"+int).hide();
 		} else {
 			$("#check-"+int).show();
 		}
 		
+		// If question is open for editing, set selected chapters
 		if (isEdit) {
 			
 			for (var j = 0; j < currentChapters.length; j++) {
@@ -57,7 +57,7 @@ function initAdmin() {
 					$("#check-"+int).prop('selected', true);
 				}
 			}	
-		}
+		} 
 	}
 }
 
@@ -69,6 +69,7 @@ function setQuestionType() {
 	$(".multiple_answer").hide();
 	$(".true_false").hide();
 	$(".input_answer").hide();
+	$(".connect_correct").hide();
 
 	if (qType === "multiple_choice" || qType === "multiple_answer") {
 		$(".numberOfAnswers").show();
@@ -145,6 +146,21 @@ function questionNumberChange() {
 	}
 }
 
+function chapterChange() {
+	var currentGrade = $("#grade").val();
+	var currentSubject = $("#subject").val();
+	var numberOfChapters = $("#chapter > option").length;
+	for (int = 0; int < numberOfChapters; int++) {
+		var chapter = $("#check-"+int).val();
+		var chapterValues = chapter.split('-');
+		if (currentGrade !== chapterValues[0] || currentSubject !== chapterValues[1]) {
+			$("#check-"+int).hide();
+		} else {
+			$("#check-"+int).show();
+		}
+	}
+}
+
 $(document).ready(function(){
 	
 	initAdmin();
@@ -154,18 +170,7 @@ $(document).ready(function(){
     });
     
     $(".chapter-trigger").change(function(){
-    	var currentGrade = $("#grade").val();
-    	var currentSubject = $("#subject").val();
-    	var numberOfChapters = $("#chapter > option").length;
-    	for (int = 0; int < numberOfChapters; int++) {
-			var chapter = $("#check-"+int).val();
-			var chapterValues = chapter.split('-');
-			if (currentGrade !== chapterValues[0] || currentSubject !== chapterValues[1]) {
-				$("#check-"+int).hide();
-			} else {
-				$("#check-"+int).show();
-			}
-		}
+    	chapterChange();
     });
     
 //    $("#chapter").change(function(){

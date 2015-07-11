@@ -42,8 +42,19 @@ public class AdminController extends Controller {
 		return ok(admin_question.render(Form.form(QuestionForm.class), session().get("firstName")));
 	}
 	
+	/**
+	 * Login method that renders html for admin home page. Mapped under GET in <i>routes</i>
+	 * @return rendered admin_home.scala.html view
+	 */
 	public static Result adminHome() {
-		return ok(admin_home.render(session().get("firstName"), Integer.parseInt(session().get("clearance")), noveltyService.findAll())); // TODO instead of findAll 
+		String clearanceString = session().get("clearance");
+		Integer clearance = 0;
+		try {
+			clearance = Integer.parseInt(clearanceString);
+		} catch (NumberFormatException ex) {
+			// no session clearance
+		}
+		return ok(admin_home.render(session().get("firstName"), clearance, noveltyService.findAll())); // TODO instead of findAll 
 	}
 
 }

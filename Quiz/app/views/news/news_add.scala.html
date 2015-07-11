@@ -1,7 +1,8 @@
-@(adminName: String)
+@(noveltyForm: Form[forms.NoveltyForm], adminName: String)
 
 @import views.html.init._;
 @import views.html.adminView._;
+@import views.html.news._;
 
 <html>
 <head>
@@ -14,7 +15,12 @@
 	<header> @adminHeader(adminName) </header>
 
 	<content>
-	
+		@helper.form(routes.NewsController.submit) {
+		<fieldset>
+			<input name="noveltyTitle" type="text" value='@form("noveltyTitle").value' />
+			<textarea name="noveltyText" rows="4" cols="50"/>@form("noveltyText").value</textarea>
+		</fieldset>
+		}
 	</content>
 </body>
 

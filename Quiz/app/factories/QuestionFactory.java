@@ -1,12 +1,15 @@
 package factories;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import enums.AnswerType;
 import forms.QuestionForm;
 import models.Admin;
 import models.Question;
+import models.questions.ConnectCorrectQuestion;
 import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
@@ -53,9 +56,33 @@ public class QuestionFactory {
 			case INPUT_ANSWER:
 				return new InputAnswerQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
 						form.difficulty, currentAdmin, form.inputCorrect);
+			case CONNECT_CORRECT:
+				// prevent creating questions with unpaired left or more left than right
+				Map<String, String> answerPairs = createAnswerPairs(form.termColumn1, form.termColumn2);
+				return new ConnectCorrectQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
+						form.difficulty, currentAdmin, answerPairs);
 		}
 		
 		return null;
+	}
+	
+	private static Map<String, String> createAnswerPairs(List<String> termColumn1, List<String> termColumn2) {
+		Map<String, String> answerPairs = new LinkedHashMap<String, String>();
+		
+		for (int i = 0; i < termColumn2.size(); i++) {
+			String term1 = termColumn1.get(i);
+			String term2 = termColumn2.get(i);
+			
+			if (term2.length() > 0) {
+				if (term1.length() > 0) {
+					answerPairs.put(term1, term2);
+				} else {
+					answerPairs.put("EMPTY_STRING"+i, term2);	// what if someone enters empty string as an answer?
+				}
+			}
+		}
+		
+		return answerPairs;
 	}
 	
 	/**

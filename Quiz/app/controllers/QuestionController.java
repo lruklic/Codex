@@ -56,7 +56,8 @@ public class QuestionController extends Controller {
 		}
 		questionService.save(question);
 
-		return ok(admin_questionlist.render(user.firstName, questionService.findAll())); 
+		return redirect(routes.AdminController.adminList());
+		// return ok(admin_questionlist.render(user.firstName, questionService.findAll())); 
 	}
 
 	
