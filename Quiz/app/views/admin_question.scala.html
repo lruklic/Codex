@@ -75,8 +75,8 @@
 	<div class="connect_correct">
 	
 		<table>
-			<th> @Messages("question.1") </th>
-			<th> @Messages("question.2") </th>
+			<th> @Messages("question.terms") </th>
+			<th> @Messages("question.answers") </th>
 			@for(i <- 0 to 5) {
 			<tr class="connect-@i">
 				<td><input type="text" name="termColumn1[]" id="multiple-@i" value="@form("termColumn1["+i+"]").value()"/></td>

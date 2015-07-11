@@ -12,6 +12,7 @@
 	border-style: groove;
 	border-color: #444;
 	background-color: #fff;
+	margin-top: 15px;
 	
 }
 
@@ -46,4 +47,17 @@
 	position: absolute;
 	right: 0px;
 	padding-top: 30px;
+}
+
+.news ul {
+	margin: 0;
+	padding: 0;
+}
+
+.news li {
+	display: inline-block;
+}
+
+.news .newsPriority {
+	padding-left: 20px;
 }

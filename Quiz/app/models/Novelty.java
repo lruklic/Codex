@@ -46,5 +46,21 @@ public class Novelty extends BaseModel {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
 		return Instant.ofEpochSecond(created).atZone(ZoneId.of("GMT+2")).format(formatter);
 	}
+
+	public Novelty() {
+		
+	}
+	
+	public Novelty(String noveltyTitle, String noveltyText, NewsType newsType, NewsPriority newsPriority, Admin admin) {
+		super();
+		this.noveltyTitle = noveltyTitle;
+		this.noveltyText = noveltyText;
+		this.created = System.currentTimeMillis() / 1000;
+		this.newsType = newsType;
+		this.newsPriority = newsPriority;
+		this.admin = admin;
+	}
+	
+	
 	
 }

@@ -107,7 +107,7 @@ public class TestDataController extends Controller {
 		novelty.noveltyText = "Prva verzija Codexa je <b><i>ONLINE</b></i>. Zasad je omogućeno dodavanje, pregled, "
 				+ "uređivanje i brisanje pitanja. Implementirane su četiri različite vrste pitanja. <br><br> Slobodno "
 				+ "isprobavajte i svakako prijavite bugove ako na njih naiđete.";
-		novelty.newsPriority = NewsPriority.HIGH;
+		novelty.newsPriority = NewsPriority.HIGH_PRIORITY;
 		novelty.newsType = NewsType.FOR_EVERYONE;
 		novelty.admin = (Admin) userService.findByUsernameOrEmail("lruklic");
 		

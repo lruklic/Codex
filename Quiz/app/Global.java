@@ -1,11 +1,10 @@
-import akka.actor.ActorSystem.Settings;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import controllers.AdminController;
 import controllers.LoginController;
+import controllers.NewsController;
 import controllers.QuestionController;
 import controllers.StartController;
 import controllers.TestDataController;
@@ -46,6 +45,7 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(QuestionController.class);
 				requestStaticInjection(StartController.class);
 				requestStaticInjection(AdminController.class);
+				requestStaticInjection(NewsController.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
 				bind(QuestionService.class).to(QuestionServiceImpl.class);
