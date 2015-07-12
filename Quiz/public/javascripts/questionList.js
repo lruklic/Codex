@@ -2,6 +2,10 @@ $(document).ready(function(){
 	
 	$("#question-table").tablesorter();
 
+	$("#filter").on('change keyup paste mouseup', function() {
+		tableFilter();
+	});
+	
 	$(".delete-button").on("click", function(e) {
 	    var link = this;
 
@@ -28,3 +32,36 @@ $(document).ready(function(){
 	});
 	
 });
+
+function tableFilter() {
+	var rows = $('#question-table > tbody > tr');
+	
+	var filterInput = $("#filter").val();
+	
+	var filterType = getTableCellClass($("#filterType").val());
+	
+	$.each(rows, function(index, row) {
+		$this = $(this);
+		var value = $this.find(filterType).html();
+		
+		// add ignore case or not ignore; add trim 
+		if (value.toLowerCase().indexOf(filterInput.toLowerCase()) >= 0) {
+			$this.show();
+		} else {
+			$this.hide();
+		}
+		
+	});
+	
+}
+
+function getTableCellClass(filterType) {
+	switch(filterType) {
+		case "TEXT_FILTER":
+			return ".table-questionText";
+		case "SUBJECT_FILTER":
+			return ".table-subject";
+		default:
+			return ".table-questionText";
+	}
+}

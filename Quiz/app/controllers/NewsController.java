@@ -15,7 +15,6 @@ import play.mvc.Result;
 import services.model.NoveltyService;
 import services.model.QuestionService;
 import services.model.UserService;
-import views.html.admin_home;
 import views.html.news.news_add;
 
 /**
@@ -39,7 +38,7 @@ public class NewsController extends Controller {
 	
 	public static Result add() {
 		
-		return ok(news_add.render(Form.form(NoveltyForm.class), session().get("firstName")));
+		return ok(news_add.render(Form.form(NoveltyForm.class)));
 		
 	}
 	
@@ -48,7 +47,7 @@ public class NewsController extends Controller {
 		
 		if (boundForm.hasErrors()) {
 			// flash errors
-			return badRequest(news_add.render(boundForm, session().get("firstName")));
+			return badRequest(news_add.render(boundForm));
 		}
 		
 		NoveltyForm noveltyForm = boundForm.get();

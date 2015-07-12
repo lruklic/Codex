@@ -1,19 +1,36 @@
-@(adminName: String, questions: List[models.Question]) 
+@(questions: List[models.Question]) 
 
 @import views.html.adminView._;
 @import views.html.init._;
+@import _root_.enums._;
 
 <html>
 <head>
 @head()
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/questionList.js")"></script>
+
 </head>
 
+@filter = {	
+	@Messages("question.filter.type"):
+	<select id="filterType">
+	@for(filterType <- FilterType.values()){
+		<option value="@filterType">@Messages(filterType.toString())</option>
+	}
+	</select> 
+	@Messages("question.filter"):
+	<input id="filter" type="text" maxlength="30"/>
+
+}
+
 <body>
-	<header> @adminHeader(adminName) </header>
+	<header> @adminHeader() </header>
 	<div class="questionlist-panel">
 		<h2>@Messages("questions")</h2>
+		<p>
+			@filter
+		</p>
 		<table id="question-table">
 			<thead>
 				<tr>

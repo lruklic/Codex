@@ -1,4 +1,4 @@
-@(adminName: String, clearanceLevel: Integer, news: List[models.Novelty]) 
+@(clearanceLevel: Integer, news: List[models.Novelty]) 
 
 @import views.html.adminView._;
 @import views.html.init._;
@@ -12,9 +12,9 @@
 </head>
 
 <body>
-	<header> @adminHeader(adminName) </header>
+	<header> @adminHeader() </header>
 	
-	<h1 class=""> @Messages("news") </h1>
+	<h1> @Messages("news") </h1>
 	
 	@news_list(news, clearanceLevel)
 	

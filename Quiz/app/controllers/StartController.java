@@ -38,7 +38,7 @@ public class StartController extends Controller {
 				// TODO unauthorized attempt?
 				// error with session().get("clearance")
 				return redirect(routes.AdminController.adminHome());
-				//return ok(admin_home.render(firstName, Integer.parseInt(session().get("clearance")), noveltyService.findAll()));	// TODO instead of findAll send news by type and priority
+				// TODO instead of findAll send news by type and priority
 			}
 		}
 		

@@ -1,4 +1,4 @@
-@(form: Form[forms.NoveltyForm], adminName: String)
+@(form: Form[forms.NoveltyForm])
 
 @import views.html.init._;
 @import views.html.adminView._;
@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<header> @adminHeader(adminName) </header>
+	<header> @adminHeader() </header>
 
 	<content>
 	<div class="news">
