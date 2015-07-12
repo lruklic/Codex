@@ -50,6 +50,8 @@ question.submit=Pošalji
 question.submitter=Pošiljatelj
 question.edit=Uredi
 question.terms=Pojmovi
+question.filter=Filter
+question.filter.type=Filtriraj po
 
 admin.header.hello=Pozdrav
 
@@ -59,6 +61,13 @@ FOR_EVERYONE=Za sve
 
 NORMAL_PRIORITY=Normalan prioritet
 HIGH_PRIORITY=Visoki prioritet
+
+TEXT_FILTER=tekstu
+TYPE_FILTER=vrsti
+SUBJECT_FILTER=predmetu
+CHAPTER_FILTER=poglavlju
+DIFFICULTY_FILTER=težini
+SUBMITTER_FILTER=pošiljatelju
 
 MULTIPLE_CHOICE=Višestruki odabir - jedan točan
 MULTIPLE_ANSWER=Višestruki odabir - više točnih

@@ -30,7 +30,7 @@ public class AdminController extends Controller {
 	public static NoveltyService noveltyService;
 	
 	public static Result adminList() {
-		return ok(admin_questionlist.render(session().get("firstName"), questionService.findAll()));
+		return ok(admin_questionlist.render(questionService.findAll()));
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class AdminController extends Controller {
 	 * @return rendered login.scala.html view
 	 */
 	public static Result adminQuestion() {
-		return ok(admin_question.render(Form.form(QuestionForm.class), session().get("firstName")));
+		return ok(admin_question.render(Form.form(QuestionForm.class)));
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class AdminController extends Controller {
 		} catch (NumberFormatException ex) {
 			// no session clearance
 		}
-		return ok(admin_home.render(session().get("firstName"), clearance, noveltyService.findAll())); // TODO instead of findAll 
+		return ok(admin_home.render(clearance, noveltyService.findAll())); // TODO instead of findAll 
 	}
 
 }

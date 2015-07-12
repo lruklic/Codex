@@ -1,4 +1,4 @@
-@(form: Form[forms.QuestionForm], adminName: String) 
+@(form: Form[forms.QuestionForm]) 
 
 @import views.html.adminView._;
 @import views.html.init._;
@@ -90,7 +90,7 @@
 
 
 <body>
-	<header> @adminHeader(adminName) </header>
+	<header> @adminHeader() </header>
 
 	<content>
 	<div class="question container">

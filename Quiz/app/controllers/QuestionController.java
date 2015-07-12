@@ -43,7 +43,7 @@ public class QuestionController extends Controller {
 		User user = getCurrentUser();
 		
 		if(questionForm.hasErrors()) {
-			return badRequest(admin_question.render(questionForm, user.firstName));
+			return badRequest(admin_question.render(questionForm));
 		}
 		
 		Question question = null;
@@ -75,7 +75,7 @@ public class QuestionController extends Controller {
 		
 		Form<QuestionForm> form = Form.form(QuestionForm.class).fill(qf);
 		
-		return ok(admin_question.render(form, user.firstName));
+		return ok(admin_question.render(form));
 		
 	}
 	
@@ -88,12 +88,12 @@ public class QuestionController extends Controller {
 		Question question = questionService.findById(id);
 		
 		if (question == null) {
-			return ok(admin_questionlist.render(user.firstName, questionService.findAll()));
+			return ok(admin_questionlist.render(questionService.findAll()));
 		}
 		
 		questionService.delete(question);
 		
-		return ok(admin_questionlist.render(user.firstName, questionService.findAll()));
+		return ok(admin_questionlist.render(questionService.findAll()));
 		
 	}
 	

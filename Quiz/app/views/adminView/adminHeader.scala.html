@@ -1,5 +1,3 @@
-@(adminName: String) 
-
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/adminHeader.js")"></script>
 
 <div class="nav">
@@ -20,7 +18,7 @@
      </ul>
 </div>
 
-<label class="hello">@Messages("admin.header.hello"), <label class="hello-name">@adminName</label> </label>
+<label class="hello">@Messages("admin.header.hello"), <label class="hello-name">@session.get("firstName")</label> </label>
 
 
 
