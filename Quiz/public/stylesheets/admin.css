@@ -12,6 +12,11 @@ h1 {
     font-style: italic;
 }
 
+.questionslist-title {
+	color: #fff;
+    font-style: italic;
+}
+
 .logo {
 	position: absolute;
 	top: 10px;
@@ -105,7 +110,17 @@ table, th, td {
 	width: 150px;
 }
 
-.table-icon {
+.export-panel {
+	padding-left: 20px;
+}
+
+.export-questions {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.export {
+	padding-left: 10px;
 }
 
 /* Questions input css tags */

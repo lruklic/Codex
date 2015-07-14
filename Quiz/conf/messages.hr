@@ -22,6 +22,9 @@ login.error.password=Lozinka nije ispravna
 tooltip.question.edit=Uredi ovo pitanje
 tooltip.question.explanation=Dodaj objašnjenje odgovora za ovo pitanje
 tooltip.question.delete=Obriši ovo pitanje
+tooltip.question.export.detailed=Izvezi pitanja na vlastito računalo u željenom formatu
+tooltip.export.csv.detailed=Izvezi pitanja u .csv formatu. \nOvo je idealan oblik za ponovno spremanje u bazu podataka.
+tooltip.export.xls.detailed=Izvezi pitanja u .xls formatu. \nNakon izvoza, xls datoteka s pitanjima se može otvoriti MS Excel programom.
 
 news=Novosti
 news.input=Unos novosti
@@ -52,6 +55,12 @@ question.edit=Uredi
 question.terms=Pojmovi
 question.filter=Filter
 question.filter.type=Filtriraj po
+question.export=Izvezi pitanja
+
+export.csv=kao CSV
+export.xls=kao XLS
+export.pdf=kao PDF
+
 
 admin.header.hello=Pozdrav
 

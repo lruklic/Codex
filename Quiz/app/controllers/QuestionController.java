@@ -1,11 +1,31 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import models.Admin;
 import models.Question;
 import models.User;
 
 import com.google.inject.Inject;
 
+import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -14,6 +34,7 @@ import services.model.QuestionService;
 import services.model.UserService;
 import views.html.admin_question;
 import views.html.admin_questionlist;
+import enums.ExportType;
 import forms.QuestionForm;
 
 /**
@@ -97,7 +118,62 @@ public class QuestionController extends Controller {
 		
 	}
 	
-	/**
+	public static Result export(String exportType) throws IOException {
+		
+//		PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
+//		writer.println("The first line");
+//		writer.println("The second line");
+//		writer.close();
+//		
+		String str = "The second line";
+//		
+		byte dataToWrite[] = str.getBytes();
+//		FileOutputStream out = new FileOutputStream("the-file-name");
+//		out.write(dataToWrite);
+//		out.close();
+		
+		InputStream is = null;
+
+		List<Question> list = questionService.findAll();
+		
+		StringBuilder sb = new StringBuilder();
+		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator("\n");
+		CSVPrinter printer = new CSVPrinter(sb, csvFileFormat);
+		
+		for (Question q : list) {
+			List<String> question = new ArrayList<String>();
+			question.add(String.valueOf(q.id));
+			question.add(q.questionText);
+			question.add(q.questionType.toString());
+			question.add(q.grade.toString());
+			question.add(q.subject.toString());
+			question.add(q.chapters);
+			question.add(q.subjectContent);
+			question.add(q.admin.username);
+			printer.printRecord(question);
+		}
+	
+		byte[] arr = sb.toString().getBytes();
+
+		printer.close();
+		
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFSheet sheet = wb.createSheet("Sample shit");
+		Row row = sheet.createRow(0);
+		//Create a new cell in current row
+		Cell cell = row.createCell(0);
+		//Set value to new value
+		cell.setCellValue("Blahblah");
+		
+		arr = wb.getBytes();
+		
+		response().setContentType("application/x-download");
+		response().setHeader("Content-disposition", "attachment; filename=test.xls");
+		return ok(arr);
+				
+	}
+	
+	/** 
 	 * Method that gets current user for session.
 	 * @return current user
 	 */

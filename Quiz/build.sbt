@@ -15,6 +15,12 @@ libraryDependencies ++= Seq(
 	"mysql" % "mysql-connector-java" % "5.1.18"
 )
 
+// csv writer
+libraryDependencies ++= Seq(
+	"org.apache.commons" % "commons-csv" % "1.1",
+	"org.apache.poi" % "poi" % "3.12"
+)
+
 // Hibernate
 libraryDependencies ++= Seq(
 	javaJpa,

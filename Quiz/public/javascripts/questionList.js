@@ -1,11 +1,21 @@
 $(document).ready(function(){
 	
+	// Hide detailed export buttons
+	$(".export").hide();
+	
+	// Predefined method for table sorting
 	$("#question-table").tablesorter();
 
+	// Method call for filtering table content
 	$("#filter").on('change keyup paste mouseup', function() {
 		tableFilter();
 	});
 	
+	$(".export-questions").on("click", function() {
+		$(".export").toggle();
+	});
+	
+	// Starts dialog button on delete
 	$(".delete-button").on("click", function(e) {
 	    var link = this;
 
@@ -33,6 +43,9 @@ $(document).ready(function(){
 	
 });
 
+
+
+// Method that filters question table based on filter input and filter type
 function tableFilter() {
 	var rows = $('#question-table > tbody > tr');
 	
@@ -59,8 +72,16 @@ function getTableCellClass(filterType) {
 	switch(filterType) {
 		case "TEXT_FILTER":
 			return ".table-questionText";
+		case "TYPE_FILTER":
+			return ".table-questionType";
 		case "SUBJECT_FILTER":
 			return ".table-subject";
+		case "CHAPTER_FILTER":
+			return ".table-chapters";
+		case "DIFFICULTY_FILTER":
+			return ".table-difficulty";
+		case "SUBMITTER_FILTER":
+			return ".table-submitter";
 		default:
 			return ".table-questionText";
 	}
