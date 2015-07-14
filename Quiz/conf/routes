@@ -15,6 +15,7 @@ GET		/logout						controllers.LoginController.logout()
 POST	/question								controllers.QuestionController.submit()
 GET		/question/edit/:id						controllers.QuestionController.edit(id: Long)
 GET		/question/delete/:id					controllers.QuestionController.delete(id: Long)
+GET		/question/export/:exportType			controllers.QuestionController.export(exportType: String)
 
 # Test data fill
 GET		/data						controllers.TestDataController.fill()

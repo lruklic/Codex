@@ -24,12 +24,23 @@
 
 }
 
+@export = {
+	<span class="export-panel">
+		<span class="tooltip export-questions" title="@Messages("tooltip.question.export.detailed")">@Messages("question.export"):</span>
+		<a class="tooltip export export-csv" href="@routes.QuestionController.export("csv")" title="@Messages("tooltip.export.csv.detailed")">@Messages("export.csv")</a>
+		<a class="tooltip export export-xls" href="@routes.QuestionController.export("xls")" title="@Messages("tooltip.export.xls.detailed")">@Messages("export.xls")</a>
+		<a class="export export-pdf" href="@routes.QuestionController.export("pdf")">@Messages("export.pdf")</a>
+	</span>
+
+}
+
 <body>
 	<header> @adminHeader() </header>
 	<div class="questionlist-panel">
-		<h2>@Messages("questions")</h2>
+		<h2 class="questionslist-title">@Messages("questions")</h2>
 		<p>
 			@filter
+			@export
 		</p>
 		<table id="question-table">
 			<thead>
@@ -52,9 +63,9 @@
 					<td class="table-chapters">@if(q.chapters != null && q.chapters.contains(";")) { @Messages("question.chapter.multiple") } else { @Messages(q.chapters) }</td>
 					<td class="table-difficulty">@q.difficulty</td>
 					<td class="table-submitter">@q.admin.username</td>
-					<td><a class="table-icon" href="@routes.QuestionController.edit(q.id)"><img title="@Messages("tooltip.question.edit")" src="@routes.Assets.at("images/edit-icon.png")"/></a></td>
-					<td><a href="#"><img title="@Messages("tooltip.question.explanation")" src="@routes.Assets.at("images/explanation-icon.png")"/></a></td>
-					<td><a class="delete-button" href="@routes.QuestionController.delete(q.id)"><img title="@Messages("tooltip.question.delete")" src="@routes.Assets.at("images/delete-icon.png")"/></a></td>
+					<td><a class="tooltip table-icon" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")"><img src="@routes.Assets.at("images/edit-icon.png")"/></a></td>
+					<td><a class="tooltip" href="#" title="@Messages("tooltip.question.explanation")"><img src="@routes.Assets.at("images/explanation-icon.png")"/></a></td>
+					<td><a class="tooltip delete-button" href="@routes.QuestionController.delete(q.id)" title="@Messages("tooltip.question.delete")"><img src="@routes.Assets.at("images/delete-icon.png")"/></a></td>
 				</tr>
 				}
 			</tbody>
