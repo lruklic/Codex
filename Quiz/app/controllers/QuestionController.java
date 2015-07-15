@@ -35,6 +35,7 @@ import services.model.UserService;
 import views.html.admin_question;
 import views.html.admin_questionlist;
 import enums.ExportType;
+import factories.export.ExportFactory;
 import forms.QuestionForm;
 
 /**
@@ -52,6 +53,8 @@ public class QuestionController extends Controller {
 	
 	@Inject
 	public static QuestionService questionService;
+	
+	private static ExportFactory exportFactory = new ExportFactory();
 	
 	/**
 	 * Mapped to POST method under adminQuestion
@@ -120,43 +123,35 @@ public class QuestionController extends Controller {
 	
 	public static Result export(String exportType) throws IOException {
 		
+		byte[] output = null;
+		
 //		PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
 //		writer.println("The first line");
 //		writer.println("The second line");
 //		writer.close();
 //		
-		String str = "The second line";
-//		
-		byte dataToWrite[] = str.getBytes();
-//		FileOutputStream out = new FileOutputStream("the-file-name");
-//		out.write(dataToWrite);
-//		out.close();
+		List<Question> questionList = questionService.findQuestionsByAdmin(getCurrentUser().username);
 		
-		InputStream is = null;
-
-		List<Question> list = questionService.findAll();
+		// return error if user has no questions
 		
-		StringBuilder sb = new StringBuilder();
-		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator("\n");
-		CSVPrinter printer = new CSVPrinter(sb, csvFileFormat);
-		
-		for (Question q : list) {
-			List<String> question = new ArrayList<String>();
-			question.add(String.valueOf(q.id));
-			question.add(q.questionText);
-			question.add(q.questionType.toString());
-			question.add(q.grade.toString());
-			question.add(q.subject.toString());
-			question.add(q.chapters);
-			question.add(q.subjectContent);
-			question.add(q.admin.username);
-			printer.printRecord(question);
+		if (exportType.equals("csv")) {
+			output = exportFactory.exportAsCSV(questionList);
+		} else if (exportType.equals("xls")) {
+			output = exportFactory.exportAsXLS(questionList);
+		} else {
+			return TODO;
 		}
-	
-		byte[] arr = sb.toString().getBytes();
-
-		printer.close();
 		
+//		String str = "The second line";
+////		
+//		byte dataToWrite[] = str.getBytes();
+////		FileOutputStream out = new FileOutputStream("the-file-name");
+////		out.write(dataToWrite);
+////		out.close();
+//		
+//		InputStream is = null;
+//		byte[] arr = null;
+//		
 		HSSFWorkbook wb = new HSSFWorkbook();
 		HSSFSheet sheet = wb.createSheet("Sample shit");
 		Row row = sheet.createRow(0);
@@ -164,12 +159,12 @@ public class QuestionController extends Controller {
 		Cell cell = row.createCell(0);
 		//Set value to new value
 		cell.setCellValue("Blahblah");
-		
-		arr = wb.getBytes();
+//		
+//		arr = wb.getBytes();
 		
 		response().setContentType("application/x-download");
-		response().setHeader("Content-disposition", "attachment; filename=test.xls");
-		return ok(arr);
+		response().setHeader("Content-disposition", "attachment; filename=questionList."+exportType);
+		return ok(output);
 				
 	}
 	
