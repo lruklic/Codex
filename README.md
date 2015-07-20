@@ -1,6 +1,4 @@
-#########
-# Codex # 
-#########
+# Codex 
 
 Eclipse setup
 
