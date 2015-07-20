@@ -1,5 +1,8 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
+
 import com.google.inject.Inject;
 
 import play.data.Form;
@@ -46,6 +49,7 @@ public class AdminController extends Controller {
 	 * Login method that renders html for admin home page. Mapped under GET in <i>routes</i>
 	 * @return rendered admin_home.scala.html view
 	 */
+	@Restrict(@Group("ADMIN"))
 	public static Result adminHome() {
 		String clearanceString = session().get("clearance");
 		Integer clearance = 0;

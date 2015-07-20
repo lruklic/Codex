@@ -3,6 +3,7 @@
 @import views.html.adminView._;
 @import views.html.init._;
 @import enums._;
+@import _root_.enums._;
 
 <html>
 <head>
@@ -150,6 +151,37 @@
 					<input class="subjectContent-input" name="subjectContent" type="text" id="subjectContent" value='@form("subjectContent").value' />
 				</li>
 			</ul>
+			<div class="extra-trigger">
+				<span class="extra-checkbox"><input name="extra" type="checkbox">@Messages("question.extra")</span>
+			</div>
+			<div class="extra">
+				<div>
+					<span class="finals-checkbox"><input name="finalExam" type="checkbox">@Messages("question.finals")</span> 
+					<span><label>@Messages("question.finals.year"):</label>
+						<select name="finalsYear" id="finalsYear" value='@form("finalsYear").value'>
+						</select>
+					</span>
+				</div>
+				<div>
+					<span class="competition-checkbox"><input name="competition" type="checkbox" >@Messages("question.competition")</span>
+					<span><label>@Messages("question.competition.year"):</label>
+						<select name="competitionYear" id="competitionYear" value='@form("competitionYear").value'>
+							@for(i <- 2010 to 2015) {
+ 					 			<option value="@i" @if(form("competitionYear").value != null && form("competitionYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
+							}	
+						</select>
+					</span>
+					<span><label>@Messages("question.competition.level"):</label>
+						<select name="competitionLevel" id="competitionLevel" value='@form("competitionLevel").value'>
+							@for(cl <- CompetitionLevelType.values()){
+								<option value="@cl" @if(form("competitionLevel").value != null && form("competitionLevel").value == cl.toString()) {selected="selected"}> @Messages(cl.toString())</option> 
+							}				
+						</select>
+					</span>
+				</div>
+
+			</div>
+
 
 			@numberOfAnswers
 

@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,6 +11,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import be.objectify.deadbolt.core.models.Permission;
+import be.objectify.deadbolt.core.models.Role;
+import be.objectify.deadbolt.core.models.Subject;
 import models.enums.UserType;
 
 /**
@@ -20,14 +26,14 @@ import models.enums.UserType;
 @Entity
 @Table(name = "user")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class User extends BaseModel {
+public class User extends BaseModel implements Subject {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "username")
+	@Column(name = "username", unique = true)
 	public String username;
 
 	@Column(name = "password_hash")
@@ -39,7 +45,7 @@ public class User extends BaseModel {
 	@Column(name = "last_name")
 	public String lastName;
 
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	public String email;
 
 	@Enumerated(EnumType.STRING)
@@ -47,6 +53,25 @@ public class User extends BaseModel {
 	
 	public String getName() {
 		return firstName + " " + lastName;
+	}
+
+	@Override
+	public String getIdentifier() {
+		return username;
+	}
+
+	@Override
+	public List<? extends Role> getRoles() {
+		List<Role> roles = new ArrayList<>();
+		roles.add(userType);
+		
+		return roles;
+	}
+	
+	@Override
+	public List<? extends Permission> getPermissions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

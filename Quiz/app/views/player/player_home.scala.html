@@ -1,0 +1,26 @@
+@import views.html.adminView._;
+@import views.html.init._;
+
+<html>
+
+<head>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	@head()
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/playerHome.css")">
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/playerHome.js")"></script>
+</head>
+
+<body>
+	
+	<h1>@Messages("app.name") - <span class="motto">@Messages("app.motto")</span></h1>
+
+	<div class="container">
+		
+		<p>
+			<button class="choiceBtn choiceBtnFont" id="quizesBtn" >@Messages("player.quizes")</button>
+			<button class="choiceBtn choiceBtnFont" id="scriptsBtn" >@Messages("player.scripts")</button>
+		</p>
+
+	</div>
+</body>
+</html>

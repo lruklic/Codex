@@ -19,7 +19,7 @@ import models.enums.Subject;
  */
 
 @Entity
-@Table(name = "inputanswerquestion")
+@Table(name = "input_answer")
 @PrimaryKeyJoinColumn(name="id")
 public class InputAnswerQuestion extends Question {
 

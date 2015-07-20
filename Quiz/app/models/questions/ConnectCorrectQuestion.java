@@ -21,7 +21,7 @@ import models.enums.Subject;
  */
 
 @Entity
-@Table(name = "connectcorrectquestion")
+@Table(name = "connect_correct")
 @PrimaryKeyJoinColumn(name="id")
 public class ConnectCorrectQuestion extends Question {
 

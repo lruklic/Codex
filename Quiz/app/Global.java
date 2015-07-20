@@ -11,6 +11,8 @@ import controllers.TestDataController;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
+import play.mvc.Result;
+import security.SimpleDeadboltHandler;
 import services.model.NoveltyService;
 import services.model.QuestionService;
 import services.model.UserService;
@@ -46,6 +48,7 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(StartController.class);
 				requestStaticInjection(AdminController.class);
 				requestStaticInjection(NewsController.class);
+				requestStaticInjection(SimpleDeadboltHandler.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
 				bind(QuestionService.class).to(QuestionServiceImpl.class);

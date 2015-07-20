@@ -14,7 +14,7 @@ import be.objectify.deadbolt.core.models.Subject;
  *
  */
 
-public enum UserType implements Role, Subject {
+public enum UserType implements Role {
 	/**
 	 * Player.
 	 */
@@ -41,21 +41,5 @@ public enum UserType implements Role, Subject {
 	public String getName() {
 		return this.value;
 	}
-
-	@Override
-	public String getIdentifier() {
-		return this.value;
-	}
-
-	@Override
-	public List<? extends Permission> getPermissions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<? extends Role> getRoles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

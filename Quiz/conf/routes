@@ -11,10 +11,9 @@ POST	/login						controllers.LoginController.authenticate()
 GET		/logout						controllers.LoginController.logout()
 
 # Question
-# GET		/question/chapters/:grade/:subject		controllers.QuestionController.getChapters(grade: String, subject: String)
 POST	/question								controllers.QuestionController.submit()
 GET		/question/edit/:id						controllers.QuestionController.edit(id: Long)
-GET		/question/delete/:id					controllers.QuestionController.delete(id: Long)
+DELETE	/question/delete/:id					controllers.QuestionController.delete(id: Long)
 GET		/question/export/:exportType			controllers.QuestionController.export(exportType: String)
 
 # Test data fill
@@ -29,5 +28,14 @@ GET		/admin/home					controllers.AdminController.adminHome()
 GET		/admin/list					controllers.AdminController.adminList()
 GET		/admin/question				controllers.AdminController.adminQuestion()
 
+# Player
+GET		/player/home				controllers.PlayerController.playerHome()
+
+# Quiz
+GET		/quiz/home					controllers.QuizController.quizHome()
+GET		/quiz/start					controllers.QuizController.startQuiz()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+GET		/javascriptRoutes			controllers.Application.javascriptRoutes

@@ -1,10 +1,14 @@
 package security;
 
-import models.enums.UserType;
+import com.google.inject.Inject;
+
+import models.User;
+import play.db.jpa.JPA;
 import play.libs.F;
 import play.libs.F.Promise;
 import play.mvc.Http.Context;
 import play.mvc.SimpleResult;
+import services.model.UserService;
 import be.objectify.deadbolt.core.models.Subject;
 import be.objectify.deadbolt.java.AbstractDeadboltHandler;
 
@@ -18,21 +22,39 @@ import be.objectify.deadbolt.java.AbstractDeadboltHandler;
 
 public class SimpleDeadboltHandler extends AbstractDeadboltHandler {
 
+	@Inject
+	protected static UserService userService;
+	
 	@Override
 	public Promise<SimpleResult> beforeAuthCheck(Context context) {
 		return null;
 	}
 	
+	/**
+	 * Method that is called on every method where some form of authentication is needed (methods with deadbolt Restrict 
+	 * annotation). This method fetches user by it's session credentials. 
+	 */
 	@Override
 	public Subject getSubject(Context context) {
-		String currentUser = context.session().get("type");
-		if (currentUser.equals("ADMIN")) {
-			return UserType.ADMIN;
+		
+		Subject subject = null;
+		try {
+			subject = JPA.withTransaction(new F.Function0<Subject>() {
+				@Override
+				public Subject apply() throws Throwable {
+					User user = userService.findByUsername(context.session().get("credential"));
+					return user;
+				}
+			});
+		} catch (Throwable t) {
 		}
 		
-		return UserType.PLAYER;
+		return subject;
 	}
 	
+	/**
+	 * Method that is called if authentication fails.
+	 */
 	@Override
 	public Promise<SimpleResult> onAuthFailure(Context context, String content) {
 		
@@ -41,7 +63,7 @@ public class SimpleDeadboltHandler extends AbstractDeadboltHandler {
             @Override
             public SimpleResult apply() throws Throwable {
             	// TODO what happens when authentication failed
-                return ok();
+                return unauthorized("Unauthorized");
             }
         });
 	}

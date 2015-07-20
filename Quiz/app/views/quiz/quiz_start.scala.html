@@ -1,0 +1,18 @@
+@import views.html.adminView._;
+@import views.html.init._;
+
+<html>
+
+<head>
+	@head()
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz.css")">
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz.js")"></script>
+</head>
+
+<body>
+	
+	<h1> Prvi kviz </h1>
+	<button id="startQuizBtn" >@Messages("quiz.start")</button>
+
+</body>
+</html>
