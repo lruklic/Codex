@@ -4,6 +4,9 @@ function initAdmin() {
 	var editId = $('[name=id]').val();
 	var editChapters = $('[name=editChapters]').val();
 	
+	// Question type - 
+	$('.extra').hide();
+	
 	// Default number of answers is set to 3
 	for (var int = 2; int < 5; int++) {
     	$('.incorrect-'+int).hide();
@@ -171,6 +174,10 @@ $(document).ready(function(){
     
     $(".chapter-trigger").change(function(){
     	chapterChange();
+    });
+    
+    $(".extra-trigger").change(function(){
+    	$('.extra').toggle();
     });
     
 //    $("#chapter").change(function(){

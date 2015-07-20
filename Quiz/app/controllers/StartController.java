@@ -23,9 +23,6 @@ public class StartController extends Controller {
 	@Inject
 	public static QuestionService questionService;
 	
-	@Inject
-	public static NoveltyService noveltyService;
-	
 	public static Result redirect() {
 		
 		String type = session("type");

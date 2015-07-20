@@ -1,23 +1,7 @@
 package controllers;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import models.Admin;
 import models.Question;
@@ -25,7 +9,6 @@ import models.User;
 
 import com.google.inject.Inject;
 
-import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -34,7 +17,6 @@ import services.model.QuestionService;
 import services.model.UserService;
 import views.html.admin_question;
 import views.html.admin_questionlist;
-import enums.ExportType;
 import factories.export.ExportFactory;
 import forms.QuestionForm;
 
@@ -75,9 +57,7 @@ public class QuestionController extends Controller {
 			 question = questionForm.get().createQuestion((Admin) user);	// if there are any errors, .get() will throw IllegalStateException: no value
 			 question.lastEdited = System.currentTimeMillis();
 		}
-//		if (question.id != null) {
-//			questionService.delete(questionService.findById(question.id));		// is this necessary?
-//		}
+
 		questionService.save(question);
 
 		return redirect(routes.AdminController.adminList());
@@ -117,7 +97,7 @@ public class QuestionController extends Controller {
 		
 		questionService.delete(question);
 		
-		return ok(admin_questionlist.render(questionService.findAll()));
+		return redirect(routes.AdminController.adminList());
 		
 	}
 	
@@ -125,11 +105,6 @@ public class QuestionController extends Controller {
 		
 		byte[] output = null;
 		
-//		PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-//		writer.println("The first line");
-//		writer.println("The second line");
-//		writer.close();
-//		
 		List<Question> questionList = questionService.findQuestionsByAdmin(getCurrentUser().username);
 		
 		// return error if user has no questions
@@ -141,26 +116,6 @@ public class QuestionController extends Controller {
 		} else {
 			return TODO;
 		}
-		
-//		String str = "The second line";
-////		
-//		byte dataToWrite[] = str.getBytes();
-////		FileOutputStream out = new FileOutputStream("the-file-name");
-////		out.write(dataToWrite);
-////		out.close();
-//		
-//		InputStream is = null;
-//		byte[] arr = null;
-//		
-		HSSFWorkbook wb = new HSSFWorkbook();
-		HSSFSheet sheet = wb.createSheet("Sample shit");
-		Row row = sheet.createRow(0);
-		//Create a new cell in current row
-		Cell cell = row.createCell(0);
-		//Set value to new value
-		cell.setCellValue("Blahblah");
-//		
-//		arr = wb.getBytes();
 		
 		response().setContentType("application/x-download");
 		response().setHeader("Content-disposition", "attachment; filename=questionList."+exportType);

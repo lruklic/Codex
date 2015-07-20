@@ -9,6 +9,7 @@ import models.enums.UserType;
 
 import com.google.inject.Inject;
 
+import constants.Constants;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
@@ -68,16 +69,15 @@ public class LoginController extends Controller {
 			switch (passwordOk) {
 			case LOGIN_OK:
 				session().clear();
-				session("credential", loginForm.get().usernameOrEmail);
-				session("firstName", user.firstName);
+				session(Constants.CREDENTIAL, user.username);
+				session("firstName", user.firstName);		// constants instead of strings
 				session("type", user.userType.toString());
 				if (user.userType.equals(UserType.ADMIN)) {
 					session("clearance", String.valueOf(((Admin) user).clearanceLevel));
-					return redirect(controllers.routes.AdminController.adminHome());
+					return redirect(routes.AdminController.adminHome());
 				} else {
-					// else user.render();
-				}
-				
+					return redirect(routes.PlayerController.playerHome());
+				}		
 			case NO_USER:
 				flash("failure", Messages.get("login.error.username"));
 				break;

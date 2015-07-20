@@ -34,4 +34,6 @@ libraryDependencies ++= Seq(
   "be.objectify" %% "deadbolt-java" % "2.2-RC5"
 )
 
+libraryDependencies += "org.julienrf" %% "play-jsmessages" % "1.6.1"
+
 play.Project.playJavaSettings

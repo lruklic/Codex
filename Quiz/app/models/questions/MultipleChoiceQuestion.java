@@ -22,7 +22,7 @@ import models.enums.Subject;
  */
 
 @Entity
-@Table(name = "multiplechoicequestion")
+@Table(name = "multiple_choice")
 @PrimaryKeyJoinColumn(name="id")
 public class MultipleChoiceQuestion extends Question {
 

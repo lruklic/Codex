@@ -4,8 +4,15 @@ $(document).ready(function(){
 	$(".export").hide();
 	
 	// Predefined method for table sorting
-	$("#question-table").tablesorter();
+	//$("#question-table").tablesorter();
 
+	$('#question-table').DataTable( {
+		"searching": false,
+		"language": {
+			"url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Croatian.json"
+		}
+	});
+	
 	// Method call for filtering table content
 	$("#filter").on('change keyup paste mouseup', function() {
 		tableFilter();
@@ -28,11 +35,17 @@ $(document).ready(function(){
 	    var questionId = hrefArray[hrefLen-1];
 	    var trName = "question-"+questionId;
 	    var questionText = $("#"+trName + " > .table-questionText").html();
-
+	     
+	    // i18n via jsMessages
 	    $("<div>Jeste li sigurni da želite obrisati pitanje? <br><br> Id: "+questionId+"<br> Tekst: "+questionText+"</div>").dialog({
 	        buttons: {
-	            "U redu": function() {
-	                window.location = link.href;
+	            "Obriši" : function() {
+	                jsRoutes.controllers.QuestionController.delete(questionId).ajax({
+	                	success: function(data) {
+	                		location.reload();
+	                	}
+	                });
+	                
 	            },
 	            "Odustani": function() {
 	                $(this).dialog("close");

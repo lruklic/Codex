@@ -96,6 +96,10 @@ public class QuestionForm {
 	
 	public List<String> termColumn2;
 	
+	public String finalExam;
+	
+	public String competition;
+	
 	public Question createQuestion(Admin admin) {
 		
 		Question question = QuestionFactory.createQuestion(this, admin);

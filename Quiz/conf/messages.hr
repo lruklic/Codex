@@ -56,13 +56,21 @@ question.terms=Pojmovi
 question.filter=Filter
 question.filter.type=Filtriraj po
 question.export=Izvezi pitanja
+question.extra = Dodatno
+question.finals=S državne mature
+question.finals.year=Godina
+question.competition=S natjecanja
+question.competition.year=Godina
+question.competition.level=Razina
 
 export.csv=kao CSV
 export.xls=kao XLS
 export.pdf=kao PDF
 
-
 admin.header.hello=Pozdrav
+
+player.quizes=Kvizovi
+player.scripts=Skripte
 
 FOR_USERS=Za korisnike
 FOR_ADMINS=Za administratore

@@ -20,7 +20,7 @@ import models.enums.Subject;
  */
 
 @Entity
-@Table(name = "truefalsequestion")
+@Table(name = "true_false")
 @PrimaryKeyJoinColumn(name="id")
 public class TrueFalseQuestion extends Question {
 

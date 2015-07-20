@@ -7,6 +7,7 @@
 <html>
 <head>
 @head()
+
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/questionList.js")"></script>
 
@@ -42,7 +43,7 @@
 			@filter
 			@export
 		</p>
-		<table id="question-table">
+		<table id="question-table" class="cell-border" width="100%">
 			<thead>
 				<tr>
 					<th>@Messages("question.text")</th>
@@ -51,10 +52,13 @@
 					<th>@Messages("question.chapter")</th>
 					<th>@Messages("question.difficulty")</th>
 					<th>@Messages("question.submitter")</th>
+					<th></th>
+					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 
-			<tbody>
+			<tbody class="dt-right">
 				@for(q <- questions) {
 				<tr id="question-@q.id">
 					<td class="table-questionText">@q.questionText</td>
@@ -63,7 +67,11 @@
 					<td class="table-chapters">@if(q.chapters != null && q.chapters.contains(";")) { @Messages("question.chapter.multiple") } else { @Messages(q.chapters) }</td>
 					<td class="table-difficulty">@q.difficulty</td>
 					<td class="table-submitter">@q.admin.username</td>
-					<td><a class="tooltip table-icon" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")"><img src="@routes.Assets.at("images/edit-icon.png")"/></a></td>
+					<td><a class="tooltip table-icon" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")">
+						@if(q.admin.username.equals(session.get("credential"))) {
+							<img src="@routes.Assets.at("images/edit-icon.png")"/>
+						}
+					</a></td>
 					<td><a class="tooltip" href="#" title="@Messages("tooltip.question.explanation")"><img src="@routes.Assets.at("images/explanation-icon.png")"/></a></td>
 					<td><a class="tooltip delete-button" href="@routes.QuestionController.delete(q.id)" title="@Messages("tooltip.question.delete")"><img src="@routes.Assets.at("images/delete-icon.png")"/></a></td>
 				</tr>
