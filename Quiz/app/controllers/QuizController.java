@@ -32,7 +32,7 @@ public class QuizController extends Controller {
 	}
 	
 	public static Result startQuiz() {
-		return ok(quiz_start.render());
+		return ok(quiz_start.render(questionService.findAll()));
 	}
 
 }

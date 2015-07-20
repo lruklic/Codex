@@ -1,17 +1,36 @@
+@(questionList: List[Question])
+
 @import views.html.adminView._;
 @import views.html.init._;
-
+@import enums._;
+ 
 <html>
 
 <head>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	@head()
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz.css")">
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.twbsPagination.min.js")"></script>
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz.js")"></script>
 </head>
 
 <body>
 	
-	<h1> Prvi kviz </h1>
+	<h1> Kviz </h1>
+	
+	<div class="quiz-container">
+		@for((q, index) <- questionList.zipWithIndex){
+			<div id="question-@index">
+				<div>@q.questionText</div>
+				@q.questionType match {
+					case QuestionType.MULTIPLE_ANSWER => {<span>Multiple</span>}
+					case _ => {<span>lol</span>}
+				}
+			</div>
+		}
+		<ul id="pagination-demo" class="pagination-sm"></ul>
+	</div>
+	
 	<button id="startQuizBtn" >@Messages("quiz.start")</button>
 
 </body>

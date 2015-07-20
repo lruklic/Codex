@@ -6,6 +6,7 @@ import controllers.AdminController;
 import controllers.LoginController;
 import controllers.NewsController;
 import controllers.QuestionController;
+import controllers.QuizController;
 import controllers.StartController;
 import controllers.TestDataController;
 import play.Application;
@@ -48,6 +49,7 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(StartController.class);
 				requestStaticInjection(AdminController.class);
 				requestStaticInjection(NewsController.class);
+				requestStaticInjection(QuizController.class);
 				requestStaticInjection(SimpleDeadboltHandler.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
