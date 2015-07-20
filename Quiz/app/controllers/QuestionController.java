@@ -83,7 +83,7 @@ public class QuestionController extends Controller {
 		
 	}
 	
-	public static Result delete(Long id) {
+	public static Result deleteQuestion(Long id) {
 		
 		// TODO deadbolt or some other handler to disable attempts for non-admin users to change question values
 		

@@ -13,7 +13,7 @@ GET		/logout						controllers.LoginController.logout()
 # Question
 POST	/question								controllers.QuestionController.submit()
 GET		/question/edit/:id						controllers.QuestionController.edit(id: Long)
-DELETE	/question/delete/:id					controllers.QuestionController.delete(id: Long)
+DELETE	/question/delete/:id					controllers.QuestionController.deleteQuestion(id: Long)
 GET		/question/export/:exportType			controllers.QuestionController.export(exportType: String)
 
 # Test data fill

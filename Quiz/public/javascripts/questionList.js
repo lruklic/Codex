@@ -23,7 +23,7 @@ $(document).ready(function(){
 	});
 	
 	// Starts dialog button on delete
-	$(".delete-button").on("click", function(e) {
+	$(".delete-button").on("click", function() {
 	    var link = this;
 
 	    e.preventDefault();
@@ -40,7 +40,7 @@ $(document).ready(function(){
 	    $("<div>Jeste li sigurni da želite obrisati pitanje? <br><br> Id: "+questionId+"<br> Tekst: "+questionText+"</div>").dialog({
 	        buttons: {
 	            "Obriši" : function() {
-	                jsRoutes.controllers.QuestionController.delete(questionId).ajax({
+	                jsRoutes.controllers.QuestionController.deleteQuestion(questionId).ajax({
 	                	success: function(data) {
 	                		location.reload();
 	                	}
