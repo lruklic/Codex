@@ -3,6 +3,7 @@
 @import views.html.adminView._;
 @import views.html.init._;
 @import enums._;
+@import models.questions._;
  
 <html>
 
@@ -14,24 +15,76 @@
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz.js")"></script>
 </head>
 
+@multipleChoice(q: Question) = {
+
+	@defining(q.asInstanceOf[MultipleChoiceQuestion]) { maq =>
+		<div>
+		@for(answer <- maq.getAllAnswersMixed()) {
+			<div><input type="radio" name="@maq.id" value="@answer">@answer</div> 
+		}
+		</div>
+	}
+
+}
+
+@multipleAnswer(q: Question) = {
+
+	@defining(q.asInstanceOf[MultipleAnswerQuestion]) { maq =>
+		<div>
+		@for(answer <- maq.getAllAnswersMixed()) {
+			<div><input type="checkbox" name="@maq.id" value="@answer">@answer</div>
+		}
+		</div>
+	}
+
+}
+
+@inputAnswer(q: Question) = {
+	
+	@defining(q.asInstanceOf[InputAnswerQuestion]) { iaq =>
+		<div><input type="text" name="@iaq.id"></div>
+	}
+	
+}
+
+@trueFalse(q: Question) = {
+
+	@defining(q.asInstanceOf[TrueFalseQuestion]) { tfq =>
+		<div>
+			@Messages("quiz.true")<input type="radio" name="@tfq.id" value="true">
+			@Messages("quiz.false")<input type="radio" name="@tfq.id" value="false">
+		</div>
+
+	}
+
+}
+
 <body>
 	
 	<h1> Kviz </h1>
 	
 	<div class="quiz-container">
-		@for((q, index) <- questionList.zipWithIndex){
-			<div id="question-@index">
-				<div>@q.questionText</div>
+		<div id="questions">
+			@for((q, index) <- questionList.zipWithIndex){
+			<div id="question-@{index+1}">
+				<div class="question-text">@q.questionText</div>
+				<input type="hidden" class="question-id" value="@q.id">
+				<input type="hidden" class="question-type" value="@q.questionType">
 				@q.questionType match {
-					case QuestionType.MULTIPLE_ANSWER => {<span>Multiple</span>}
-					case _ => {<span>lol</span>}
-				}
+					case QuestionType.MULTIPLE_CHOICE => {@multipleChoice(q)}
+					case QuestionType.MULTIPLE_ANSWER => {@multipleAnswer(q)}
+					case QuestionType.INPUT_ANSWER => {@inputAnswer(q)}
+					case QuestionType.TRUE_FALSE => {@trueFalse(q)}
+					case _ => {<span>Not yet implemented</span>}
+			}
 			</div>
 		}
-		<ul id="pagination-demo" class="pagination-sm"></ul>
+		</div>
+		<ul id="pagination" class="pagination-sm"></ul>
+		<button id="finishQuizBtn"> @Messages("quiz.finish")</button>
 	</div>
 	
-	<button id="startQuizBtn" >@Messages("quiz.start")</button>
+	<button id="startQuizBtn"> @Messages("quiz.start")</button>
 
 </body>
 </html>
