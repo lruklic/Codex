@@ -1,7 +1,9 @@
 package models.questions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -67,6 +69,22 @@ public class MultipleAnswerQuestion extends Question {
 		}
 		
 		return answersList;
+	}
+	
+	/**
+	 * Method that returns all answers shuffled.
+	 * 
+	 * @return list with shuffled answers, both correct and incorrect
+	 */
+	
+	public List<String> getAllAnswersMixed() {
+		List<String> allAnswers = new ArrayList<String>(getCorrectAnswers());
+		allAnswers.addAll(getIncorrectAnswers());
+		
+		long seed = System.nanoTime();
+		Collections.shuffle(allAnswers, new Random(seed));
+		
+		return allAnswers;
 	}
 	
 	public int getNumberOfAnswers() {

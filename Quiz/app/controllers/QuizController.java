@@ -2,12 +2,13 @@ package controllers;
 
 import com.google.inject.Inject;
 
+import play.data.DynamicForm;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.NoveltyService;
 import services.model.QuestionService;
-
 import views.html.quiz.quiz_home;
 import views.html.quiz.quiz_start;
 
@@ -33,6 +34,11 @@ public class QuizController extends Controller {
 	
 	public static Result startQuiz() {
 		return ok(quiz_start.render(questionService.findAll()));
+	}
+	
+	public static Result evaluateQuiz() {
+		DynamicForm form = Form.form().bindFromRequest();
+		return ok();
 	}
 
 }

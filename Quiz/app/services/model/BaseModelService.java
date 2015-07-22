@@ -2,8 +2,6 @@ package services.model;
 
 import java.util.List;
 
-import play.db.jpa.Transactional;
-
 /**
  * Base model service interface that defines basic operations that every service must implement.
  * 
@@ -12,7 +10,6 @@ import play.db.jpa.Transactional;
  * @param <T> parameter that defines class
  */
 
-@Transactional
 public interface BaseModelService<T> {
 	
 	/**

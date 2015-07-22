@@ -46,7 +46,7 @@ public class TestDataController extends Controller {
 		admin.lastName = "Cundić";
 		admin.username = "mcundic";
 		admin.passwordHash = "81dc9bdb52d04dc20036dbd8313ed055";
-		admin.email = "email@email.hr";
+		admin.email = "email1@email.hr";
 		admin.userType = UserType.ADMIN;
 		admin.questionsAdded = 0;
 		admin.clearanceLevel = 2;
@@ -58,7 +58,7 @@ public class TestDataController extends Controller {
 		admin.lastName = "Bravić";
 		admin.username = "lbravic";
 		admin.passwordHash = "81dc9bdb52d04dc20036dbd8313ed055";
-		admin.email = "email@email.hr";
+		admin.email = "email2@email.hr";
 		admin.userType = UserType.ADMIN;
 		admin.questionsAdded = 0;
 		admin.clearanceLevel = 2;
@@ -70,7 +70,7 @@ public class TestDataController extends Controller {
 		admin.lastName = "Bužančić";
 		admin.username = "mbuzancic";
 		admin.passwordHash = "81dc9bdb52d04dc20036dbd8313ed055";
-		admin.email = "email@email.hr";
+		admin.email = "email3@email.hr";
 		admin.userType = UserType.ADMIN;
 		admin.questionsAdded = 0;
 		admin.clearanceLevel = 2;
@@ -82,7 +82,7 @@ public class TestDataController extends Controller {
 		admin.lastName = "Weber";
 		admin.username = "iweber";
 		admin.passwordHash = "81dc9bdb52d04dc20036dbd8313ed055";
-		admin.email = "email@email.hr";
+		admin.email = "email4@email.hr";
 		admin.userType = UserType.ADMIN;
 		admin.questionsAdded = 0;
 		admin.clearanceLevel = 2;
