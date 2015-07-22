@@ -68,8 +68,6 @@ public class QuestionController extends Controller {
 		
 		// TODO deadbolt or some other handler to disable attempts for non-admin users to change question values
 		
-		User user = getCurrentUser();
-		
 		Question question = questionService.findById(id);
 		
 		QuestionForm qf = new QuestionForm();
@@ -86,8 +84,6 @@ public class QuestionController extends Controller {
 	public static Result deleteQuestion(Long id) {
 		
 		// TODO deadbolt or some other handler to disable attempts for non-admin users to change question values
-		
-		User user = getCurrentUser();
 		
 		Question question = questionService.findById(id);
 		

@@ -1,7 +1,9 @@
 package models.questions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,8 +56,25 @@ public class MultipleChoiceQuestion extends Question {
 		for (String incorrectAnswer : incorrectAnswerArray) {
 			incorrectAnswersList.add(incorrectAnswer);
 		}
-		
+
 		return incorrectAnswersList;
+	}
+	
+	/**
+	 * Method that returns all answers, shuffled. Used for answer display in HTML.
+	 * 
+	 * @return shuffled list of answers, both correct and incorrect
+	 */
+	public List<String> getAllAnswersMixed() {
+		List<String> allAnswers = new ArrayList<>();
+		allAnswers = getIncorrectAnswers();
+		allAnswers.add(correctAnswer);
+		
+		long seed = System.nanoTime();
+		
+		Collections.shuffle(allAnswers, new Random(seed));
+		
+		return allAnswers;
 	}
 	
 	public int getNumberOfAnswers() {
