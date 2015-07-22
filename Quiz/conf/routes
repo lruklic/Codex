@@ -34,6 +34,7 @@ GET		/player/home				controllers.PlayerController.playerHome()
 # Quiz
 GET		/quiz/home					controllers.QuizController.quizHome()
 GET		/quiz/start					controllers.QuizController.startQuiz()
+POST	/quiz/evaluate				controllers.QuizController.evaluateQuiz()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
