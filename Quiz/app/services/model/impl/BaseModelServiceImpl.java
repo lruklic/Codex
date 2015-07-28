@@ -22,7 +22,6 @@ import play.db.jpa.Transactional;
  * @param <T> class that is persisted; must implement BaseModel because of id
  */
 
-@Transactional
 public abstract class BaseModelServiceImpl<T extends BaseModel> implements BaseModelService<T> {
 
 	protected Class<T> clazz;

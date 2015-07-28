@@ -2,9 +2,11 @@ package controllers;
 
 import models.Admin;
 import models.Novelty;
+import models.User;
 
 import com.google.inject.Inject;
 
+import constants.Constants;
 import factories.NewsFactory;
 import forms.NoveltyForm;
 import play.data.Form;
@@ -52,7 +54,10 @@ public class NewsController extends Controller {
 		
 		NoveltyForm noveltyForm = boundForm.get();
 		
-		Novelty novelty = NewsFactory.createNews(noveltyForm, (Admin) Session.getCurrentUser());		
+		String username = session().get(Constants.USERNAME);
+		User user = userService.findByUsernameOrEmail(username);
+		
+		Novelty novelty = NewsFactory.createNews(noveltyForm, (Admin) user);		
 		// extract user fetch to new static class and use it in every current user fetch occasion?
 		
 		noveltyService.save(novelty);

@@ -9,6 +9,7 @@ import models.User;
 
 import com.google.inject.Inject;
 
+import constants.Constants;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -47,7 +48,10 @@ public class QuestionController extends Controller {
 	public static Result submit() {
 		Form<QuestionForm> questionForm = Form.form(QuestionForm.class).bindFromRequest();
 		
-		User user = Session.getCurrentUser();
+		String username = session().get(Constants.USERNAME);
+		User user = userService.findByUsernameOrEmail(username);
+		
+		// User user = Session.getCurrentUser();
 		
 		if(questionForm.hasErrors()) {
 			return badRequest(admin_question.render(questionForm));
