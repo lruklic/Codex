@@ -8,4 +8,6 @@ public interface QuestionService extends BaseModelService<Question> {
 	
 	public List<Question> findQuestionsByAdmin(String username);
 	
+	public List<Question> getSimilarQuestions(Long id);
+	
 }
