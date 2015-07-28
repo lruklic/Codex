@@ -1,8 +1,4 @@
-/quiz/
-/enums/
-/controllers/
-/models/
-/views/
+/services/
 /session/
-/constants/
+/controllers/
 /security/

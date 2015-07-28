@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.Query;
 
 import models.Question;
-import models.User;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import services.model.QuestionService;

@@ -44,14 +44,4 @@ public class Session extends Controller {
 		session().clear();
 	}
 	
-	/**
-	 * Method that gets current user for session.
-	 * @return current user
-	 */
-	public static User getCurrentUser() {
-		String username = session().get(Constants.USERNAME);
-		User user = userService.findByUsernameOrEmail(username);
-		return user;
-	}
-	
 }
