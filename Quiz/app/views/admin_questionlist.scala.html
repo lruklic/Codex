@@ -3,10 +3,14 @@
 @import views.html.adminView._;
 @import views.html.init._;
 @import _root_.enums._;
+@import _root_.session._;
 
 <html>
 <head>
 @head()
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/questionList.js")"></script>
@@ -40,10 +44,10 @@
 	<div class="questionlist-panel">
 		<h2 class="questionslist-title">@Messages("questions")</h2>
 		<p>
-			@filter
 			@export
+			@filter
 		</p>
-		<table id="question-table" class="cell-border" width="100%">
+		<table id="question-table" class="display cell-border" width="100%">
 			<thead>
 				<tr>
 					<th>@Messages("question.text")</th>
@@ -52,8 +56,6 @@
 					<th>@Messages("question.chapter")</th>
 					<th>@Messages("question.difficulty")</th>
 					<th>@Messages("question.submitter")</th>
-					<th></th>
-					<th></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -67,13 +69,13 @@
 					<td class="table-chapters">@if(q.chapters != null && q.chapters.contains(";")) { @Messages("question.chapter.multiple") } else { @Messages(q.chapters) }</td>
 					<td class="table-difficulty">@q.difficulty</td>
 					<td class="table-submitter">@q.admin.username</td>
-					<td><a class="tooltip table-icon" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")">
-						@if(q.admin.username.equals(session.get("credential"))) {
-							<img src="@routes.Assets.at("images/edit-icon.png")"/>
-						}
-					</a></td>
-					<td><a class="tooltip" href="#" title="@Messages("tooltip.question.explanation")"><img src="@routes.Assets.at("images/explanation-icon.png")"/></a></td>
-					<td><a class="tooltip delete-button" href="@routes.QuestionController.deleteQuestion(q.id)" title="@Messages("tooltip.question.delete")"><img src="@routes.Assets.at("images/delete-icon.png")"/></a></td>
+					<td>
+					@if(q.admin.username.equals(Session.getUsername())) {
+						<a class="tooltip-custom btn btn-primary" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")">@Messages("question.edit")</a>
+						<!-- <a class="tooltip-custom btn btn-info" href="#" title="@Messages("tooltip.question.explanation")">@Messages("question.explanation")</a> -->
+						<a class="tooltip-custom delete-button btn btn-danger" href="@routes.QuestionController.deleteQuestion(q.id)" title="@Messages("tooltip.question.delete")">@Messages("question.delete")</a>
+					}
+					</td>
 				</tr>
 				}
 			</tbody>
