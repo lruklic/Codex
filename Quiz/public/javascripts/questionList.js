@@ -4,18 +4,38 @@ $(document).ready(function(){
 	$(".export").hide();
 	
 	// Predefined method for table sorting
-	//$("#question-table").tablesorter();
-
 	$('#question-table').DataTable( {
-		"searching": false,
+		// "searching": false,
 		"language": {
 			"url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Croatian.json"
 		}
 	});
 	
+	// DataTable
+    var table = $('#question-table').DataTable();
+    
+    table.columns().eq(0).each( function (index) {
+    	
+    	var bla = table.column(index).header();
+    	var bla = table.column(index).footer();
+    	
+        $( 'input', table.column(index).header() ).on( 'keyup change', function () {
+ 
+            table.column(index)
+                .search( this.value )
+                .draw();
+        } );
+        
+    } );
+	
 	// Method call for filtering table content
 	$("#filter").on('change keyup paste mouseup', function() {
-		tableFilter();
+		
+		var filter = $("#filter").val();
+		var searchColumn = getColumnNumber($("#filterType").val());
+		
+		table.column(searchColumn).search(filter).draw();
+
 	});
 	
 	$(".export-questions").on("click", function() {
@@ -56,46 +76,24 @@ $(document).ready(function(){
 	
 });
 
-
-
-// Method that filters question table based on filter input and filter type
-function tableFilter() {
-	var rows = $('#question-table > tbody > tr');
-	
-	var filterInput = $("#filter").val();
-	
-	var filterType = getTableCellClass($("#filterType").val());
-	
-	$.each(rows, function(index, row) {
-		$this = $(this);
-		var value = $this.find(filterType).html();
-		
-		// add ignore case or not ignore; add trim 
-		if (value.toLowerCase().indexOf(filterInput.toLowerCase()) >= 0) {
-			$this.show();
-		} else {
-			$this.hide();
-		}
-		
-	});
-	
-}
-
-function getTableCellClass(filterType) {
+// Predefines column numbers
+function getColumnNumber(filterType) {
 	switch(filterType) {
 		case "TEXT_FILTER":
-			return ".table-questionText";
+			return 0;
 		case "TYPE_FILTER":
-			return ".table-questionType";
+			return 1;
 		case "SUBJECT_FILTER":
-			return ".table-subject";
+			return 2;
 		case "CHAPTER_FILTER":
-			return ".table-chapters";
+			return 3
 		case "DIFFICULTY_FILTER":
-			return ".table-difficulty";
+			return 4;
 		case "SUBMITTER_FILTER":
-			return ".table-submitter";
+			return 5;
 		default:
-			return ".table-questionText";
+			return 1;
 	}
 }
+
+

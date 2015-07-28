@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import enums.AnswerType;
 import models.enums.Chapter;
 import models.enums.Grade;
 import models.enums.QuestionType;
@@ -35,7 +36,7 @@ import models.enums.Subject;
 @Entity
 @Table(name = "question")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Question extends BaseModel {
+public abstract class Question extends BaseModel {
 
 	/**
 	 * 

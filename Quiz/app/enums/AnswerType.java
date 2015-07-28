@@ -4,6 +4,10 @@ public enum AnswerType {
 
 	CORRECT,
 	
-	INCORRECT
+	PARTIALLY_CORRECT,
+	
+	INCORRECT, 
+	
+	NOT_ANSWERED
 	
 }

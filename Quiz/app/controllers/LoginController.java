@@ -9,13 +9,13 @@ import models.enums.UserType;
 
 import com.google.inject.Inject;
 
-import constants.Constants;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.UserService;
+import session.Session;
 import views.html.login;
 import enums.AuthReply;
 import forms.LoginForm;
@@ -41,14 +41,14 @@ public class LoginController extends Controller {
 	public static Result login() {
 		return ok(login.render(Form.form(LoginForm.class)));
 	}
-	
+
 	/**
 	 * Logout method that clears current session with current user info. Mapped under GET in <i>routes</i>.
 	 * 
 	 * @return rendered login.scala.html view
 	 */
 	public static Result logout() {
-		session().clear();
+		Session.clear();
 		return ok(login.render(Form.form(LoginForm.class)));
 	}
 
@@ -68,16 +68,15 @@ public class LoginController extends Controller {
 
 			switch (passwordOk) {
 			case LOGIN_OK:
-				session().clear();
-				session(Constants.CREDENTIAL, user.username);
-				session("firstName", user.firstName);		// constants instead of strings
-				session("type", user.userType.toString());
+				Session.clear();
+				Session.addUserData(user);
+				
 				if (user.userType.equals(UserType.ADMIN)) {
 					session("clearance", String.valueOf(((Admin) user).clearanceLevel));
 					return redirect(routes.AdminController.adminHome());
 				} else {
 					return redirect(routes.PlayerController.playerHome());
-				}		
+				}
 			case NO_USER:
 				flash("failure", Messages.get("login.error.username"));
 				break;

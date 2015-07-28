@@ -1,0 +1,11 @@
+@(result: _root_.quiz.QuizResult)
+
+@import _root_.quiz._;
+ 
+<html>
+
+	<div>@Messages("quiz.number.correct"): @result.numberOfCorrectAnswers</div>
+	<div>@Messages("quiz.number.incorrect"): @result.numberOfIncorrectAnswers</div>
+	<div>@Messages("quiz.number.unanswered"): @result.numberOfUnansweredQuestions</div>
+
+</html>
