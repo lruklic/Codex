@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	
 	// Enable JS plugin tooltipster for every tag with .tooltip class
-	$('.tooltip').tooltipster({		   
+	$('.tooltip-custom').tooltipster({		   
 		animation: 'grow',
 		delay: 800,
 		theme: 'tooltipster-default',

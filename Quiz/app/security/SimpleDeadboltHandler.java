@@ -9,6 +9,7 @@ import play.libs.F.Promise;
 import play.mvc.Http.Context;
 import play.mvc.SimpleResult;
 import services.model.UserService;
+import session.Session;
 import be.objectify.deadbolt.core.models.Subject;
 import be.objectify.deadbolt.java.AbstractDeadboltHandler;
 
@@ -42,7 +43,7 @@ public class SimpleDeadboltHandler extends AbstractDeadboltHandler {
 			subject = JPA.withTransaction(new F.Function0<Subject>() {
 				@Override
 				public Subject apply() throws Throwable {
-					User user = userService.findByUsername(context.session().get("credential"));
+					User user = userService.findByUsername(Session.getUsername());
 					return user;
 				}
 			});

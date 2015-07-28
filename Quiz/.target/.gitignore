@@ -1,13 +1,8 @@
-/Global$1.class
-/Global.class
-/IntegrationTest$1.class
-/IntegrationTest.class
-/controllers/
+/quiz/
 /enums/
-/factories/
-/forms/
+/controllers/
 /models/
-/security/
-/services/
 /views/
+/session/
 /constants/
+/security/

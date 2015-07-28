@@ -52,6 +52,8 @@ question.multiple.number=Broj mogućih odgovora
 question.submit=Pošalji
 question.submitter=Pošiljatelj
 question.edit=Uredi
+question.delete=Obriši
+question.explanation=Objašnjenje
 question.terms=Pojmovi
 question.filter=Filter
 question.filter.type=Filtriraj po
@@ -71,6 +73,12 @@ admin.header.hello=Pozdrav
 
 player.quizes=Kvizovi
 player.scripts=Skripte
+
+quiz.start=Započni kviz
+quiz.finish=Završi kviz
+quiz.number.correct=Broj točnih odgovora
+quiz.number.incorrect=Broj netočnih odgovora
+quiz.number.unanswered=Broj neodgovorenih pitanja
 
 FOR_USERS=Za korisnike
 FOR_ADMINS=Za administratore
@@ -102,12 +110,16 @@ HISTORY=Povijest
 BIOLOGY=Biologija
 CROATIAN_LITERATURE=Hrvatski: književnost
 
+# Povijest - 1 razred
+
 INTRO_TO_HISTORY=Uvod u povijest
 ANCIENT_HISTORY=Prapovijest
 EASTERN_CIVILIZATIONS=Narodi starog istoka
 OLD_GREECE=Stari Grci
 ROME_KINGS=Rim: doba kraljeva i Republika
 ROME_EMPIRE=Rim: carstvo
+
+# Hrvatski književnost
 
 LYRICS=Lirika
 EPICS=Epika

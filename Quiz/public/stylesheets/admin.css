@@ -72,6 +72,8 @@ h1 {
 
 /* Questions list css tags*/
 
+.dataTables_wrapper .dataTables_filter { float: right; text-align: right; visibility: hidden; }
+
 #question-table {
 	color: #444;
 }
