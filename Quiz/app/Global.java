@@ -1,3 +1,5 @@
+import org.h2.engine.Session;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -51,6 +53,7 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(NewsController.class);
 				requestStaticInjection(QuizController.class);
 				requestStaticInjection(SimpleDeadboltHandler.class);
+				requestStaticInjection(Session.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
 				bind(QuestionService.class).to(QuestionServiceImpl.class);

@@ -2,7 +2,6 @@ package controllers;
 
 import models.Admin;
 import models.Novelty;
-import models.User;
 
 import com.google.inject.Inject;
 
@@ -15,6 +14,7 @@ import play.mvc.Result;
 import services.model.NoveltyService;
 import services.model.QuestionService;
 import services.model.UserService;
+import session.Session;
 import views.html.news.news_add;
 
 /**
@@ -52,7 +52,7 @@ public class NewsController extends Controller {
 		
 		NoveltyForm noveltyForm = boundForm.get();
 		
-		Novelty novelty = NewsFactory.createNews(noveltyForm, (Admin) getCurrentUser());		
+		Novelty novelty = NewsFactory.createNews(noveltyForm, (Admin) Session.getCurrentUser());		
 		// extract user fetch to new static class and use it in every current user fetch occasion?
 		
 		noveltyService.save(novelty);
@@ -64,19 +64,8 @@ public class NewsController extends Controller {
 		
 		// TODO deadbolt or some other handler to disable attempts for non-admin users to change question values
 		
-		
 		return ok();
 		
-	}
-	
-	/**
-	 * Method that gets current user for session.
-	 * @return current user
-	 */
-	private static User getCurrentUser() {
-		String credential = session().get("credential");
-		User user = userService.findByUsernameOrEmail(credential);
-		return user;
 	}
 	
 //	public static Result getChapters(String grade, String subject) {

@@ -15,6 +15,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.QuestionService;
 import services.model.UserService;
+import session.Session;
 import views.html.admin_question;
 import views.html.admin_questionlist;
 import factories.export.ExportFactory;
@@ -46,7 +47,7 @@ public class QuestionController extends Controller {
 	public static Result submit() {
 		Form<QuestionForm> questionForm = Form.form(QuestionForm.class).bindFromRequest();
 		
-		User user = getCurrentUser();
+		User user = Session.getCurrentUser();
 		
 		if(questionForm.hasErrors()) {
 			return badRequest(admin_question.render(questionForm));
@@ -101,7 +102,7 @@ public class QuestionController extends Controller {
 		
 		byte[] output = null;
 		
-		List<Question> questionList = questionService.findQuestionsByAdmin(getCurrentUser().username);
+		List<Question> questionList = questionService.findQuestionsByAdmin(Session.getUsername());
 		
 		// return error if user has no questions
 		
@@ -117,16 +118,6 @@ public class QuestionController extends Controller {
 		response().setHeader("Content-disposition", "attachment; filename=questionList."+exportType);
 		return ok(output);
 				
-	}
-	
-	/** 
-	 * Method that gets current user for session.
-	 * @return current user
-	 */
-	private static User getCurrentUser() {
-		String credential = session().get("credential");
-		User user = userService.findByUsernameOrEmail(credential);
-		return user;
 	}
 	
 //	public static Result getChapters(String grade, String subject) {
