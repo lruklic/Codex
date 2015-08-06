@@ -35,9 +35,9 @@ public class InputAnswerQuestion extends Question {
 	}
 	
 	public InputAnswerQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, int difficulty, Admin admin, String answer) {
+			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, String answer) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, difficulty, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
 		this.answer = answer;
 	}
 

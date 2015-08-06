@@ -6,12 +6,14 @@ import java.util.List;
 import models.Admin;
 import models.Question;
 import models.User;
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 
 import com.google.inject.Inject;
 
-import constants.Constants;
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.QuestionService;
@@ -23,7 +25,10 @@ import factories.export.ExportFactory;
 import forms.QuestionForm;
 
 /**
- * Controller that handles operations over questions.
+ * <p>Controller that handles operations over questions.</p>
+ * 
+ * <p>Question operations that this controller handles are following: 
+ * submitting new, editing, deleting, exporting </p>
  * 
  * @author Luka Ruklic
  *
@@ -48,10 +53,8 @@ public class QuestionController extends Controller {
 	public static Result submit() {
 		Form<QuestionForm> questionForm = Form.form(QuestionForm.class).bindFromRequest();
 		
-		String username = session().get(Constants.USERNAME);
+		String username = Session.getUsername();
 		User user = userService.findByUsernameOrEmail(username);
-		
-		// User user = Session.getCurrentUser();
 		
 		if(questionForm.hasErrors()) {
 			return badRequest(admin_question.render(questionForm));
@@ -68,12 +71,18 @@ public class QuestionController extends Controller {
 		return redirect(routes.AdminController.adminList());
 	}
 
-	
+	@Restrict(@Group("ADMIN"))
 	public static Result edit(Long id) {
 		
-		// TODO deadbolt or some other handler to disable attempts for non-admin users to change question values
+		// TODO don't allow editing for user that is not author of question
 		
 		Question question = questionService.findById(id);
+		
+		if (!question.author.username.equals(Session.getUsername())) {
+			flash("error", Messages.get("error.unauthorized.edit"));
+			// TODO error, not allowed to edit question
+			return redirect(routes.AdminController.adminList());
+		}
 		
 		QuestionForm qf = new QuestionForm();
 		qf.fillForm(question);
@@ -102,6 +111,7 @@ public class QuestionController extends Controller {
 		
 	}
 	
+	@Restrict(@Group("ADMIN"))
 	public static Result export(String exportType) throws IOException {
 		
 		byte[] output = null;

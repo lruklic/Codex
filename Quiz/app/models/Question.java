@@ -13,7 +13,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import enums.AnswerType;
 import models.enums.Chapter;
 import models.enums.Grade;
 import models.enums.QuestionType;
@@ -26,7 +25,9 @@ import models.enums.Subject;
  * that contains question text, <code>questionType</code> that determines type of the question, grade that 
  * specifies at which level of school curriculum can answer to this question be found, <code>subject</code> 
  * ,<code>chapter</code> and <code>subjectContent</code> which define which subject content question references 
- * and <code>difficulty</code> which is a somewhat subjective rank how difficult the question is.</p>
+ * and <code>difficulty</code> which is a somewhat subjective rank how difficult the question is. Also,
+ * each question can have optional <code>explanation</code> that closely explains correct answer and special
+ * tags that note that same question already appeared on competition or nationwide leaving exam. </p> 
  * 
  * 
  * @author Luka Ruklic
@@ -64,11 +65,17 @@ public abstract class Question extends BaseModel {
 	@Column(name = "subjectContent")
 	public String subjectContent;	// maybe Enum?
 	
+	@Column(name = "specialTags")
+	public String specialTags;
+	
 	@Column(name = "difficulty")
 	public int difficulty;	// maybe Enum?
 	
+	@Column(name = "explanation")
+	public String explanation;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Admin admin;
+	public Admin author;
 	
 	/**
 	 * Empty contructor.
@@ -88,7 +95,7 @@ public abstract class Question extends BaseModel {
 	 * @param admin
 	 */
 	public Question(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, int difficulty, Admin admin) {
+			String subjectContent, String specialTags, int difficulty, String explanation, Admin author) {
 		this.lastEdited = System.currentTimeMillis();
 		this.questionText = questionText;
 		this.questionType = questionType;
@@ -96,8 +103,10 @@ public abstract class Question extends BaseModel {
 		this.subject = subject;
 		this.chapters = chapters;
 		this.subjectContent = subjectContent;
+		this.specialTags = specialTags;
 		this.difficulty = difficulty;
-		this.admin = admin;
+		this.explanation = explanation;
+		this.author = author;
 	}
 	
 	/**

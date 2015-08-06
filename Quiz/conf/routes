@@ -28,12 +28,16 @@ GET		/admin/home					controllers.AdminController.adminHome()
 GET		/admin/list					controllers.AdminController.adminList()
 GET		/admin/question				controllers.AdminController.adminQuestion()
 
+# Scripts
+GET		/admin/scripts/add			controllers.ScriptController.add()
+POST	/admin/scripts/add			controllers.ScriptController.submit()
+
 # Player
 GET		/player/home				controllers.PlayerController.playerHome()
 
 # Quiz
 GET		/quiz/home					controllers.QuizController.quizHome()
-GET		/quiz/start					controllers.QuizController.startQuiz()
+POST	/quiz/start					controllers.QuizController.startQuiz()
 POST	/quiz/evaluate				controllers.QuizController.evaluateQuiz()
 
 # Map static resources from the /public folder to the /assets URL path

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 
+import constants.Constants;
 import factories.QuestionFactory;
 import models.Admin;
 import models.Question;
@@ -98,7 +99,15 @@ public class QuestionForm {
 	
 	public String finalExam;
 	
+	public String finalsYear;
+	
 	public String competition;
+	
+	public String explanation;
+	
+	public String competitionYear;
+	
+	public String competitionLevel;
 	
 	public Question createQuestion(Admin admin) {
 		
@@ -123,6 +132,17 @@ public class QuestionForm {
 		this.subject = question.subject;
 		this.subjectContent = question.subjectContent;
 		this.difficulty = question.difficulty;
+		this.explanation = question.explanation;
+		
+		List<String> specialTags = Arrays.asList(question.specialTags.split(";"));
+		for (String tag : specialTags) {
+			if (tag.startsWith(Constants.COMPETITION_ABBR)) {
+				String[] tagParts = tag.split("-");
+				this.competition = "true";
+				this.competitionLevel = tagParts[1];
+				this.competitionYear = tagParts[2];
+			}
+		}
 		
 		if (question.chapters != null) {
 			List<String> chaptersList = Arrays.asList(question.chapters.split(";"));
@@ -180,8 +200,7 @@ public class QuestionForm {
 				this.termColumn2 = termColumn2;
 				break;
 		}
-		
-		
+			
 	}
 
 }

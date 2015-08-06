@@ -7,6 +7,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.NoveltyService;
 import services.model.QuestionService;
+import session.Session;
 
 /**
  * Controller that is called when user attempts to access /, top application domain (i.e. localhost:9000/).
@@ -25,7 +26,7 @@ public class StartController extends Controller {
 	
 	public static Result redirect() {
 		
-		String type = session("type");
+		String type = Session.getUserType();
 		
 		if(type == null) {
 			return redirect(controllers.routes.LoginController.login());

@@ -12,7 +12,9 @@ import java.util.List;
  */
 
 public enum Chapter {
-	
+	/**
+	 * Enums for subject History.
+	 */
 	INTRO_TO_HISTORY(Grade.GIMN_1ST, Subject.HISTORY),
 	ANCIENT_HISTORY(Grade.GIMN_1ST, Subject.HISTORY),
 	EASTERN_CIVILIZATIONS(Grade.GIMN_1ST, Subject.HISTORY),
@@ -20,6 +22,19 @@ public enum Chapter {
 	ROME_KINGS(Grade.GIMN_1ST, Subject.HISTORY),
 	ROME_EMPIRE(Grade.GIMN_1ST, Subject.HISTORY),
 	
+	/**
+	 * Enums for subject Geography.
+	 */
+	INTRO_TO_GEOGRAPHY(Grade.GIMN_1ST, Subject.GEOGRAPHY),
+	EARTH_IN_SOLAR_SYSTEM(Grade.GIMN_1ST, Subject.GEOGRAPHY),
+	ORIENTATION_AND_POSITIONING(Grade.GIMN_1ST, Subject.GEOGRAPHY),
+	GEOLOGICAL_FEATURES(Grade.GIMN_1ST, Subject.GEOGRAPHY),
+	CLIMATE_ON_EARTH(Grade.GIMN_1ST, Subject.GEOGRAPHY),
+	WATER_GROUND_LIFE(Grade.GIMN_1ST, Subject.GEOGRAPHY),
+	
+	/**
+	 * Enums for subject Croatian Language - Literature
+	 */
 	LYRICS(Grade.GIMN_1ST, Subject.CROATIAN_LITERATURE),
 	EPICS(Grade.GIMN_1ST, Subject.CROATIAN_LITERATURE),
 	DRAMA(Grade.GIMN_1ST, Subject.CROATIAN_LITERATURE),

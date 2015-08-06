@@ -6,10 +6,19 @@ import java.util.List;
 import javax.persistence.Query;
 
 import models.Question;
+import models.enums.Subject;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import services.model.QuestionService;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler;
+
+/**
+ * Implementation of question service.
+ * 
+ * @author Luka Ruklic
+ * @author Ivan Weber
+ *
+ */
 
 @Transactional
 public class QuestionServiceImpl extends BaseModelServiceImpl<Question> implements QuestionService {
@@ -41,6 +50,21 @@ public class QuestionServiceImpl extends BaseModelServiceImpl<Question> implemen
 		}
 		
 		return similar;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Question> getQuestionsBySubjects(List<Subject> subjects) {
+		List<Question> questions = new ArrayList<>();
+		
+		for (Subject subject : subjects) {
+			Query query = JPA.em().createQuery("SELECT q FROM Question q WHERE q.subject = :subject", Question.class);
+			query.setParameter("subject", subject);
+			
+			questions.addAll(query.getResultList());
+		}
+		
+		return questions;
 	}
 
 }

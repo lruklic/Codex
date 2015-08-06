@@ -7,13 +7,14 @@
 
 <html>
 <head>
-@head()
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
-<script type="text/javascript" src="@routes.Assets.at("/javascripts/questionList.js")"></script>
+@head()
+
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionList.css")">
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/admin/questionList.js")"></script>
 
 </head>
 
@@ -31,21 +32,24 @@
 
 @export = {
 	<span class="export-panel">
-		<span class="tooltip export-questions" title="@Messages("tooltip.question.export.detailed")">@Messages("question.export"):</span>
-		<a class="tooltip export export-csv" href="@routes.QuestionController.export("csv")" title="@Messages("tooltip.export.csv.detailed")">@Messages("export.csv")</a>
-		<a class="tooltip export export-xls" href="@routes.QuestionController.export("xls")" title="@Messages("tooltip.export.xls.detailed")">@Messages("export.xls")</a>
+		<span class="tooltip-custom export-questions" title="@Messages("tooltip.question.export.detailed")">@Messages("question.export"):</span>
+		<a class="tooltip-custom export export-csv" href="@routes.QuestionController.export("csv")" title="@Messages("tooltip.export.csv.detailed")">@Messages("export.csv")</a>
+		<a class="tooltip-custom export export-xls" href="@routes.QuestionController.export("xls")" title="@Messages("tooltip.export.xls.detailed")">@Messages("export.xls")</a>
 		<a class="export export-pdf" href="@routes.QuestionController.export("pdf")">@Messages("export.pdf")</a>
 	</span>
-
 }
 
 <body>
-	<header> @adminHeader() </header>
+	<header> 
+		@adminHeader() 
+	</header>
+	
 	<div class="questionlist-panel">
 		<h2 class="questionslist-title">@Messages("questions")</h2>
 		<p>
-			@export
 			@filter
+			@export
+			@error()
 		</p>
 		<table id="question-table" class="display cell-border" width="100%">
 			<thead>
@@ -68,9 +72,10 @@
 					<td class="table-subject">@Messages(q.subject.toString())</td>
 					<td class="table-chapters">@if(q.chapters != null && q.chapters.contains(";")) { @Messages("question.chapter.multiple") } else { @Messages(q.chapters) }</td>
 					<td class="table-difficulty">@q.difficulty</td>
-					<td class="table-submitter">@q.admin.username</td>
+					<td class="table-submitter">@q.author.username</td>
+					
 					<td>
-					@if(q.admin.username.equals(Session.getUsername())) {
+					@if(q.author.username.equals(Session.getUsername())) {
 						<a class="tooltip-custom btn btn-primary" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")">@Messages("question.edit")</a>
 						<!-- <a class="tooltip-custom btn btn-info" href="#" title="@Messages("tooltip.question.explanation")">@Messages("question.explanation")</a> -->
 						<a class="tooltip-custom delete-button btn btn-danger" href="@routes.QuestionController.deleteQuestion(q.id)" title="@Messages("tooltip.question.delete")">@Messages("question.delete")</a>

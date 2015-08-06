@@ -28,6 +28,14 @@ public class Session extends Controller {
 	}
 	
 	/**
+	 * Getter for current user type.
+	 * @return user type string
+	 */
+	public static String getUserType() {
+		return session().get(Constants.USER_TYPE);
+	}
+	
+	/**
 	 * Method that adds username, first name and type of user to current session.
 	 * @param 
 	 */

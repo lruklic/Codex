@@ -26,7 +26,7 @@ import models.enums.UserType;
 @Entity
 @Table(name = "user")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class User extends BaseModel implements Subject {
+public abstract class User extends BaseModel implements Subject {
 
 	/**
 	 *
@@ -51,6 +51,18 @@ public class User extends BaseModel implements Subject {
 	@Enumerated(EnumType.STRING)
 	public UserType userType;
 	
+	protected User() {
+	}
+	
+	public User(String username, String passwordHash, String firstName, String lastName, String email) {
+		super();
+		this.username = username;
+		this.passwordHash = passwordHash;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
 	public String getName() {
 		return firstName + " " + lastName;
 	}

@@ -39,7 +39,15 @@ public class LoginController extends Controller {
 	 * @return rendered login.scala.html view
 	 */
 	public static Result login() {
-		return ok(login.render(Form.form(LoginForm.class)));
+		
+		String userType = Session.getUserType();
+		if (userType == null) {
+			return ok(login.render(Form.form(LoginForm.class)));
+		} else {
+			return redirect(routes.StartController.redirect());
+		}
+		
+		
 	}
 
 	/**

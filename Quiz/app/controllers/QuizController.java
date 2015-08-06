@@ -1,8 +1,11 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import models.Question;
+import models.enums.Subject;
 import cache.question.QuestionCache;
 import cache.question.QuestionSet;
 
@@ -10,6 +13,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
+import forms.LoginForm;
+import forms.QuizForm;
+import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.BodyParser.Json;
 import play.mvc.Controller;
@@ -47,13 +53,19 @@ public class QuizController extends Controller {
 
 	public static Result startQuiz() {
 		
-		List<Question> ql = questionService.findAll();
+		Form<QuizForm> quizForm = Form.form(QuizForm.class).bindFromRequest();
+		Subject subject = quizForm.get().subject;
 		
-		QuestionCache.getInstance().addSet(Session.getUsername(), new QuestionSet(ql));;
+		List<Subject> subjects = new ArrayList<Subject>();
+		subjects.add(subject);
 		
-		return ok(quiz_start.render(questionService.findAll()));
+		// TODO if there is not enough questions
+		List<Question> ql = getNRandomQuestions(questionService.getQuestionsBySubjects(subjects), 10);	// set customizable number of questions
+		
+		QuestionCache.getInstance().addSet(Session.getUsername(), new QuestionSet(ql));; 
+		return ok(quiz_start.render(ql));
 	}
-	
+	 
 	@BodyParser.Of(Json.class)
 	public static Result evaluateQuiz() {
 		// Get JSON array with questions
@@ -74,6 +86,12 @@ public class QuizController extends Controller {
 		QuestionCache.getInstance().removeSet(Session.getUsername());
 		
 		return ok(quiz_result.render(result));
+	}
+	
+	private static List<Question> getNRandomQuestions(List<Question> questionList, int numberOfQuestions) {
+		Collections.shuffle(questionList);
+		List<Question> picked = questionList.subList(0, numberOfQuestions);
+		return picked;
 	}
 
 }

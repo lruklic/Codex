@@ -102,7 +102,7 @@ public class ExportFactory {
 		question.add(q.chapters);
 		question.add(q.subjectContent);
 		question.add(String.valueOf(q.difficulty));
-		question.add(q.admin.username);
+		question.add(q.author.username);
 		
 		return question;
 	}
