@@ -1,7 +1,6 @@
 package controllers;
 
-import be.objectify.deadbolt.java.actions.Group;
-import be.objectify.deadbolt.java.actions.Restrict;
+import be.objectify.deadbolt.java.actions.SubjectPresent;
 
 import com.google.inject.Inject;
 
@@ -28,7 +27,7 @@ public class PlayerController extends Controller {
 	@Inject
 	public static NoveltyService noveltyService;
 
-	@Restrict(@Group("PLAYER"))
+	@SubjectPresent
 	public static Result playerHome() {
 		return ok(player_home.render()); // TODO instead of findAll 
 	}

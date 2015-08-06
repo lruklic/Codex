@@ -43,9 +43,9 @@ public class MultipleAnswerQuestion extends Question {
 	}
 	
 	public MultipleAnswerQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, int difficulty, Admin admin, String correctAnswers, String incorrectAnswers) {
+			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, String correctAnswers, String incorrectAnswers) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, difficulty, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
 		this.correctAnswers = correctAnswers;
 		this.incorrectAnswers = incorrectAnswers;
 	}

@@ -4,20 +4,28 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
 	@head()
-	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/playerHome.css")">
-	<script type="text/javascript" src="@routes.Assets.at("javascripts/playerHome.js")"></script>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/home.css")">
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz/home.js")"></script>
 </head>
 
 <body>
-	
-	<h1> Kvizevi </h1>
-
-	<div class="container">
 		
-		<a class="quiz" href="@routes.QuizController.startQuiz()">Test kviz - povijest</a>
+		<h1> @Messages("quizzes") </h1>
+		
+		@helper.form(routes.QuizController.startQuiz) {
 
-	</div>
+		<select name="subject">
+			<option value="HISTORY">@Messages("HISTORY")</option>
+			<option value="GEOGRAPHY">@Messages("GEOGRAPHY")</option>
+		</select>
+	
+		<button type="submit">@Messages("quiz.confirm")</button>
+		}
+
 </body>
 </html>

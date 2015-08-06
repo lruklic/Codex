@@ -40,9 +40,9 @@ public class ConnectCorrectQuestion extends Question {
 	}
 	
 	public ConnectCorrectQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, int difficulty, Admin admin, Map<String, String> answerPairs) {
+			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, Map<String, String> answerPairs) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, difficulty, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
 		this.answerPairs = answerPairs;
 	}
 	

@@ -5,10 +5,23 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import models.enums.UserType;
+
 @Entity
 @Table(name = "player")
 @PrimaryKeyJoinColumn(name="id")
 public class Player extends User {
+	
+	/**
+	 * Empty constructor, necessary for Hibernate.
+	 */
+	protected Player() {
+	}
+	
+	public Player(String username, String passwordHash, String firstName, String lastName, String email) {
+		super(username, passwordHash, firstName, lastName, email);
+		this.userType = UserType.PLAYER;
+	}
 
 	/**
 	 *

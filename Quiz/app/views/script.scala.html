@@ -1,0 +1,22 @@
+
+@import views.html.adminView._;
+@import views.html.init._;
+
+<html>
+<head>
+@head()
+<script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<script>tinymce.init({selector:'textarea'});</script>
+</head>
+
+<body>
+	<header> @adminHeader() </header>
+	@helper.form(routes.ScriptController.submit) {
+		<textarea name="script">Easy! You should check out MoxieManager!</textarea>
+		
+		<button type="submit">@Messages("script.submit")</button>
+	}
+
+</body>
+
+</html>

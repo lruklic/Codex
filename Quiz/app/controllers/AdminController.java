@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Admin;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
 
@@ -11,6 +12,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.model.NoveltyService;
 import services.model.QuestionService;
+import services.model.UserService;
+import session.Session;
 import views.html.admin_question;
 import views.html.admin_home;
 import views.html.admin_questionlist;
@@ -32,8 +35,16 @@ public class AdminController extends Controller {
 	@Inject
 	public static NoveltyService noveltyService;
 	
+	@Inject
+	public static UserService userService;
+	
 	public static Result adminList() {
-		return ok(admin_questionlist.render(questionService.findAll()));
+		
+		Admin currentAdmin = (Admin) userService.findByUsernameOrEmail(Session.getUsername());
+		
+		return ok(admin_questionlist.render(questionService.getQuestionsBySubjects(currentAdmin.subjectPermissions)));
+		
+		// return ok(admin_questionlist.render(questionService.findAll()));
 	}
 	
 	/**
@@ -58,7 +69,7 @@ public class AdminController extends Controller {
 		} catch (NumberFormatException ex) {
 			// no session clearance
 		}
-		return ok(admin_home.render(clearance, noveltyService.findAll())); // TODO instead of findAll 
+		return ok(admin_home.render(clearance, noveltyService.findAll())); // TODO instead of findAll, only for admins
 	}
 
 }

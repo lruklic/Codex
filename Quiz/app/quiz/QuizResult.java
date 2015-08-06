@@ -1,5 +1,12 @@
 package quiz;
 
+/**
+ * Class that contains details about quiz that was recently completed.
+ * 
+ * @author Luka Ruklic
+ *
+ */
+
 public class QuizResult {
 
 	public int numberOfQuestions = 0;
@@ -11,8 +18,4 @@ public class QuizResult {
 		
 	}
 	
-	public QuizResult(int numberOfQuestions, int numberOfCorrectAnswers) {
-		this.numberOfQuestions = numberOfQuestions;
-		this.numberOfCorrectAnswers = numberOfCorrectAnswers;
-	}
 }

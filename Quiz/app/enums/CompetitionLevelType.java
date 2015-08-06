@@ -1,7 +1,7 @@
 package enums;
 
 /**
- * Types of filters for filtering questions.
+ * Types of competition level types.
  * 
  * @author Luka Ruklic
  *

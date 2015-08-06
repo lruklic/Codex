@@ -43,9 +43,9 @@ public class MultipleChoiceQuestion extends Question {
 	}
 	
 	public MultipleChoiceQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, int difficulty, Admin admin, String correctAnswer, String incorrectAnswers) {
+			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, String correctAnswer, String incorrectAnswers) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, difficulty, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
 		this.correctAnswer = correctAnswer;
 		this.incorrectAnswers = incorrectAnswers;
 	}

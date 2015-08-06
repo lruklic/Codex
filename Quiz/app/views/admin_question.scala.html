@@ -8,10 +8,14 @@
 <html>
 <head>
 @head()
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin.css")">
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionInput.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/questionInput.js")"></script>
 
 </head>
+
+@setChecked(formFieldName: String, compareValue: Object) = {
+	 @if(form(formFieldName).value != null && form(formFieldName).value == compareValue.toString()) {checked}
+} 
 
 @numberOfAnswers = {
 	<p class="numberOfAnswers">
@@ -88,7 +92,42 @@
 	</div>
 }
 
+@specialTags = {
 
+	<div class="extra">
+		<div>
+			<span class="finals-checkbox">
+				<input name="finalExam" type="checkbox" value="true" @setChecked("finalExam", "true")>@Messages("question.finals")
+			</span> 
+			<span><label>@Messages("question.finals.year"):</label>
+				<select name="finalsYear" id="finalsYear" value='@form("finalsYear").value'>
+				@for(i <- 2010 to 2015) {
+ 					<option value="@i" @if(form("finalsYear").value != null && form("finalsYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
+				}	
+				</select>
+			</span>
+		</div>
+		<div>
+			<span class="competition-checkbox">
+				<input name="competition" type="checkbox" value="true" @setChecked("competition", "true") />@Messages("question.competition")
+			</span>
+			<span><label>@Messages("question.competition.year"):</label>
+			<select name="competitionYear" id="competitionYear" value='@form("competitionYear").value'>
+			@for(i <- 2010 to 2015) {
+ 				<option value="@i" @if(form("competitionYear").value != null && form("competitionYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
+			}	
+			</select>
+			</span>
+			<span><label>@Messages("question.competition.level"):</label>
+			<select name="competitionLevel" id="competitionLevel" value='@form("competitionLevel").value'>
+				@for(cl <- CompetitionLevelType.values()){
+					<option value="@cl" @if(form("competitionLevel").value != null && form("competitionLevel").value == cl.toString()) {selected="selected"}> @Messages(cl.toString())</option> 
+				}				
+			</select>
+			</span>
+		</div>
+	</div>
+}
 
 <body>
 	<header> @adminHeader() </header>
@@ -154,34 +193,8 @@
 			<div class="extra-trigger">
 				<span class="extra-checkbox"><input name="extra" type="checkbox">@Messages("question.extra")</span>
 			</div>
-			<div class="extra">
-				<div>
-					<span class="finals-checkbox"><input name="finalExam" type="checkbox">@Messages("question.finals")</span> 
-					<span><label>@Messages("question.finals.year"):</label>
-						<select name="finalsYear" id="finalsYear" value='@form("finalsYear").value'>
-						</select>
-					</span>
-				</div>
-				<div>
-					<span class="competition-checkbox"><input name="competition" type="checkbox" >@Messages("question.competition")</span>
-					<span><label>@Messages("question.competition.year"):</label>
-						<select name="competitionYear" id="competitionYear" value='@form("competitionYear").value'>
-							@for(i <- 2010 to 2015) {
- 					 			<option value="@i" @if(form("competitionYear").value != null && form("competitionYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
-							}	
-						</select>
-					</span>
-					<span><label>@Messages("question.competition.level"):</label>
-						<select name="competitionLevel" id="competitionLevel" value='@form("competitionLevel").value'>
-							@for(cl <- CompetitionLevelType.values()){
-								<option value="@cl" @if(form("competitionLevel").value != null && form("competitionLevel").value == cl.toString()) {selected="selected"}> @Messages(cl.toString())</option> 
-							}				
-						</select>
-					</span>
-				</div>
-
-			</div>
-
+			
+			@specialTags
 
 			@numberOfAnswers
 
@@ -195,6 +208,9 @@
 			
 			@connectCorrect
 		
+			<p><label>@Messages("question.explanation")</label></p>
+			<textarea name="explanation" rows="4" cols="50"/>@form("questionText").value</textarea>
+			
 			<button class="submit-button" type="submit">@Messages("question.submit")</button>
 		</fieldset>
 		}

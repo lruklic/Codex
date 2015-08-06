@@ -34,6 +34,16 @@ libraryDependencies ++= Seq(
   "be.objectify" %% "deadbolt-java" % "2.2-RC5"
 )
 
+// Play Messages in JS
 libraryDependencies += "org.julienrf" %% "play-jsmessages" % "1.6.1"
+
+// PDFBOX - tool for generating pdf
+libraryDependencies += "org.apache.pdfbox" % "pdfbox" % "1.8.10"
+
+// HTML Parser
+libraryDependencies += "org.jsoup" % "jsoup" % "1.7.2"
+
+// HTML to PDF library
+libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-pdf" % "9.0.7"
 
 play.Project.playJavaSettings

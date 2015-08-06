@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/header/adminHeader.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/adminHeader.js")"></script>
 
 <div class="nav">
@@ -5,6 +6,8 @@
 		<span class="nav-home">
 			<li class="home"><a href="@routes.AdminController.adminHome">@Messages("navigation.home")</a></li>
         	<li class="questions"><a href="#">@Messages("navigation.questions")</a></li>
+        	<li class="quiz"><a href="@routes.PlayerController.playerHome">@Messages("navigation.quiz")</a></li>
+        	<li class="script"><a href="@routes.ScriptController.add">@Messages("navigation.scripts")</a></li>
         	<li class="profile"><a href="#">@Messages("navigation.profile")</a></li>
         	<li class="logout"><a href="@routes.LoginController.logout">@Messages("navigation.logout")</a></li>
 		</span>

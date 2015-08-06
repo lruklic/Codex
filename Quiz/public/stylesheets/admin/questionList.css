@@ -1,0 +1,62 @@
+/* Questions list css tags*/
+
+.dataTables_wrapper .dataTables_filter { float: right; text-align: right; visibility: hidden; }
+
+#question-table {
+	color: #444;
+}
+
+.questionlist-panel {
+	background-color: #2CA3C4;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+#question-table thead tr th {
+	color: #fff;
+	background-color: #444;
+}
+
+#question-table thead tr th:hover {
+	cursor: pointer;
+	color: #2CA3C4;
+}
+
+.table-questionText-data {
+	height: 50px;
+	overflow: hidden;
+}
+
+.table-questionText {
+	width: 400px;
+	height: 60px;
+}
+
+.table-chapters {
+	width: 300px;
+}
+
+.table-questionType, .table-subject{
+	width: 150px;
+}
+
+.export-panel {
+	padding-left: 20px;
+}
+
+.export-questions {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.export {
+	padding-left: 10px;
+}
+
+.extra {
+	padding-top: 10px;
+}
+
+.hello {
+	padding-top: 20px;
+}

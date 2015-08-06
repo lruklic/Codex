@@ -6,6 +6,9 @@ navigation.questions=Pitanja
 navigation.questions.add=Dodaj novo pitanje
 navigation.questions.list=Prikaz pitanja
 navigation.profile=Profil
+navigation.quiz=Kviz
+navigation.scripts=Skripte
+navigation.scripts.add=Dodaj skriptu
 navigation.logout=Odjava
 navigation.back=Nazad
 
@@ -80,6 +83,13 @@ quiz.number.correct=Broj točnih odgovora
 quiz.number.incorrect=Broj netočnih odgovora
 quiz.number.unanswered=Broj neodgovorenih pitanja
 
+error.unauthorized.edit = Nemate dozvolu za uređivanje odabranog pitanja. 
+
+SCHOOL = Školsko
+CITY = Općinsko/Gradsko
+REGION = Županijsko
+STATE = Državno
+
 FOR_USERS=Za korisnike
 FOR_ADMINS=Za administratore
 FOR_EVERYONE=Za sve
@@ -107,6 +117,7 @@ GIMN_4TH=Četvrti razred
 GRADE_EXAM=Za Maturu
 
 HISTORY=Povijest
+GEOGRAPHY=Geografija
 BIOLOGY=Biologija
 CROATIAN_LITERATURE=Hrvatski: književnost
 
