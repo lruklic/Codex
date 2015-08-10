@@ -36,6 +36,14 @@ public class QuestionServiceImpl extends BaseModelServiceImpl<Question> implemen
 	}
 	
 	@Override
+	public long countQuestionsBySubject(Subject subject) {
+		Query query = JPA.em().createQuery("SELECT COUNT(*) FROM Question q WHERE q.subject = :subject");
+		query.setParameter("subject", subject);
+		
+		return (long) query.getSingleResult();
+	}
+	
+	@Override
 	public List<Question> getSimilarQuestions(Long id) {
 		Question current = findById(id);
 		List<Question> others = findAll();

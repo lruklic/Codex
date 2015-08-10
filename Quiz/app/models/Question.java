@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -71,8 +73,13 @@ public abstract class Question extends BaseModel {
 	@Column(name = "difficulty")
 	public int difficulty;	// maybe Enum?
 	
+	@Lob
+	@Basic(fetch=FetchType.LAZY)		// prevent eager loading because explanation can be big chunk of text
 	@Column(name = "explanation")
 	public String explanation;
+	
+	@Column(name = "approved")
+	public Boolean approved;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Admin author;
@@ -106,6 +113,7 @@ public abstract class Question extends BaseModel {
 		this.specialTags = specialTags;
 		this.difficulty = difficulty;
 		this.explanation = explanation;
+		this.approved = false;
 		this.author = author;
 	}
 	

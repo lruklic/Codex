@@ -1,7 +1,6 @@
 package converter;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -16,9 +15,9 @@ import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
+import com.lowagie.text.ListItem;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfWriter;
 
 public class HtmlPdfConverter {
@@ -46,7 +45,7 @@ public class HtmlPdfConverter {
 		Elements body = jsoupDoc.body().children();
 		
 		try {
-			PdfWriter writer = PdfWriter.getInstance(document, baos);
+			PdfWriter.getInstance(document, baos);
 			document.open();
 			
 			for (Element element : body) {
@@ -63,9 +62,10 @@ public class HtmlPdfConverter {
 	
 	public static void applyElementToPdf(Document doc, PdfFont font, Element element) {
 		
+		// Font is resetted to document default for each top level tag
 		font.resetFont();
 		
-		com.lowagie.text.Phrase pdfElement = null;
+		com.lowagie.text.Element pdfElement = null;
 		
 		String topLevelTag = element.tag().toString();
 		
@@ -79,14 +79,25 @@ public class HtmlPdfConverter {
 			
 			p.setFont(font.getFont());
 			
-			String text = element.text();
 			if (element.toString().contains("&nbsp;")) {
 				p.add(new Chunk(" "));
 			} else {
 				applyText(p, element, font.getFont());
 			}
-					
+			
+			applyTopLevelTagStyle(p, element.attr("style"));
+			
 			pdfElement = p;
+			
+		} else if (topLevelTag.endsWith("l")) { // ul, ol - check if that is enough
+			
+			ListDetails listDetails = new ListDetails();
+			
+			com.lowagie.text.List list = new com.lowagie.text.List(isOrdered(topLevelTag), 15);
+			
+			applyList(list, font, listDetails, element, topLevelTag);
+			
+			pdfElement = list;
 		}
 		
 		try {
@@ -95,6 +106,38 @@ public class HtmlPdfConverter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private static void applyList(com.lowagie.text.List list, PdfFont font, ListDetails listDetails, Node node, String topLevelTag) {
+		
+		boolean isOrdered = isOrdered(topLevelTag);
+		
+		list.setIndentationLeft(listDetails.getListIndentation());
+		
+		if (!isOrdered) {
+			list.setListSymbol(listDetails.getListSymbol());
+		}
+		
+		for (Node n : node.childNodes()) {
+			
+			if (n instanceof Element && ((Element) n).tag().toString().endsWith("l")) {
+				ListDetails newListDetails = new ListDetails(listDetails);
+				newListDetails.increaseSymbol();
+				
+				com.lowagie.text.List newList = new com.lowagie.text.List(isOrdered(topLevelTag), 15);
+				applyList(newList, font, newListDetails, n, topLevelTag);
+				list.add(newList);
+				
+			} else if (!n.toString().trim().equals("")) {
+				Paragraph p = new Paragraph();
+				applyText(p, n, font.getFont()); // different indentations for nodes
+				
+				ListItem item = new ListItem(p);
+				list.add(item);
+			}
+
+		}
+		
 	}
 	
 	private static void applyText(Phrase phrase, Node node, Font font) {
@@ -115,14 +158,15 @@ public class HtmlPdfConverter {
 				tag = ((Element) n).tag();
 				attr = ((Element) n).attributes();
 			}
-			applyTagToFont(currentFont, tag, attr);
 			
-			applyText(phrase, n, currentFont);
+			applyText(phrase, n, applyTagToFont(currentFont, tag, attr));
 		}
 		
 	}
 	
-	private static void applyTagToFont(Font font, Tag tag, Attributes attr) {
+	private static Font applyTagToFont(Font font, Tag tag, Attributes attr) {
+		
+		Font newFont = new Font(font);
 		int style = font.getStyle();
 		
 		if (tag != null) {
@@ -130,18 +174,20 @@ public class HtmlPdfConverter {
 				style = style | Font.BOLD;
 			} else if (tag.toString().equals("em")) {
 				style = style | Font.ITALIC;
-			}
+			} 
 		}
 		
 		if (attr != null && attr.get("style") != null) {
 			String styleAttr = attr.get("style");
-			style = style | applyStyleAttr(styleAttr);
+			style = style | getStyleAttr(styleAttr);
 		}
 
-		font.setStyle(style);
+		newFont.setStyle(style);
+		
+		return newFont;
 	}
 	
-	private static int applyStyleAttr(String styleAttr) {
+	private static int getStyleAttr(String styleAttr) {
 		String[] styleAttrArray = styleAttr.split(":");
 		if (styleAttrArray[0].equals("text-decoration")) {
 			// what if two different styles are present? rework ; problem maybe?
@@ -151,6 +197,26 @@ public class HtmlPdfConverter {
 		}
 		
 		return 0;
-		
+	}
+	
+	private static void applyTopLevelTagStyle(Paragraph p, String styleAttr) {
+		String[] styleAttrArray = styleAttr.split(":");
+		if (styleAttrArray[0].equals("padding-left")) {
+			String paddingAmount = styleAttrArray[1].replaceAll("[^\\d.]", "");
+			p.setIndentationLeft(Integer.parseInt(paddingAmount));
+		}
+	}
+	
+	/**
+	 * Method that checks if list in HTML is ordered.
+	 * @param topLevelTag tag that defines HTML list; can be <ol> or <ul>
+	 * @return true if list is <ol>, false otherwise
+	 */
+	private static boolean isOrdered(String topLevelTag) {
+		if (topLevelTag.equals("ol")) {
+			return com.lowagie.text.List.ORDERED;
+		} else {	// under else is considered <ul> tag
+			return com.lowagie.text.List.UNORDERED;
+		}
 	}
 }

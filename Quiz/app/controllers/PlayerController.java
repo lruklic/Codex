@@ -29,7 +29,7 @@ public class PlayerController extends Controller {
 
 	@SubjectPresent
 	public static Result playerHome() {
-		return ok(player_home.render()); // TODO instead of findAll 
+		return ok(player_home.render());
 	}
 
 }

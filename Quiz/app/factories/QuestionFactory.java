@@ -78,12 +78,12 @@ public class QuestionFactory {
 		StringBuilder sb = new StringBuilder();
 		
 		// TODO check if some value is not set
-		if (form.competition.equals("true")) {
+		if (form.competition != null && form.competition.equals("true")) {
 			// Chosen question has previously appeared on competition
 			sb.append(Constants.COMPETITION_ABBR+"-");
 			sb.append(form.competitionLevel+"-");
 			sb.append(form.competitionYear);
-		} else if (form.finalExam.equals("true")) {
+		} else if (form.finalExam != null && form.finalExam.equals("true")) {
 			sb.append(Constants.LEAVING_EXAM_ABBR+"-");
 			sb.append(form.finalsYear);
 		}

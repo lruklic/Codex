@@ -134,13 +134,21 @@ public class QuestionForm {
 		this.difficulty = question.difficulty;
 		this.explanation = question.explanation;
 		
-		List<String> specialTags = Arrays.asList(question.specialTags.split(";"));
+		List<String> specialTags = new ArrayList<>();
+		if (question.specialTags != null) {
+			specialTags = Arrays.asList(question.specialTags.split(";"));
+		}
+		
 		for (String tag : specialTags) {
 			if (tag.startsWith(Constants.COMPETITION_ABBR)) {
 				String[] tagParts = tag.split("-");
 				this.competition = "true";
 				this.competitionLevel = tagParts[1];
 				this.competitionYear = tagParts[2];
+			} else if (tag.startsWith(Constants.LEAVING_EXAM_ABBR)) {
+				String[] tagParts = tag.split("-");
+				this.finalExam = "true";
+				this.finalsYear = tagParts[1];
 			}
 		}
 		
@@ -192,8 +200,14 @@ public class QuestionForm {
 				for (Entry<String, String> entry : ccq.answerPairs.entrySet()) {
 					if (!entry.getKey().startsWith("EMPTY_STRING")) {
 						termColumn1.add(entry.getKey());
+						termColumn2.add(entry.getValue()); 
 					}
-					termColumn2.add(entry.getValue()); 
+				}
+				
+				for (Entry<String, String> entry : ccq.answerPairs.entrySet()) {
+					if (entry.getKey().startsWith("EMPTY_STRING")) {
+						termColumn2.add(entry.getValue()); 
+					}
 				}
 				
 				this.termColumn1 = termColumn1;

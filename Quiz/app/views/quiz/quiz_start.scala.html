@@ -11,16 +11,18 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	@head()
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz.css")">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.twbsPagination.min.js")"></script>
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz.js")"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
 
 @multipleChoice(q: Question) = {
 
-	@defining(q.asInstanceOf[MultipleChoiceQuestion]) { maq =>
+	@defining(q.asInstanceOf[MultipleChoiceQuestion]) { mcq =>
 		<div>
-		@for(answer <- maq.getAllAnswersMixed()) {
-			<div><input type="radio" name="@maq.id" value="@answer">@answer</div> 
+		@for(answer <- mcq.getAllAnswersMixed()) {
+			<div><input type="radio" name="@mcq.id" value="@answer">@answer</div> 
 		}
 		</div>
 	}
@@ -59,6 +61,27 @@
 
 }
 
+@connectCorrect(q: Question) = {
+
+	@defining(q.asInstanceOf[ConnectCorrectQuestion]) { ccq =>
+	
+		<div id="q-@{ccq.id}-answers">
+			@for(term1 <- ccq.getAllPairValues()) {
+			<div id="@term1" class="draggable">
+  				<p>@term1</p>
+			</div>
+			}
+			
+ 			@for(term2 <- ccq.getAllPairKeys()) {
+			<div id="@term2" class="droppable">
+  				<p>@term2</p>
+			</div>
+			}
+		</div>
+	
+	}
+
+}
 <body>
 	
 	<h1> Kviz </h1>
@@ -75,6 +98,7 @@
 					case QuestionType.MULTIPLE_ANSWER => {@multipleAnswer(q)}
 					case QuestionType.INPUT_ANSWER => {@inputAnswer(q)}
 					case QuestionType.TRUE_FALSE => {@trueFalse(q)}
+					case QuestionType.CONNECT_CORRECT => {@connectCorrect(q)}
 					case _ => {<span>Not yet implemented</span>}
 			}
 			</div>
