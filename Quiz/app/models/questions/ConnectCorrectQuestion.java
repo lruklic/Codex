@@ -1,5 +1,8 @@
 package models.questions;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.ElementCollection;
@@ -34,7 +37,7 @@ public class ConnectCorrectQuestion extends Question {
 	 * Map that contains term from one column with the term from the second column.
 	 */
 	@ElementCollection
-	public Map<String, String> answerPairs;
+	public Map<String, String> answerPairs;		// instead of map, how about a custom AnswerPairs class?
 
 	public ConnectCorrectQuestion() {
 	}
@@ -44,6 +47,30 @@ public class ConnectCorrectQuestion extends Question {
 		
 		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
 		this.answerPairs = answerPairs;
+	}
+	
+	public List<String> getAllPairKeys() {
+		List<String> pairKeys = new ArrayList<>();
+		pairKeys.addAll(answerPairs.keySet());
+		
+		for (Iterator<String> iter = pairKeys.listIterator(); iter.hasNext(); ) {
+		    String key = iter.next();
+		    if (key.startsWith("EMPTY_STRING")) {
+		        iter.remove();
+		    }
+		}
+		
+		return pairKeys;
+	}
+	
+	public List<String> getAllPairValues() {
+		List<String> pairValues = new ArrayList<>();
+		pairValues.addAll(answerPairs.values());
+		return pairValues;
+	}
+
+	public Map<String, String> getAnswerPairs() {
+		return answerPairs;
 	}
 	
 }

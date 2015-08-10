@@ -1,4 +1,11 @@
+/Global$1.class
+/Global.class
+/IntegrationTest$1.class
+/IntegrationTest.class
+/cache/
+/constants/
 /controllers/
-/parser/
-/converter/
+/quiz/
+/models/
 /views/
+/forms/

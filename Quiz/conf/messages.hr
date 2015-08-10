@@ -1,5 +1,9 @@
 app.name = Codex
 app.motto = Ignorance is bliss, but knowledge is power.
+app.motto2 = Geniuses are made, not born.
+app.motto3 = An investment in knowledge pays the best interest.
+app.motto4 = Education is the best friend. An educated person is respected everywhere. Education beats the beauty and the youth.
+app.motto5 = Poor people cannot rely on the government to come to help you in times of need. You have to get your education. Then nobody can control your destiny.
 
 navigation.home=Početna
 navigation.questions=Pitanja
@@ -68,20 +72,25 @@ question.competition=S natjecanja
 question.competition.year=Godina
 question.competition.level=Razina
 
+script.submit=Predaj skriptu
+
 export.csv=kao CSV
 export.xls=kao XLS
 export.pdf=kao PDF
 
 admin.header.hello=Pozdrav
 
-player.quizes=Kvizovi
+player.quizzes=Kvizovi
 player.scripts=Skripte
 
 quiz.start=Započni kviz
 quiz.finish=Završi kviz
+quiz.confirm=Potvrdi kviz
 quiz.number.correct=Broj točnih odgovora
 quiz.number.incorrect=Broj netočnih odgovora
 quiz.number.unanswered=Broj neodgovorenih pitanja
+quiz.true=Točno
+quiz.false=Netočno
 
 error.unauthorized.edit = Nemate dozvolu za uređivanje odabranog pitanja. 
 

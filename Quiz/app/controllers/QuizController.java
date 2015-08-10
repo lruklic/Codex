@@ -60,7 +60,9 @@ public class QuizController extends Controller {
 		subjects.add(subject);
 		
 		// TODO if there is not enough questions
-		List<Question> ql = getNRandomQuestions(questionService.getQuestionsBySubjects(subjects), 10);	// set customizable number of questions
+		long questionsForSubject = questionService.countQuestionsBySubject(subject);
+		
+		List<Question> ql = getNRandomQuestions(questionService.getQuestionsBySubjects(subjects), (int) questionsForSubject);	// set customizable number of questions
 		
 		QuestionCache.getInstance().addSet(Session.getUsername(), new QuestionSet(ql));; 
 		return ok(quiz_start.render(ql));

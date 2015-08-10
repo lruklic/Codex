@@ -1,12 +1,38 @@
+/**
+ * Javascript that handles effects for quiz HTML.
+ */
+
 $(document).ready(function(){
+	
+    $( ".draggable" ).draggable({ 
+    	cursor: "crosshair", 
+    	revert: false
+    });
+    
+    $( ".droppable" ).droppable({
+    	drop: function( event, ui ) {
+    		
+    		var draggedAnswer = $(ui.draggable).attr("id");
+    		
+    		$(this).attr('answer', draggedAnswer);
+    		
+    		$(this).addClass( "ui-state-highlight" );
+    	},
+    	out: function(event, ui) {
+    		if ($(ui.draggable).attr("id") === $(this).attr('answer')) {
+        		$(this).attr('answer', null);
+    		}
+    	}
+    });
 	
 	$(".quiz-container").hide();
 	
-	var numberOfPages = 10;
+	var numberOfQuestions = $('#questions').children().size();
+	var visiblePages = (numberOfQuestions < 5 ? 5 : numberOfQuestions);
 	
 	$("#pagination").twbsPagination({
-        totalPages: numberOfPages,
-        visiblePages: 5,
+        totalPages: numberOfQuestions,
+        visiblePages: visiblePages,
         onPageClick: function (event, page) {
         	$('div[id^="question-"]').hide();
             $('#question-'+page).show();
@@ -26,6 +52,23 @@ $(document).ready(function(){
 		
 	});
 });
+
+function getConnectCorrect(questionId) {
+	
+	var answerPairs = [];
+	
+	$("#q-"+questionId+"-answers>div.droppable").each(function() {
+		
+		var answerPair = [];
+		
+		answerPair[0] = $(this).attr('answer');
+		answerPair[1] = $(this).attr('id');
+	
+		answerPairs.push(answerPair);
+	});
+	
+	return answerPairs;
+}
 
 /**
  * Method that is called when player wants to evaluate his quiz answers. All answers are collected from HTML and are
@@ -83,5 +126,8 @@ function getAnswers(questionId, questionType) {
 		case "INPUT_ANSWER":
 			var answer = $("input[name="+questionId+"]").val();
 			return answer;
+		case "CONNECT_CORRECT":
+			var answers = getConnectCorrect(questionId);
+			return answers;
 	}
 }

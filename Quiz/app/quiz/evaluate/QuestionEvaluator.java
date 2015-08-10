@@ -11,6 +11,7 @@ import cache.question.QuestionSet;
 import enums.AnswerType;
 import models.Question;
 import models.enums.QuestionType;
+import models.questions.ConnectCorrectQuestion;
 import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
@@ -55,11 +56,35 @@ public class QuestionEvaluator {
 		
 		switch(qType) {
 		case CONNECT_CORRECT:
+			ConnectCorrectQuestion ccq = (ConnectCorrectQuestion) question;
+			
+			// if no answer is provided, mark as Unanswered
+			if (answersNode != null) {
+				List<JsonNode> answersNodes = Lists.newArrayList(answersNode.elements());
+				for (JsonNode answerNode : answersNodes) {
+					List<JsonNode> elements = Lists.newArrayList(answerNode.elements());
+					
+					String value = elements.get(0).asText();
+					String key = elements.get(1).asText();
+					
+					if (value.equals("")) {
+						value = "EMPTY_STRING";
+					}
+					
+					String correctValueForKey = ccq.getAnswerPairs().get(key);
+					
+					if (!correctValueForKey.equals(value)) {
+						return AnswerType.INCORRECT;
+					}
+				}
+				
+				return AnswerType.CORRECT;
+			}
 			break;
 		case INPUT_ANSWER:
 			String questionAnswer = ((InputAnswerQuestion) question).answer;
 			// check for capital letters
-			if (answersNode != null) {
+			if (answersNode != null && answersNode.asText().length() > 0) {
 				if ((answersNode.asText().equals(questionAnswer))) {
 					return AnswerType.CORRECT;
 				} else {
@@ -116,6 +141,7 @@ public class QuestionEvaluator {
 				// this depends on how user answers question in HTML
 				return AnswerType.NOT_ANSWERED;
 			}
+			
 		}
 		
 		return null;
