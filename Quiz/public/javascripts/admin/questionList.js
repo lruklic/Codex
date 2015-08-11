@@ -13,29 +13,14 @@ $(document).ready(function(){
 	
 	// DataTable
     var table = $('#question-table').DataTable();
-    
-    table.columns().eq(0).each( function (index) {
-    	
-    	var bla = table.column(index).header();
-    	var bla = table.column(index).footer();
-    	
-        $( 'input', table.column(index).header() ).on( 'keyup change', function () {
- 
-            table.column(index)
-                .search( this.value )
-                .draw();
-        } );
-        
-    } );
 	
-	// Method call for filtering table content
+	// Method call for filtering table content on keystroke
 	$("#filter").on('change keyup paste mouseup', function() {
-		
-		var filter = $("#filter").val();
-		var searchColumn = getColumnNumber($("#filterType").val());
-		
-		table.column(searchColumn).search(filter).draw();
-
+		filter(table);
+	});
+	
+	$('#filterType').change(function(e){
+		filter(table);
 	});
 	
 	$(".export-questions").on("click", function() {
@@ -75,8 +60,28 @@ $(document).ready(function(){
 	});
 	
 });
+/**
+ * Function that invokes DataTables search method with filter parameter
+ * and re-draws the whole question table with filtered results.
+ */
+function filter(table) {
+	
+	table.columns().search("").draw();		// resets the search; 
+	
+	var filter = $("#filter").val();
+	var searchColumn = getColumnNumber($("#filterType").val());
+	
+	table.column(searchColumn).search(filter).draw();
+	
+}
 
-// Predefines column numbers
+/**
+ * Function that returns predefined column number in question table based on 
+ * <i>filterType</i> string which defines which search filter is used.
+ * 
+ * @param filterType string that defines which search filter is used
+ * @returns {Number} predefined number for one of the columns in question table
+ */
 function getColumnNumber(filterType) {
 	switch(filterType) {
 		case "TEXT_FILTER":
