@@ -60,6 +60,7 @@ question.submit=Pošalji
 question.submitter=Pošiljatelj
 question.edit=Uredi
 question.delete=Obriši
+question.cancel=Odustani
 question.explanation=Objašnjenje
 question.terms=Pojmovi
 question.filter=Filter

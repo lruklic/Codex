@@ -28,10 +28,10 @@ $(document).ready(function(){
 	});
 	
 	// Starts dialog button on delete
-	$(".delete-button").on("click", function() {
+	$(".delete-button").click(function(ev) {
 	    var link = this;
 
-	    e.preventDefault();
+	    ev.preventDefault();
 	    
 	    var href = link.href;
 	    var hrefArray = href.split("/");
@@ -40,25 +40,31 @@ $(document).ready(function(){
 	    var questionId = hrefArray[hrefLen-1];
 	    var trName = "question-"+questionId;
 	    var questionText = $("#"+trName + " > .table-questionText").html();
+	    
+	    var deleteQuestion = Messages("question.delete");
 	     
-	    // i18n via jsMessages
 	    $("<div>Jeste li sigurni da želite obrisati pitanje? <br><br> Id: "+questionId+"<br> Tekst: "+questionText+"</div>").dialog({
-	        buttons: {
-	            "Obriši" : function() {
-	                jsRoutes.controllers.QuestionController.deleteQuestion(questionId).ajax({
-	                	success: function(data) {
-	                		location.reload();
-	                	}
-	                });
-	                
-	            },
-	            "Odustani": function() {
-	                $(this).dialog("close");
-	            }
-	        }
+	        buttons: [
+				{
+					text: Messages('question.delete'),
+					click: function() {
+		                jsRoutes.controllers.QuestionController.deleteQuestion(questionId).ajax({
+		                	success: function(data) {
+		                		location.reload();
+		                	}
+		                });
+					}
+				},
+				{
+					text: Messages('question.cancel'),
+					click: function() {
+						$(this).dialog("close");
+					}
+				},
+			]
+	        
 	    });
 	});
-	
 });
 /**
  * Function that invokes DataTables search method with filter parameter
