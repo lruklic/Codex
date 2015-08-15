@@ -38,10 +38,22 @@ public class PdfFont {
 	public void setHeadingFont(String heading) {
 		switch(heading) {
 		case "h1": 
-			this.font.setSize(24);
+			this.font.setSize(32);
 			break;
 		case "h2":
-			this.font.setSize(18);
+			this.font.setSize(24);
+			break;
+		case "h3": 
+			this.font.setSize(19);
+			break;
+		case "h4":
+			this.font.setSize(16);
+			break;
+		case "h5": 
+			this.font.setSize(14);
+			break;
+		case "h6":
+			this.font.setSize(13);
 			break;
 		}
 	}
