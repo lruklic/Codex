@@ -12,29 +12,34 @@
 	@head()
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz.css")">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+	
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.twbsPagination.min.js")"></script>
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz.js")"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 </head>
 
 @multipleChoice(q: Question) = {
-
 	@defining(q.asInstanceOf[MultipleChoiceQuestion]) { mcq =>
-		<div>
-		@for(answer <- mcq.getAllAnswersMixed()) {
-			<div><input type="radio" name="@mcq.id" value="@answer">@answer</div> 
-		}
-		</div>
+	<div class="multiple-choice-container">
+	@for(answer <- mcq.getAllAnswersMixed()) {
+		<div class="multiple-choice-answer"><input type="radio" name="@mcq.id" value="@answer">
+			<span class="multiple-answer-text custom-font font-size-14">@answer</span>
+		</div> 
 	}
-
+	</div>
+	}
 }
 
 @multipleAnswer(q: Question) = {
 
 	@defining(q.asInstanceOf[MultipleAnswerQuestion]) { maq =>
-		<div>
+		<div class="multiple-choice-container">
 		@for(answer <- maq.getAllAnswersMixed()) {
-			<div><input type="checkbox" name="@maq.id" value="@answer">@answer</div>
+			<div class="multiple-choice-answer"><input type="checkbox" name="@maq.id" value="@answer">
+				<span class="multiple-answer-text custom-font font-size-14">@answer</span>
+			</div>
 		}
 		</div>
 	}
@@ -87,10 +92,11 @@
 	<h1> Kviz </h1>
 	
 	<div class="quiz-container">
-		<div id="questions">
+		<div class="center"><ul id="pagination" class="pagination-sm"></ul></div>
+		<div class="questions-container" id="questions">
 			@for((q, index) <- questionList.zipWithIndex){
-			<div id="question-@{index+1}">
-				<div class="question-text">@q.questionText</div>
+			<div class="question-container" id="question-@{index+1}">
+				<div class="question-text custom-font font-size-20">@q.questionText</div>
 				<input type="hidden" class="question-id" value="@q.id">
 				<input type="hidden" class="question-type" value="@q.questionType">
 				@q.questionType match {
@@ -104,7 +110,6 @@
 			</div>
 		}
 		</div>
-		<ul id="pagination" class="pagination-sm"></ul>
 		<button id="finishQuizBtn"> @Messages("quiz.finish")</button>
 	</div>
 	

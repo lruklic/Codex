@@ -131,7 +131,7 @@ GEOGRAPHY=Geografija
 BIOLOGY=Biologija
 CROATIAN_LITERATURE=Hrvatski: književnost
 
-# Povijest - 1 razred
+# Povijest - 1. razred
 
 INTRO_TO_HISTORY=Uvod u povijest
 ANCIENT_HISTORY=Prapovijest
@@ -139,6 +139,15 @@ EASTERN_CIVILIZATIONS=Narodi starog istoka
 OLD_GREECE=Stari Grci
 ROME_KINGS=Rim: doba kraljeva i Republika
 ROME_EMPIRE=Rim: carstvo
+
+# Geografija - 1. razred
+
+INTRO_TO_GEOGRAPHY=Uvod u geografiju
+EARTH_IN_SOLAR_SYSTEM=Zemlja u Sunčevom sustavu
+ORIENTATION_AND_POSITIONING=Orijentacija i pozicioniranje
+GEOLOGICAL_FEATURES=Geološka svojstva
+CLIMATE_ON_EARTH=Klima na Zemlji
+WATER_GROUND_LIFE=Voda, tlo i život
 
 # Hrvatski književnost
 
