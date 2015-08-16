@@ -93,7 +93,12 @@ quiz.number.unanswered=Broj neodgovorenih pitanja
 quiz.true=Točno
 quiz.false=Netočno
 
-error.unauthorized.edit = Nemate dozvolu za uređivanje odabranog pitanja. 
+error.unauthorized.edit=Nemate dozvolu za uređivanje odabranog pitanja. 
+
+pagination.first=Prvo
+pagination.last=Posljednje
+pagination.previous=Prethodno
+pagination.next=Iduće
 
 SCHOOL = Školsko
 CITY = Općinsko/Gradsko
