@@ -10,7 +10,7 @@
 <head>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	@head()
-	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz.css")">
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/start.css")">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
@@ -18,14 +18,19 @@
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.twbsPagination.min.js")"></script>
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz.js")"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/svg/component.css")">
+	
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/svg/modernizr.custom.js")"></script>
 </head>
 
 @multipleChoice(q: Question) = {
 	@defining(q.asInstanceOf[MultipleChoiceQuestion]) { mcq =>
 	<div class="multiple-choice-container">
 	@for(answer <- mcq.getAllAnswersMixed()) {
-		<div class="multiple-choice-answer"><input type="radio" name="@mcq.id" value="@answer">
-			<span class="multiple-answer-text custom-font font-size-14">@answer</span>
+		<div class="multiple-choice-answer">
+			<input type="radio" name="@mcq.id" value="@answer">
+			<span class="padding-left-5 custom-font font-size-14">@answer</span>
 		</div> 
 	}
 	</div>
@@ -36,11 +41,20 @@
 
 	@defining(q.asInstanceOf[MultipleAnswerQuestion]) { maq =>
 		<div class="multiple-choice-container">
+		
+		<form class="ac-custom ac-checkbox ac-checkmark" autocomplete="off">
+		<ul>
 		@for(answer <- maq.getAllAnswersMixed()) {
-			<div class="multiple-choice-answer"><input type="checkbox" name="@maq.id" value="@answer">
-				<span class="multiple-answer-text custom-font font-size-14">@answer</span>
+			<div class="multiple-choice-answer">
+			<li>
+				<input type="checkbox" name="@maq.id" value="@answer">
+				<label class="custom-font font-size-14">@answer</label>	
+			</li>
 			</div>
 		}
+		</ul>
+		</form>
+		
 		</div>
 	}
 
@@ -49,7 +63,9 @@
 @inputAnswer(q: Question) = {
 	
 	@defining(q.asInstanceOf[InputAnswerQuestion]) { iaq =>
-		<div><input type="text" name="@iaq.id"></div>
+		<div class="padding-top-10">
+			<input type="text" name="@iaq.id" autocomplete="off">
+		</div>
 	}
 	
 }
@@ -57,9 +73,11 @@
 @trueFalse(q: Question) = {
 
 	@defining(q.asInstanceOf[TrueFalseQuestion]) { tfq =>
-		<div>
-			@Messages("quiz.true")<input type="radio" name="@tfq.id" value="true">
-			@Messages("quiz.false")<input type="radio" name="@tfq.id" value="false">
+		<div class="padding-top-10 custom-font font-size-16">
+			<input type="radio" name="@tfq.id" value="true">
+			<span class="padding-right-15">@Messages("quiz.true")</span>
+			<input type="radio" name="@tfq.id" value="false">
+			<span>@Messages("quiz.false")</span>
 		</div>
 
 	}
@@ -110,12 +128,13 @@
 			</div>
 		}
 		</div>
-		<button id="finishQuizBtn"> @Messages("quiz.finish")</button>
+		<button class="finish-button" id="finishQuizBtn"> @Messages("quiz.finish")</button>
 	</div>
 	
 	<button id="startQuizBtn"> @Messages("quiz.start")</button>
 
 	<div class="result"></div>
 	
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/svg/svgcheckbx.js")"></script>
 </body>
 </html>

@@ -31,6 +31,10 @@ $(document).ready(function(){
 	var visiblePages = (numberOfQuestions < 5 ? 5 : numberOfQuestions);
 	
 	$("#pagination").twbsPagination({
+		first: Messages("pagination.first"),
+		prev: Messages("pagination.previous"),
+		next: Messages("pagination.next"),
+		last: Messages("pagination.last"),
         totalPages: numberOfQuestions,
         visiblePages: visiblePages,
         onPageClick: function (event, page) {
