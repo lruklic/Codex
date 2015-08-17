@@ -1,11 +1,21 @@
 @(result: _root_.quiz.QuizResult)
 
 @import _root_.quiz._;
- 
+
 <html>
 
-	<div>@Messages("quiz.number.correct"): @result.numberOfCorrectAnswers</div>
-	<div>@Messages("quiz.number.incorrect"): @result.numberOfIncorrectAnswers</div>
-	<div>@Messages("quiz.number.unanswered"): @result.numberOfUnansweredQuestions</div>
+<head>
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/start.css")">
+</head>
+
+<body>
+	<label class="padding-left-15 custom-font font-size-36 italic">@result.numberOfCorrectAnswers / @result.numberOfQuestions</label>
+	
+	<div class="padding-left-15">@Messages("quiz.number.correct"): @result.numberOfCorrectAnswers</div>
+	<div class="padding-left-15">@Messages("quiz.number.incorrect"): @result.numberOfIncorrectAnswers</div>
+	<div class="padding-left-15">@Messages("quiz.number.unanswered"): @result.numberOfUnansweredQuestions</div>
+
+</body>
+
 
 </html>

@@ -57,7 +57,7 @@ public class QuestionController extends Controller {
 		User user = userService.findByUsernameOrEmail(username);
 		
 		if(questionForm.hasErrors()) {
-			return badRequest(admin_question.render(questionForm));
+			return badRequest(admin_question.render(questionForm, ((Admin)user).subjectPermissions));	// TODO check for admin twice? refactor!
 		}
 		
 		Question question = null;
@@ -91,7 +91,7 @@ public class QuestionController extends Controller {
 		
 		Form<QuestionForm> form = Form.form(QuestionForm.class).fill(qf);
 		
-		return ok(admin_question.render(form));
+		return ok(admin_question.render(form, question.author.subjectPermissions));
 		
 	}
 	

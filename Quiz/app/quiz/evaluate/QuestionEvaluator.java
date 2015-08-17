@@ -29,6 +29,8 @@ public class QuestionEvaluator {
 		
 		QuizResult result = new QuizResult();
 		
+		result.numberOfQuestions = questionList.size();
+		
 		for (JsonNode givenAnswer : questionList) {
 			Long id = givenAnswer.get("id").asLong();
 			Question question = questionSet.getQuestion(id);

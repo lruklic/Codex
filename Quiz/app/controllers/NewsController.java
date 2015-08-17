@@ -16,7 +16,6 @@ import play.mvc.Result;
 import services.model.NoveltyService;
 import services.model.QuestionService;
 import services.model.UserService;
-import session.Session;
 import views.html.news.news_add;
 
 /**

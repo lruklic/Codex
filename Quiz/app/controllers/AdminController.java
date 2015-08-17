@@ -53,7 +53,10 @@ public class AdminController extends Controller {
 	 * @return rendered login.scala.html view
 	 */
 	public static Result adminQuestion() {
-		return ok(admin_question.render(Form.form(QuestionForm.class)));
+		
+		Admin currentAdmin = (Admin) userService.findByUsernameOrEmail(Session.getUsername());
+		
+		return ok(admin_question.render(Form.form(QuestionForm.class), currentAdmin.subjectPermissions));
 	}
 	
 	/**

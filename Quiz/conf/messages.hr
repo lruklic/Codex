@@ -84,6 +84,8 @@ admin.header.hello=Pozdrav
 player.quizzes=Kvizovi
 player.scripts=Skripte
 
+quiz=Kviz
+
 quiz.start=Započni kviz
 quiz.finish=Završi kviz
 quiz.confirm=Potvrdi kviz

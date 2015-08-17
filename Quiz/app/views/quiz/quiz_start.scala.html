@@ -21,18 +21,25 @@
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/svg/component.css")">
 	
-	<script type="text/javascript" src="@routes.Assets.at("javascripts/svg/modernizr.custom.js")"></script>
 </head>
 
 @multipleChoice(q: Question) = {
 	@defining(q.asInstanceOf[MultipleChoiceQuestion]) { mcq =>
 	<div class="multiple-choice-container">
+	
+	<form class="ac-custom ac-radio ac-circle" autocomplete="off">
+	<ul>
 	@for(answer <- mcq.getAllAnswersMixed()) {
 		<div class="multiple-choice-answer">
+		<li>
 			<input type="radio" name="@mcq.id" value="@answer">
-			<span class="padding-left-5 custom-font font-size-14">@answer</span>
+			<label class="custom-font font-size-16">@answer</label>
+		</li>
 		</div> 
 	}
+	</ul>
+	</form>
+	
 	</div>
 	}
 }
@@ -48,7 +55,7 @@
 			<div class="multiple-choice-answer">
 			<li>
 				<input type="checkbox" name="@maq.id" value="@answer">
-				<label class="custom-font font-size-14">@answer</label>	
+				<label class="custom-font font-size-16">@answer</label>	
 			</li>
 			</div>
 		}
@@ -89,17 +96,23 @@
 	@defining(q.asInstanceOf[ConnectCorrectQuestion]) { ccq =>
 	
 		<div id="q-@{ccq.id}-answers">
+		
+		<div class="draggable-container">
 			@for(term1 <- ccq.getAllPairValues()) {
 			<div id="@term1" class="draggable">
-  				<p>@term1</p>
+  				<label class="custom-font">@term1</label>
 			</div>
 			}
-			
- 			@for(term2 <- ccq.getAllPairKeys()) {
+		</div>
+		
+		<div class="droppable-container">
+		 	@for(term2 <- ccq.getAllPairKeys()) {
 			<div id="@term2" class="droppable">
-  				<p>@term2</p>
+  				<label class="custom-font">@term2</label>
 			</div>
 			}
+		</div>
+			
 		</div>
 	
 	}
@@ -107,7 +120,7 @@
 }
 <body>
 	
-	<h1> Kviz </h1>
+	<h1 class="margin-left-30"> @Messages("quiz") </h1>
 	
 	<div class="quiz-container">
 		<div class="center"><ul id="pagination" class="pagination-sm"></ul></div>
@@ -131,7 +144,7 @@
 		<button class="finish-button" id="finishQuizBtn"> @Messages("quiz.finish")</button>
 	</div>
 	
-	<button id="startQuizBtn"> @Messages("quiz.start")</button>
+	<button class="margin-left-30" id="startQuizBtn"> @Messages("quiz.start")</button>
 
 	<div class="result"></div>
 	
