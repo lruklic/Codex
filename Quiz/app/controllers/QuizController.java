@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
-import forms.LoginForm;
 import forms.QuizForm;
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -59,8 +58,15 @@ public class QuizController extends Controller {
 		List<Subject> subjects = new ArrayList<Subject>();
 		subjects.add(subject);
 		
-		// TODO if there is not enough questions
+		
 		long questionsForSubject = questionService.countQuestionsBySubject(subject);
+		
+		// TODO if there is not enough questions TODO custom number of questions
+		if(questionsForSubject > 10) {
+			questionsForSubject = 10;
+		} else if (questionsForSubject == 0) {
+			return redirect(routes.StartController.redirect());
+		}
 		
 		List<Question> ql = getNRandomQuestions(questionService.getQuestionsBySubjects(subjects), (int) questionsForSubject);	// set customizable number of questions
 		

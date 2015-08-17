@@ -5,8 +5,8 @@
 $(document).ready(function(){
 	
     $( ".draggable" ).draggable({ 
-    	cursor: "crosshair", 
-    	revert: false
+    	cursor: "pointer", 
+    	revert: false,
     });
     
     $( ".droppable" ).droppable({
@@ -16,10 +16,11 @@ $(document).ready(function(){
     		
     		$(this).attr('answer', draggedAnswer);
     		
-    		$(this).addClass( "ui-state-highlight" );
+    		$(this).css("background-color","#6AA121");
     	},
     	out: function(event, ui) {
     		if ($(ui.draggable).attr("id") === $(this).attr('answer')) {
+    			$(this).css("background-color","#fff");
         		$(this).attr('answer', null);
     		}
     	}
@@ -61,7 +62,7 @@ function getConnectCorrect(questionId) {
 	
 	var answerPairs = [];
 	
-	$("#q-"+questionId+"-answers>div.droppable").each(function() {
+	$("#q-"+questionId+"-answers>div.droppable-container>div.droppable").each(function() {
 		
 		var answerPair = [];
 		

@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import services.model.NoveltyService;
 import services.model.QuestionService;
 import session.Session;
 

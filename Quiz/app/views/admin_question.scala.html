@@ -1,4 +1,4 @@
-@(form: Form[forms.QuestionForm]) 
+@(form: Form[forms.QuestionForm], subjects: List[models.enums.Subject]) 
 
 @import views.html.adminView._;
 @import views.html.init._;
@@ -170,7 +170,7 @@
 				<li class="question subject">
 					<p><label>@Messages("question.subject")</label></p>
 					<select class="chapter-trigger" name="subject" id="subject" value='@form("subject").value'> 
-					@for(subject <- Subject.values()){
+					@for(subject <- subjects){
 						<option value="@subject" @if(form("subject").value != null && form("subject").value == subject.toString()) {selected="selected"}>@Messages(subject.toString())</option> 
 					}
 					</select>
