@@ -3,6 +3,10 @@ package controllers;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import models.Admin;
 import models.User;
 import models.enums.UserType;
@@ -57,6 +61,7 @@ public class LoginController extends Controller {
 	 */
 	public static Result logout() {
 		Session.clear();
+	    
 		return ok(login.render(Form.form(LoginForm.class)));
 	}
 
@@ -68,7 +73,7 @@ public class LoginController extends Controller {
 	public static Result authenticate() {
 		Form<LoginForm> loginForm = Form.form(LoginForm.class).bindFromRequest();
 		if (loginForm.hasErrors()) {
-			flash("failure", Messages.get("login.error.values"));
+			flash("error", Messages.get("login.error.values"));
 			return ok(login.render(Form.form(LoginForm.class)));
 		} else {
 			User user = userService.findByUsernameOrEmail(loginForm.get().usernameOrEmail);
@@ -86,10 +91,10 @@ public class LoginController extends Controller {
 					return redirect(routes.PlayerController.playerHome());
 				}
 			case NO_USER:
-				flash("failure", Messages.get("login.error.username"));
+				flash("error", Messages.get("login.error.username"));
 				break;
 			case WRONG_PASSWORD:
-				flash("failure", Messages.get("login.error.password"));
+				flash("error", Messages.get("login.error.password"));
 				break;
 			}
 

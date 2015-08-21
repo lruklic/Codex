@@ -3,7 +3,8 @@
 fieldset {
 	position: relative;
 	width: 600px;
-	height: 750px;
+	height: 850px;
+	font-family: 'Open Sans', serif;
 }
 
 textarea {

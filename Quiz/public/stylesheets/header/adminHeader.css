@@ -58,11 +58,13 @@ h1 {
   color: #444;
   cursor: default;
 }
+
 .hello {
 	float: right;
 	color: white;
 	float: right;
 	margin: 10px;
+	padding-top: 20px;
 }
 
 .hello-name {

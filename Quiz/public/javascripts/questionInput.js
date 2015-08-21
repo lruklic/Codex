@@ -180,6 +180,18 @@ $(document).ready(function(){
     	$('.extra').toggle();
     });
     
+    $("#finalExam").change(function(){
+    	if($("#competition").prop('checked')) {
+    		$("#competition").prop('checked', false);
+    	}
+    });
+    
+    $("#competition").change(function(){
+    	if($("#finalExam").prop('checked')) {
+    		$("#finalExam").prop('checked', false);
+    	}
+    });
+    
 //    $("#chapter").change(function(){
 //    	var t1 = $.now();
 //    	$.ajax({

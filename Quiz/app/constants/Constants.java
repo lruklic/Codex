@@ -15,7 +15,7 @@ public class Constants {
 	
 	public static String FIRST_NAME = "firstName";
 	
-	public static Integer FINAL_EXAM_FIRST_YEAR = 2010;
+	public static Integer LEAVING_EXAM_FIRST_YEAR = 2010;
 	
 	public static Integer CURRENT_YEAR = 2015;
 	/**

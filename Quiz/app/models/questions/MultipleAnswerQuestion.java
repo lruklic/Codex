@@ -17,7 +17,7 @@ import models.enums.QuestionType;
 import models.enums.Subject;
 
 /**
- * Question with multiple options.
+ * Question with multiple answers and random number of correct ones.
  * 
  * @author Luka Ruklic
  *
@@ -33,9 +33,14 @@ public class MultipleAnswerQuestion extends Question {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * String containing correct answers, separated with semicolon.
+	 */
 	@Column(name = "correctAnswer")
 	public String correctAnswers;
-	
+	/**
+	 * String containing incorrect answers, separated with semicolon.
+	 */
 	@Column(name = "incorrectAnswers")
 	public String incorrectAnswers;
 
