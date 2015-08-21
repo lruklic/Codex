@@ -89,6 +89,7 @@ quiz=Kviz
 quiz.start=Započni kviz
 quiz.finish=Završi kviz
 quiz.confirm=Potvrdi kviz
+quiz.choose=Odaberi kviz
 quiz.number.correct=Broj točnih odgovora
 quiz.number.incorrect=Broj netočnih odgovora
 quiz.number.unanswered=Broj neodgovorenih pitanja

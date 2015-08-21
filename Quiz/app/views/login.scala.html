@@ -10,10 +10,15 @@
 	@head()
 	<script type="text/javascript" src="@routes.Assets.at("/javascripts/login.js")"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+	
+	<script type="text/javascript" src="@routes.Assets.at("/javascripts/login/facebook.login.js")"></script>
 </head>
 
 </head>
 <body>
+	<script>
+
+	</script>
 	<header>
 
 	</header>
@@ -24,10 +29,12 @@
 		
 		@helper.form(routes.LoginController.authenticate) {
 		<h2>@Messages("login.signin")</h2>
-
-		@if(flash.contains("failure") != null) {
-		<div>@flash.get("failure")</div>
-		} 
+		
+		@if(flash.containsKey("error")) {
+			<div class="error-container">
+			@flash.get("error") !
+			</div>
+		}
 		
 		<p>
 			<input class="loginTextBox loginBoxFont" id="username" type="text" name="usernameOrEmail" placeholder="@Messages("login.usernameoremail")" value="@form("email").value">
@@ -38,6 +45,10 @@
 		<p>
 			<button class="loginBtn loginBtnFont" type="submit">@Messages("login")</button>
 		</p>
+		
+		<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+		</fb:login-button>
+		
 		}
 		
 	</div>

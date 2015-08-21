@@ -4,12 +4,16 @@
 @import views.html.init._;
 @import enums._;
 @import _root_.enums._;
+@import _root_.constants._;
 
 <html>
 <head>
+
 @head()
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionInput.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/questionInput.js")"></script>
+
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
 
 </head>
 
@@ -97,11 +101,11 @@
 	<div class="extra">
 		<div>
 			<span class="finals-checkbox">
-				<input name="finalExam" type="checkbox" value="true" @setChecked("finalExam", "true")>@Messages("question.finals")
+				<input id="finalExam" name="finalExam" type="checkbox" value="true" @setChecked("finalExam", "true")>@Messages("question.finals")
 			</span> 
 			<span><label>@Messages("question.finals.year"):</label>
 				<select name="finalsYear" id="finalsYear" value='@form("finalsYear").value'>
-				@for(i <- 2010 to 2015) {
+				@for(i <- 2010 to Constants.CURRENT_YEAR) {
  					<option value="@i" @if(form("finalsYear").value != null && form("finalsYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
 				}	
 				</select>
@@ -109,11 +113,11 @@
 		</div>
 		<div>
 			<span class="competition-checkbox">
-				<input name="competition" type="checkbox" value="true" @setChecked("competition", "true") />@Messages("question.competition")
+				<input id="competition" name="competition" type="checkbox" value="true" @setChecked("competition", "true") />@Messages("question.competition")
 			</span>
 			<span><label>@Messages("question.competition.year"):</label>
 			<select name="competitionYear" id="competitionYear" value='@form("competitionYear").value'>
-			@for(i <- 2010 to 2015) {
+			@for(i <- 2010 to Constants.CURRENT_YEAR) {
  				<option value="@i" @if(form("competitionYear").value != null && form("competitionYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
 			}	
 			</select>

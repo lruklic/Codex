@@ -16,7 +16,7 @@
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
 	
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.twbsPagination.min.js")"></script>
-	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz.js")"></script>
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz/start.js")"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/svg/component.css")">
@@ -98,7 +98,7 @@
 		<div id="q-@{ccq.id}-answers">
 		
 		<div class="draggable-container">
-			@for(term1 <- ccq.getAllPairValues()) {
+			@for(term1 <- ccq.getValuesMixed()) {
 			<div id="@term1" class="draggable">
   				<label class="custom-font">@term1</label>
 			</div>
@@ -106,7 +106,7 @@
 		</div>
 		
 		<div class="droppable-container">
-		 	@for(term2 <- ccq.getAllPairKeys()) {
+		 	@for(term2 <- ccq.getKeysMixed()) {
 			<div id="@term2" class="droppable">
   				<label class="custom-font">@term2</label>
 			</div>
@@ -122,7 +122,7 @@
 	
 	<h1 class="margin-left-30"> @Messages("quiz") </h1>
 	
-	<div class="quiz-container">
+	<div class="quiz-container hidden">
 		<div class="center"><ul id="pagination" class="pagination-sm"></ul></div>
 		<div class="questions-container" id="questions">
 			@for((q, index) <- questionList.zipWithIndex){

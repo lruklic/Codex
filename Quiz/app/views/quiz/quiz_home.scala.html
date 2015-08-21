@@ -15,16 +15,16 @@
 
 <body>
 		
-		<h1> @Messages("player.quizzes") </h1>
+		<h1 class="margin-left-15"> @Messages("player.quizzes") </h1>
 		
 		@helper.form(routes.QuizController.startQuiz) {
 
-		<select name="subject">
+		<select class="margin-left-15" name="subject">
 			<option value="HISTORY">@Messages("HISTORY")</option>
 			<option value="GEOGRAPHY">@Messages("GEOGRAPHY")</option>
 		</select>
 	
-		<button type="submit">@Messages("quiz.confirm")</button>
+		<button type="submit">@Messages("quiz.choose")</button>
 		}
 
 </body>

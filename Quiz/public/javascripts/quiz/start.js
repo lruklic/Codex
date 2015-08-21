@@ -26,8 +26,6 @@ $(document).ready(function(){
     	}
     });
 	
-	$(".quiz-container").hide();
-	
 	var numberOfQuestions = $('#questions').children().size();
 	var visiblePages = (numberOfQuestions < 5 ? 5 : numberOfQuestions);
 	
@@ -46,7 +44,7 @@ $(document).ready(function(){
 	
 	$("#startQuizBtn").click(function() {
 		$("#startQuizBtn").hide();
-		$(".quiz-container").show();
+		$(".quiz-container").removeClass('hidden');
 		$('div[id^="question-"]').hide();
 		$("#question-1").show();
 	});

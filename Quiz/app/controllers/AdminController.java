@@ -66,6 +66,7 @@ public class AdminController extends Controller {
 	@Restrict(@Group("ADMIN"))
 	public static Result adminHome() {
 		String clearanceString = session().get("clearance");
+		
 		Integer clearance = 0;
 		try {
 			clearance = Integer.parseInt(clearanceString);
