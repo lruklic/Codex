@@ -20,7 +20,7 @@ import models.questions.TrueFalseQuestion;
 public class QuestionEvaluator {
 	
 	/**
-	 * Method that receives list of questions and 
+	 * Method that receives list of questions and evaluates it.
 	 * @param questionList
 	 * @param questionSet
 	 * @return
@@ -29,20 +29,13 @@ public class QuestionEvaluator {
 		
 		QuizResult result = new QuizResult();
 		
-		result.numberOfQuestions = questionList.size();
-		
 		for (JsonNode givenAnswer : questionList) {
 			Long id = givenAnswer.get("id").asLong();
 			Question question = questionSet.getQuestion(id);
 			AnswerType answerResult = evaluateQuestion(question, givenAnswer);
 			
-			if (answerResult == AnswerType.CORRECT) {
-				result.numberOfCorrectAnswers++;
-			} else if(answerResult == AnswerType.INCORRECT) {
-				result.numberOfIncorrectAnswers++;
-			} else {
-				result.numberOfUnansweredQuestions++;
-			}
+			QuestionResultPair qrp = new QuestionResultPair(question, answerResult);
+			result.addQuestionResultPair(qrp);
 			
 		}
 		

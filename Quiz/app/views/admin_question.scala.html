@@ -12,6 +12,7 @@
 @head()
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionInput.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/questionInput.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/autogrow.js")"></script>
 
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
 
@@ -31,13 +32,13 @@
 @multipleChoiceForm = {
 	<div class="multiple_choice">
 		<div class="multiple-row">
-			<label>@Messages("question.correct"): </label><input type="text" name="multipleCorrect" id="correct" value='@form("multipleCorrect").value'/>
+			<label>@Messages("question.correct"): </label><input class="autogrow" type="text" name="multipleCorrect" id="correct" value='@form("multipleCorrect").value'/>
 		</div>
 				
 		@for(i <- 0 to 4) {
 		<div class="multiple-row incorrect-@i">
 			<label class="incorrect-label">@Messages("question.incorrect"): </label>
-			<input type="text" name="incorrect[]" id="incorrect-@i" value="@form("incorrect["+i+"]").value()"/>
+			<input class="autogrow answer-input" type="text" name="incorrect[]" id="incorrect-@i" value="@form("incorrect["+i+"]").value()"/>
 		</div>
 		}
 		
@@ -59,7 +60,7 @@
 @inputAnswerForm = {
 	<div class="input_answer">
 		<p>
-		<label>@Messages("question.correct"): </label><input type="text" name="inputCorrect" id="input-correct" value='@form("inputCorrect").value' />
+		<label>@Messages("question.correct"): </label><input class="autogrow" type="text" name="inputCorrect" id="input-correct" value='@form("inputCorrect").value' />
 		</p>
 	</div>
 }
@@ -72,7 +73,7 @@
 			<th> @Messages("question.isCorrect") </th>
 			@for(i <- 0 to 5) {
 			<tr class="multiple-@i">
-				<td><input type="text" name="multiple[]" id="multiple-@i" value="@form("multiple["+i+"]").value()"/></td>
+				<td><input class="autogrow" type="text" name="multiple[]" id="multiple-@i" value="@form("multiple["+i+"]").value()"/></td>
 				<td><input type="checkbox" name="multipleTrue[]" id="multipleTrue-@i" value=@i @if(form("multipleTrue["+i+"]").value() != "") {checked}/></td>
 			</tr>
 			} 
@@ -105,7 +106,7 @@
 			</span> 
 			<span><label>@Messages("question.finals.year"):</label>
 				<select name="finalsYear" id="finalsYear" value='@form("finalsYear").value'>
-				@for(i <- 2010 to Constants.CURRENT_YEAR) {
+				@for(i <- Constants.LEAVING_EXAM_FIRST_YEAR to Constants.CURRENT_YEAR) {
  					<option value="@i" @if(form("finalsYear").value != null && form("finalsYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
 				}	
 				</select>
