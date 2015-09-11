@@ -15,9 +15,9 @@ public class Constants {
 	
 	public static String FIRST_NAME = "firstName";
 	
-	public static Integer LEAVING_EXAM_FIRST_YEAR = 2010;
+	public static int LEAVING_EXAM_FIRST_YEAR = 2010;
 	
-	public static Integer CURRENT_YEAR = 2015;
+	public static int CURRENT_YEAR = 2015;
 	/**
 	 * Competition abbreviation, in Croatian NATJ (short for 'Natjecanje').
 	 */

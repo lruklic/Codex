@@ -1,4 +1,7 @@
 function initAdmin() {
+	
+	$("input.autogrow").autoGrowInput({minWidth:100,comfortZone:30,maxWidth:300});
+	
 	// Admin page question input initialization - starting question type is Multiple Choice
 	
 	var editId = $('[name=id]').val();

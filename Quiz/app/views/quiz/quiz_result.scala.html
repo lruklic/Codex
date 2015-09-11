@@ -1,20 +1,54 @@
-@(result: _root_.quiz.QuizResult)
+@(result: _root_.quiz.QuizResult) 
 
 @import _root_.quiz._;
 
 <html>
 
 <head>
-	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/start.css")">
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/start.css")"> 
 </head>
 
 <body>
-	<label class="padding-left-15 custom-font font-size-36 italic">@result.numberOfCorrectAnswers / @result.numberOfQuestions</label>
-	
-	<div class="padding-left-15">@Messages("quiz.number.correct"): @result.numberOfCorrectAnswers</div>
-	<div class="padding-left-15">@Messages("quiz.number.incorrect"): @result.numberOfIncorrectAnswers</div>
-	<div class="padding-left-15">@Messages("quiz.number.unanswered"): @result.numberOfUnansweredQuestions</div>
+	<label class="padding-left-15 custom-font font-size-36 italic">@result.getNumberOfCorrectAnswers / @result.getNumberOfQuestions</label>
 
+	<div class="padding-left-15">
+		<div>@Messages("quiz.number.correct"): @result.getNumberOfCorrectAnswers</div>
+		<div>@Messages("quiz.number.incorrect"): @result.getNumberOfIncorrectAnswers</div>
+		<div>@Messages("quiz.number.unanswered"): @result.getNumberOfUnansweredQuestions</div>
+		
+		<div>
+			<table class="question-table" width="50%">
+			
+				<tbody>
+				@for(qrp <- result.getQuestionResultPairs){
+				<tr>
+					<td>@qrp.question.questionText</td>
+					<td class="right-wrong-cell">
+					@if(qrp.isCorrect.toString().equals("CORRECT")) {
+						<img class="tooltip-custom center" title="@qrp.question.questionText" src="@routes.Assets.at("images/right.gif")" alt="RIGHT" style="width:30px;height:30px;">
+					} else { @if(qrp.isCorrect.toString().equals("INCORRECT")) {
+						<img src="@routes.Assets.at("images/wrong.gif")" alt="WRONG" style="width:30px;height:30px;">
+					} else {
+						<img src="@routes.Assets.at("images/unanswered.gif")" alt="UNANSWERED" style="width:30px;height:30px;">
+					}}
+ 					</td>
+				</tr>
+				}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>
+	// Enable JS plugin tooltipster for every tag with .tooltip class
+	$('.tooltip-custom').tooltipster({		   
+		animation: 'grow',
+		delay: 800,
+		theme: 'tooltipster-default',
+		touchDevices: false,
+		trigger: 'hover'
+	});
+	</script>
 </body>
 
 

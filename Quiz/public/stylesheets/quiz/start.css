@@ -32,6 +32,20 @@
 	
 }
 
+table, th, td {
+	margin-top: 10px;
+	background-color: #fff;
+	border: 2px solid #000;
+}
+
+th, td {
+	padding: 5px;
+}
+
+td.right-wrong-cell {
+	text-align: center;
+}
+
 .custom-font {
 	font-family: 'Open Sans', serif;
 }
