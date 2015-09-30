@@ -3,7 +3,7 @@ package services.model;
 import java.util.List;
 
 import models.Question;
-import models.enums.Subject;
+import models.Subject;
 
 public interface QuestionService extends BaseModelService<Question> {
 	

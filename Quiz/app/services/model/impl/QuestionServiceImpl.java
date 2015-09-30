@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import models.Question;
-import models.enums.Subject;
+import models.Subject;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import services.model.QuestionService;

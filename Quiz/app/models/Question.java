@@ -15,10 +15,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import models.enums.Chapter;
-import models.enums.Grade;
+import cache.models.ModelCache;
+import cache.models.ModelCacheType;
 import models.enums.QuestionType;
-import models.enums.Subject;
 
 /**
  * <p>Question <code>class</code> represents quiz questions contained in the application.</p>
@@ -55,10 +54,10 @@ public abstract class Question extends BaseModel {
 	@Enumerated(EnumType.STRING)
 	public QuestionType questionType;
 	
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
 	public Grade grade;
 	
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
 	public Subject subject;
 	
 	@Column(name = "subjectChapter")
@@ -127,7 +126,7 @@ public abstract class Question extends BaseModel {
 		
 		String[] chaptersArray = chapters.split(";");
 		for (String chapter : chaptersArray) {
-			chaptersList.add(Chapter.valueOf(chapter));
+			chaptersList.add((Chapter) ModelCache.getInstance().getSet(ModelCacheType.CHAPTER, chapter));	// bad design
 		}
 		
 		return chaptersList;

@@ -35,6 +35,9 @@ public class QuestionEvaluator {
 			AnswerType answerResult = evaluateQuestion(question, givenAnswer);
 			
 			QuestionResultPair qrp = new QuestionResultPair(question, answerResult);
+			
+			qrp.createAnswerRecap();	// TODO add answer provided by user
+			
 			result.addQuestionResultPair(qrp);
 			
 		}

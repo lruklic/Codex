@@ -1,6 +1,6 @@
 package forms;
 
-import models.enums.Subject;
+import models.Subject;
 
 public class QuizForm {
 	

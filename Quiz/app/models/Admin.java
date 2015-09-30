@@ -12,7 +12,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import models.enums.UserType;
-import models.enums.Subject;
 
 @Entity
 @Table(name = "admin")

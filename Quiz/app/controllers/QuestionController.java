@@ -8,6 +8,7 @@ import models.Question;
 import models.User;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
+import cache.models.ModelCache;
 
 import com.google.inject.Inject;
 
@@ -57,7 +58,7 @@ public class QuestionController extends Controller {
 		User user = userService.findByUsernameOrEmail(username);
 		
 		if(questionForm.hasErrors()) {
-			return badRequest(admin_question.render(questionForm, ((Admin)user).subjectPermissions));	// TODO check for admin twice? refactor!
+			return badRequest(admin_question.render(questionForm, ((Admin)user).subjectPermissions, ModelCache.getInstance().getAllChapters(), ModelCache.getInstance().getAllGrades()));	// TODO check for admin twice? refactor!
 		}
 		
 		Question question = null;
@@ -91,7 +92,7 @@ public class QuestionController extends Controller {
 		
 		Form<QuestionForm> form = Form.form(QuestionForm.class).fill(qf);
 		
-		return ok(admin_question.render(form, question.author.subjectPermissions));
+		return ok(admin_question.render(form, question.author.subjectPermissions, ModelCache.getInstance().getAllChapters(), ModelCache.getInstance().getAllGrades()));
 		
 	}
 	

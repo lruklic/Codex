@@ -5,13 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 
+import cache.models.ModelCache;
+import cache.models.ModelCacheType;
 import constants.Constants;
 import factories.QuestionFactory;
 import models.Admin;
+import models.Grade;
 import models.Question;
-import models.enums.Grade;
+import models.Subject;
 import models.enums.QuestionType;
-import models.enums.Subject;
 import models.questions.ConnectCorrectQuestion;
 import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
@@ -45,13 +47,14 @@ public class QuestionForm {
 	/**
 	 * Question grade, required for every question.
 	 */
-	@Required
 	public Grade grade;
 	/**
 	 * Question subject, required for every question.
 	 */
-	@Required
 	public Subject subject;
+	
+	public String gradeName;
+	public String subjectName;
 	/**
  	 * Question difficulty from 1 to 5, required for every question.
 	 */
@@ -110,6 +113,9 @@ public class QuestionForm {
 	public String competitionLevel;
 	
 	public Question createQuestion(Admin admin) {
+		
+		this.subject = (Subject) ModelCache.getInstance().getSet(ModelCacheType.SUBJECT, subjectName);
+		this.grade = (Grade) ModelCache.getInstance().getSet(ModelCacheType.GRADE, gradeName);
 		
 		Question question = QuestionFactory.createQuestion(this, admin);
 		
