@@ -1,4 +1,4 @@
-@(form: Form[forms.QuestionForm], subjects: List[models.enums.Subject]) 
+@(form: Form[forms.QuestionForm], subjects: List[models.Subject], chapters: List[models.Chapter], grades: List[models.Grade]) 
 
 @import views.html.adminView._;
 @import views.html.init._;
@@ -159,9 +159,9 @@
 				</li>
 				<li class="question grade">
 					<p><label>@Messages("question.grade")</label></p>
-					<select class="chapter-trigger" name="grade" id="grade" value='@form("grade").value'> 
-					@for(grade <- Grade.values()){
-						<option value="@grade" @if(form("grade").value != null && form("grade").value == grade.toString()) {selected="selected"}> @Messages(grade.toString())</option> 
+					<select class="chapter-trigger" name="gradeName" id="grade" value='@form("grade").value'> 
+					@for(grade <- grades){
+						<option value="@grade.name" @if(form("grade").value != null && form("grade").value == grade.toString()) {selected="selected"}> @Messages(grade.name)</option> 
 					}
 					</select>
 				</li>
@@ -174,18 +174,18 @@
 			<ul class="question">
 				<li class="question subject">
 					<p><label>@Messages("question.subject")</label></p>
-					<select class="chapter-trigger" name="subject" id="subject" value='@form("subject").value'> 
+					<select class="chapter-trigger" name="subjectName" id="subject" value='@form("subject").value'> 
 					@for(subject <- subjects){
-						<option value="@subject" @if(form("subject").value != null && form("subject").value == subject.toString()) {selected="selected"}>@Messages(subject.toString())</option> 
+						<option value="@subject.name" @if(form("subject").value != null && form("subject").value == subject.toString()) {selected="selected"}>@Messages(subject.name)</option> 
 					}
 					</select>
 				</li>
 				<li class="question chapter">
 					<p><label>@Messages("question.chapter")</label></p>
 					<select class="chapter" multiple name="chapters[]" id="chapter"> 
-					@for((chapter, l) <- Chapter.values().zipWithIndex){
-						<option id="check-@l" value="@chapter.grade-@chapter.subject-@chapter" @if(form("chapter").value != null && form("chapter").value == chapter.toString()) {selected="selected"}>
-							@Messages(chapter.toString())
+					@for((chapter, l) <- chapters.zipWithIndex){
+						<option id="check-@l" value="@chapter.grade.name-@chapter.subject.name-@chapter.name" >
+							@Messages(chapter.name)
 						</option>
 					}
 					</select>

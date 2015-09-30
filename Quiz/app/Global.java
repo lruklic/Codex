@@ -1,5 +1,7 @@
 import org.h2.engine.Session;
 
+import cache.models.ModelCache;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -16,11 +18,17 @@ import play.GlobalSettings;
 import play.Logger;
 import play.mvc.Result;
 import security.SimpleDeadboltHandler;
+import services.model.ChapterService;
+import services.model.GradeService;
 import services.model.NoveltyService;
 import services.model.QuestionService;
+import services.model.SubjectService;
 import services.model.UserService;
+import services.model.impl.ChapterServiceImpl;
+import services.model.impl.GradeServiceImpl;
 import services.model.impl.NoveltyServiceImpl;
 import services.model.impl.QuestionServiceImpl;
+import services.model.impl.SubjectServiceImpl;
 import services.model.impl.UserServiceImpl;
 
 
@@ -54,10 +62,14 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(QuizController.class);
 				requestStaticInjection(SimpleDeadboltHandler.class);
 				requestStaticInjection(Session.class);
+				requestStaticInjection(ModelCache.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
 				bind(QuestionService.class).to(QuestionServiceImpl.class);
 				bind(NoveltyService.class).to(NoveltyServiceImpl.class);
+				bind(SubjectService.class).to(SubjectServiceImpl.class);
+				bind(ChapterService.class).to(ChapterServiceImpl.class);
+				bind(GradeService.class).to(GradeServiceImpl.class);
 			}
 			
 		});

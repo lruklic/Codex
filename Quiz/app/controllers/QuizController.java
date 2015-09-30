@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import models.Question;
-import models.enums.Subject;
+import models.Subject;
+import cache.models.ModelCache;
+import cache.models.ModelCacheType;
 import cache.question.QuestionCache;
 import cache.question.QuestionSet;
 
@@ -53,7 +55,7 @@ public class QuizController extends Controller {
 	public static Result startQuiz() {
 		
 		Form<QuizForm> quizForm = Form.form(QuizForm.class).bindFromRequest();
-		Subject subject = quizForm.get().subject;
+		Subject subject = (Subject) ModelCache.getInstance().getSet(ModelCacheType.SUBJECT, quizForm.get().subject.name);
 		
 		List<Subject> subjects = new ArrayList<Subject>();
 		subjects.add(subject);

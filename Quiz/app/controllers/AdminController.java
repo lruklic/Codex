@@ -3,6 +3,7 @@ package controllers;
 import models.Admin;
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
+import cache.models.ModelCache;
 
 import com.google.inject.Inject;
 
@@ -56,7 +57,7 @@ public class AdminController extends Controller {
 		
 		Admin currentAdmin = (Admin) userService.findByUsernameOrEmail(Session.getUsername());
 		
-		return ok(admin_question.render(Form.form(QuestionForm.class), currentAdmin.subjectPermissions));
+		return ok(admin_question.render(Form.form(QuestionForm.class), currentAdmin.subjectPermissions, ModelCache.getInstance().getAllChapters(), ModelCache.getInstance().getAllGrades()));
 	}
 	
 	/**

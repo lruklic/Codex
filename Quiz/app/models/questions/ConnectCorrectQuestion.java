@@ -13,10 +13,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import models.Admin;
+import models.Grade;
 import models.Question;
-import models.enums.Grade;
+import models.Subject;
 import models.enums.QuestionType;
-import models.enums.Subject;
 
 /**
  * <p> Question where user has to connect a term from first column with the appropriate
