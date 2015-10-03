@@ -96,5 +96,21 @@ public class MultipleAnswerQuestion extends Question {
 		return getIncorrectAnswers().size() + getCorrectAnswers().size();
 	}
 
+	@Override
+	public String getQuestionAnswerText() {
+		StringBuilder sb = new StringBuilder();
+		for (String answer : getCorrectAnswers()) {
+			sb.append(answer);
+			sb.append(", ");
+		}
+		
+		if (sb.length() == 0) {
+			return "NONE_CORRECT";
+		} else {
+			return sb.substring(0, sb.length()-2);
+		}
+
+	}
+
 	
 }

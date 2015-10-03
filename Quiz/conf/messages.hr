@@ -96,6 +96,10 @@ quiz.number.unanswered=Broj neodgovorenih pitanja
 quiz.true=Točno
 quiz.false=Netočno
 
+answer.correct=Točan odgovor
+answer.given=Vaš odgovor
+answer.explanation=Objašnjenje
+
 error.unauthorized.edit=Nemate dozvolu za uređivanje odabranog pitanja. 
 
 pagination.first=Prvo

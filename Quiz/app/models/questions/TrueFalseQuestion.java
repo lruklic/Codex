@@ -30,7 +30,7 @@ public class TrueFalseQuestion extends Question {
 	private static final long serialVersionUID = 1L;
 	
 	@Column(name = "answer")
-	public  Boolean answer;
+	public Boolean answer;
 
 	public TrueFalseQuestion() {
 	}
@@ -41,6 +41,17 @@ public class TrueFalseQuestion extends Question {
 		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
 		this.answer = answer;
 	}
+
+	@Override
+	public String getQuestionAnswerText() {
+		if (answer) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
+	
+	
 
 	
 }

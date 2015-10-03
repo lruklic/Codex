@@ -41,5 +41,9 @@ public class InputAnswerQuestion extends Question {
 		this.answer = answer;
 	}
 
+	@Override
+	public String getQuestionAnswerText() {
+		return answer;
+	}
 	
 }

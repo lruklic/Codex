@@ -52,7 +52,7 @@ public class QuizResult {
 		int counter = 0;
 		
 		for (QuestionResultPair qrp : questionResultPairs) {
-			if (qrp.isCorrect.equals(at)) {
+			if (qrp.isCorrect().equals(at)) {
 				counter++;
 			}
 		}

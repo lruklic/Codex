@@ -128,5 +128,20 @@ public class ConnectCorrectQuestion extends Question {
 	public Map<String, String> getAnswerPairs() {
 		return answerPairs;
 	}
+
+	@Override
+	public String getQuestionAnswerText() {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for (Map.Entry<String, String> entry : answerPairs.entrySet()) {
+			if (!entry.getKey().startsWith("EMPTY_STRING")) {
+			    sb.append(entry.getKey() + ":" + entry.getValue());
+			    sb.append(", ");
+			}
+		}
+		
+		return sb.toString().substring(0, sb.length()-2);
+	}
 	
 }
