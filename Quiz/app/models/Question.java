@@ -117,6 +117,12 @@ public abstract class Question extends BaseModel {
 	}
 	
 	/**
+	 * Method that returns question correct answer(s) in text form. Every question type must have own implementation.
+	 * @return question answer in text form
+	 */
+	public abstract String getQuestionAnswerText();
+	
+	/**
 	 * Getter for chapters that turns string into list of Chapters.
 	 * 
 	 * @return Chapter list

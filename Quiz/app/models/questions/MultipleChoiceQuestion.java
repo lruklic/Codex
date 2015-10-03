@@ -81,5 +81,10 @@ public class MultipleChoiceQuestion extends Question {
 		return getIncorrectAnswers().size() + 1;
 	}
 
+	@Override
+	public String getQuestionAnswerText() {
+		return correctAnswer;
+	}
+
 	
 }

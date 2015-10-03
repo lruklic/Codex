@@ -21,9 +21,10 @@ public class QuestionEvaluator {
 	
 	/**
 	 * Method that receives list of questions and evaluates it.
-	 * @param questionList
-	 * @param questionSet
-	 * @return
+	 * 
+	 * @param questionList list of JSON nodes from HTML that are questions and contain user answers
+	 * @param questionSet set of questions for one quiz
+	 * @return result of a quiz
 	 */
 	public QuizResult evaulateQuiz(List<JsonNode> questionList, QuestionSet questionSet) {
 		
@@ -32,9 +33,11 @@ public class QuestionEvaluator {
 		for (JsonNode givenAnswer : questionList) {
 			Long id = givenAnswer.get("id").asLong();
 			Question question = questionSet.getQuestion(id);
-			AnswerType answerResult = evaluateQuestion(question, givenAnswer);
+//			AnswerType answerResult = evaluateQuestion(question, givenAnswer);
+//			
+//			QuestionResultPair qrp = new QuestionResultPair(question);
 			
-			QuestionResultPair qrp = new QuestionResultPair(question, answerResult);
+			QuestionResultPair qrp = evaluateQuestion(question, givenAnswer);
 			
 			qrp.createAnswerRecap();	// TODO add answer provided by user
 			
@@ -46,15 +49,28 @@ public class QuestionEvaluator {
 		
 	}
 	
-	private AnswerType evaluateQuestion(Question question, JsonNode givenAnswer) {
+	/**
+	 * Method that evaluates answer given by user.
+	 * 
+	 * @param question given question
+	 * @param givenAnswer answer given by user
+	 * @return QuestionResultPair that contains all the information about question and given answer
+	 */
+	private QuestionResultPair evaluateQuestion(Question question, JsonNode givenAnswer) {
+		
+		QuestionResultPair qrp = new QuestionResultPair(question);
 		
 		QuestionType qType = question.questionType;
+		
+		StringBuilder givenAnswerText = new StringBuilder();
 		
 		JsonNode answersNode = givenAnswer.get("answers");
 		
 		switch(qType) {
 		case CONNECT_CORRECT:
 			ConnectCorrectQuestion ccq = (ConnectCorrectQuestion) question;
+			
+			qrp.isCorrect = AnswerType.CORRECT;
 			
 			// if no answer is provided, mark as Unanswered
 			if (answersNode != null) {
@@ -67,39 +83,53 @@ public class QuestionEvaluator {
 					
 					if (value.equals("")) {
 						value = "EMPTY_STRING";
+					} else {
+						givenAnswerText.append(key + ":" + value);
+						givenAnswerText.append(", ");
 					}
 					
 					String correctValueForKey = ccq.getAnswerPairs().get(key);
 					
 					if (!correctValueForKey.equals(value)) {
-						return AnswerType.INCORRECT;
+						qrp.isCorrect = AnswerType.INCORRECT;
 					}
 				}
 				
-				return AnswerType.CORRECT;
 			}
+			qrp.givenAnswer = givenAnswerText.toString().substring(0, givenAnswerText.length()-2);
 			break;
 		case INPUT_ANSWER:
 			String questionAnswer = ((InputAnswerQuestion) question).answer;
 			// check for capital letters
 			if (answersNode != null && answersNode.asText().length() > 0) {
 				if ((answersNode.asText().equals(questionAnswer))) {
-					return AnswerType.CORRECT;
+					qrp.isCorrect = AnswerType.CORRECT;
 				} else {
-					return AnswerType.INCORRECT;
+					qrp.isCorrect = AnswerType.INCORRECT;
 				}
+				
+				qrp.givenAnswer = answersNode.asText();
+				
 			} else {
-				return AnswerType.NOT_ANSWERED;
+				qrp.isCorrect = AnswerType.NOT_ANSWERED;
 			}
-
-
+			
+			break;
 		case MULTIPLE_ANSWER:
+			qrp.isCorrect = AnswerType.CORRECT;
+			
 			if (answersNode != null) {
 				List<JsonNode> answersNodes = Lists.newArrayList(answersNode.elements());
 				
 				List<String> givenAnswers = new ArrayList<>();
 				for (JsonNode answerNode : answersNodes) {
-					givenAnswers.add(answerNode.asText());
+					String answer = answerNode.asText();
+					givenAnswers.add(answer);
+					givenAnswerText.append(answer + ", ");
+				}
+				
+				if (givenAnswers.size() != 0) {
+					qrp.givenAnswer = givenAnswerText.toString().substring(0, givenAnswerText.length()-2);
 				}
 				
 				MultipleAnswerQuestion maq = (MultipleAnswerQuestion) question;
@@ -107,11 +137,15 @@ public class QuestionEvaluator {
 					if (givenAnswers.contains(correctAnswer)) {
 						// do nothing
 					} else {
-						return AnswerType.INCORRECT;
+						qrp.isCorrect = AnswerType.INCORRECT;
 					}
 				}
 				
-				return AnswerType.CORRECT;
+				for (String incorrectAnswer : maq.getIncorrectAnswers()) {
+					if (givenAnswers.contains(incorrectAnswer)) {
+						qrp.isCorrect = AnswerType.INCORRECT;
+					}
+				}
 				
 			}
 			break;
@@ -120,29 +154,37 @@ public class QuestionEvaluator {
 			if (answersNode != null) {
 				answer = answersNode.asText();
 			} else {
-				return AnswerType.NOT_ANSWERED;
+				qrp.isCorrect = AnswerType.NOT_ANSWERED;
 			}
 			if (answer.equals(((MultipleChoiceQuestion)question).correctAnswer)) {
-				return AnswerType.CORRECT;
+				qrp.isCorrect = AnswerType.CORRECT;
 			} else {
-				return AnswerType.INCORRECT;
+				qrp.isCorrect = AnswerType.INCORRECT;
 			}
+			
+			qrp.givenAnswer = answer;
+			
+			break;
 		case TRUE_FALSE:
 			if (answersNode != null) {
 				TrueFalseQuestion tfq = (TrueFalseQuestion) question;
 				if ((answersNode.asText().equals("true") && tfq.answer) || (answersNode.asText().equals("false") && !tfq.answer)) {
-					return AnswerType.CORRECT;
+					qrp.isCorrect = AnswerType.CORRECT;
 				} else {
-					return AnswerType.INCORRECT;
+					qrp.isCorrect = AnswerType.INCORRECT;
 				}
+				
+				qrp.givenAnswer = answersNode.asText();
+				
 			} else {
 				// this depends on how user answers question in HTML
-				return AnswerType.NOT_ANSWERED;
+				qrp.isCorrect = AnswerType.NOT_ANSWERED;
 			}
 			
+			break;
 		}
 		
-		return null;
+		return qrp;
 		
 	}
 	
