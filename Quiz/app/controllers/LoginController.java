@@ -1,23 +1,35 @@
 package controllers;
 
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Base64;
 
 import models.Admin;
+import models.FacebookAuth;
+import models.Player;
 import models.User;
 import models.enums.UserType;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.BodyParser.Json;
+import play.mvc.Http.RequestBody;
+import services.model.FacebookAuthService;
 import services.model.UserService;
 import session.Session;
 import views.html.login;
@@ -36,6 +48,9 @@ public class LoginController extends Controller {
 
 	@Inject
 	public static UserService userService;
+	
+	@Inject
+	public static FacebookAuthService facebookAuthService;
 
 	/**
 	 * Login method that renders form for user login. Mapped under GET in <i>routes</i>.
@@ -43,15 +58,69 @@ public class LoginController extends Controller {
 	 * @return rendered login.scala.html view
 	 */
 	public static Result login() {
-		
+
 		String userType = Session.getUserType();
 		if (userType == null) {
 			return ok(login.render(Form.form(LoginForm.class)));
 		} else {
 			return redirect(routes.StartController.redirect());
 		}
+
+	}
+
+	/**
+	 * Method that is called when User attempts to login using his/her Facebook account.
+	 * 
+	 * @return 
+	 * @throws NoSuchAlgorithmException
+	 * @throws InvalidKeyException
+	 */
+	@BodyParser.Of(Json.class)
+	public static Result facebookAuthenticate() throws NoSuchAlgorithmException, InvalidKeyException {
+
+		// TODO encapsulated in error catch
+		RequestBody body = request().body();
+		JsonNode js = body.asJson();
 		
+		String isConnected = js.get("status").asText();
 		
+		if (isConnected.equals("connected")) {
+			
+			JsonNode signedRequest = js.get("authResponse").get("signedRequest");
+				
+			JsonNode envelope = parseSignedRequest(signedRequest.asText(), "96db8f1576269a2e9cf3b3aba168b3d6", 3600);
+			
+			if (envelope == null) {
+				return null; // TODO parse of signed request was unsuccessful, write error and repeat
+			} else {
+				Long userId = envelope.get("user_id").asLong();
+				
+				JsonNode name = js.get("name");
+				
+				FacebookAuth facebookAuth = facebookAuthService.findByUserId(userId);
+				
+				User user = null;
+				if (facebookAuth == null) {		// prvi login
+					user = new Player(userId.toString(), "some_random_hash", name.get("firstName").asText(), name.get("lastName").asText(), "");
+					
+					FacebookAuth auth = new FacebookAuth(userId, user);
+					
+					facebookAuthService.save(auth);
+				
+				} else {
+					user = facebookAuth.user;
+				}
+				
+				Session.clear();
+				Session.addUserData(user);
+				
+				return ok();
+				
+			}
+
+		}
+
+		return null;
 	}
 
 	/**
@@ -61,7 +130,7 @@ public class LoginController extends Controller {
 	 */
 	public static Result logout() {
 		Session.clear();
-	    
+
 		return ok(login.render(Form.form(LoginForm.class)));
 	}
 
@@ -83,7 +152,7 @@ public class LoginController extends Controller {
 			case LOGIN_OK:
 				Session.clear();
 				Session.addUserData(user);
-				
+
 				if (user.userType.equals(UserType.ADMIN)) {
 					session("clearance", String.valueOf(((Admin) user).clearanceLevel));
 					return redirect(routes.AdminController.adminHome());
@@ -112,7 +181,7 @@ public class LoginController extends Controller {
 	 *            password input from form
 	 * @return AuthReply that describes if authentication credentials were correct
 	 */
-	public static AuthReply passwordOk(User user, String inputPassword) {
+	private static AuthReply passwordOk(User user, String inputPassword) {
 
 		if (user == null) {
 			return AuthReply.NO_USER;
@@ -136,7 +205,7 @@ public class LoginController extends Controller {
 	 *            password string that will be turned into hash
 	 * @return password hash
 	 */
-	public static String createPasswordHash(String password) {
+	private static String createPasswordHash(String password) {
 
 		String generatedPassword = null;
 
@@ -156,6 +225,51 @@ public class LoginController extends Controller {
 		}
 
 		return generatedPassword;
+	}
+	
+	private static JsonNode parseSignedRequest(String signedRequest, String secret, int maxAge) {
+		
+		String[] split = signedRequest.split("[.]", 2);
+		
+		String encodedSignature = split[0];
+		String encodedEnvelope = split[1];
+		
+		try {
+			String envelope = new String(new Base64(true).decode(encodedEnvelope));
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			JsonNode envelopeNode = null;
+
+			envelopeNode = mapper.readTree(envelope);
+			
+			String algorithm = envelopeNode.get("algorithm").asText();
+			
+		    if (!algorithm.equals("HMAC-SHA256")) {
+		        throw new Exception("Invalid request. (Unsupported algorithm.)");
+		    }
+
+		    if (((Long) envelopeNode.get("issued_at").asLong()) < System.currentTimeMillis() / 1000 - maxAge) {
+		        throw new Exception("Invalid request. (Too old.)");
+		    }
+			
+			byte[] key = secret.getBytes();
+			SecretKey hmacKey = new SecretKeySpec(key, "HMACSHA256");
+			Mac mac = Mac.getInstance("HMACSHA256");
+		    mac.init(hmacKey);
+		    byte[] digest = mac.doFinal(encodedEnvelope.getBytes());
+			
+		    if (!Arrays.equals(new Base64(true).decode(encodedSignature), digest)) {
+		        throw new Exception("Invalid request. (Invalid signature.)");
+		    }
+		    
+		    return envelopeNode;
+		    
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		
 	}
 
 }

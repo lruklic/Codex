@@ -19,12 +19,14 @@ import play.Logger;
 import play.mvc.Result;
 import security.SimpleDeadboltHandler;
 import services.model.ChapterService;
+import services.model.FacebookAuthService;
 import services.model.GradeService;
 import services.model.NoveltyService;
 import services.model.QuestionService;
 import services.model.SubjectService;
 import services.model.UserService;
 import services.model.impl.ChapterServiceImpl;
+import services.model.impl.FacebookAuthServiceImpl;
 import services.model.impl.GradeServiceImpl;
 import services.model.impl.NoveltyServiceImpl;
 import services.model.impl.QuestionServiceImpl;
@@ -70,6 +72,7 @@ public class Global extends GlobalSettings {
 				bind(SubjectService.class).to(SubjectServiceImpl.class);
 				bind(ChapterService.class).to(ChapterServiceImpl.class);
 				bind(GradeService.class).to(GradeServiceImpl.class);
+				bind(FacebookAuthService.class).to(FacebookAuthServiceImpl.class);
 			}
 			
 		});

@@ -18,8 +18,10 @@ public class QuestionResultPair {
 	 * Question asked.
 	 */
 	public Question question;
-	
-	public String givenAnswer;
+	/**
+	 * Answer given by user in text format. Default assumed answer is blank field.
+	 */
+	public String givenAnswer = "";
 	/**
 	 * Correct if user answered correctly, incorrect otherwise. // TODO partially correct
 	 */
@@ -32,6 +34,7 @@ public class QuestionResultPair {
 	
 	/**
 	 * Constructor.
+	 * 
 	 * @param question given question
 	 */
 	public QuestionResultPair(Question question) {
@@ -45,14 +48,14 @@ public class QuestionResultPair {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("<html> ");
-		sb.append("<div><b>"+Messages.get("question.text")+":</b> " + question.questionText + "</div>");		// TODO escaping!
+		sb.append("<div><b>"+Messages.get("question.text")+":</b> " + question.questionText + "</div>");		// TODO escaping!!
 		sb.append("<br>");
 		sb.append("<div><b>"+Messages.get("answer.given")+":</b> " + givenAnswer + "</div>");
 		sb.append("<br>");
 		sb.append("<div><b>"+Messages.get("answer.correct")+":</b> " + question.getQuestionAnswerText() + "</div>");
 		sb.append("<br>");
 		if (question.explanation.length() > 0) {
-			sb.append("<div><b>"+Messages.get("answer.explanation")+":</b>" + question.explanation + "</div>");		// TODO escaping!
+			sb.append("<div><b>"+Messages.get("answer.explanation")+":</b> " + question.explanation + "</div>");		// TODO escaping!!
 		}
 		sb.append("</html>");
 		
@@ -67,6 +70,12 @@ public class QuestionResultPair {
 		this.givenAnswer = givenAnswer;
 	}
 
+	/**
+	 * Getter for answer type.
+	 * 
+	 * @return enum <code>CORRECT</code> of <code>AnswerType</code> if question was answered correctly, 
+	 * <code>INCORRECT</code> otherwise or <code>NOT_ANSWERED</code> if no answer was provided
+	 */
 	public AnswerType isCorrect() {
 		return isCorrect;
 	}

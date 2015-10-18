@@ -49,7 +49,7 @@ public class QuizController extends Controller {
 	public static NoveltyService noveltyService;
 
 	public static Result quizHome() {
-		return ok(quiz_home.render());
+		return ok(quiz_home.render(ModelCache.getInstance().getAllSubjects()));
 	}
 
 	public static Result startQuiz() {

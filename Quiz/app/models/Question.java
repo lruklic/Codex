@@ -121,6 +121,11 @@ public abstract class Question extends BaseModel {
 	 * @return question answer in text form
 	 */
 	public abstract String getQuestionAnswerText();
+	/**
+	 * Method that returns question specific details for question (i.e. 
+	 * @return
+	 */
+	public abstract String getQuestionSpecificsAsString();
 	
 	/**
 	 * Getter for chapters that turns string into list of Chapters.

@@ -45,5 +45,10 @@ public class InputAnswerQuestion extends Question {
 	public String getQuestionAnswerText() {
 		return answer;
 	}
+
+	@Override
+	public String getQuestionSpecificsAsString() {
+		return answer;
+	}
 	
 }

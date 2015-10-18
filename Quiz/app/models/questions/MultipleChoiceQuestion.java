@@ -86,5 +86,14 @@ public class MultipleChoiceQuestion extends Question {
 		return correctAnswer;
 	}
 
+	@Override
+	public String getQuestionSpecificsAsString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(correctAnswer + " | " + incorrectAnswers);
+		
+		return sb.toString();
+	}
+
 	
 }
