@@ -112,5 +112,14 @@ public class MultipleAnswerQuestion extends Question {
 
 	}
 
+	@Override
+	public String getQuestionSpecificsAsString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(correctAnswers + " | " + incorrectAnswers);
+		
+		return sb.toString();
+	}
+
 	
 }

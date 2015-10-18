@@ -50,6 +50,11 @@ public class TrueFalseQuestion extends Question {
 			return "false";
 		}
 	}
+
+	@Override
+	public String getQuestionSpecificsAsString() {
+		return getQuestionAnswerText();
+	}
 	
 	
 

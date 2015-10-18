@@ -43,7 +43,7 @@ public class ConnectCorrectQuestion extends Question {
 	 * Map that contains term from one column with the term from the second column.
 	 */
 	@ElementCollection
-	public Map<String, String> answerPairs;		// instead of map, how about a custom AnswerPairs class?
+	public Map<String, String> answerPairs;		// TODO instead of map, how about a custom AnswerPairs class?
 
 	/**
 	 * Empty constructor.
@@ -136,12 +136,25 @@ public class ConnectCorrectQuestion extends Question {
 		
 		for (Map.Entry<String, String> entry : answerPairs.entrySet()) {
 			if (!entry.getKey().startsWith("EMPTY_STRING")) {
-			    sb.append(entry.getKey() + ":" + entry.getValue());
+			    sb.append(entry.getKey() + " : " + entry.getValue());
 			    sb.append(", ");
 			}
 		}
 		
 		return sb.toString().substring(0, sb.length()-2);
+	}
+
+	@Override
+	public String getQuestionSpecificsAsString() {
+		StringBuilder sb = new StringBuilder();
+		
+		for (Map.Entry<String, String> entry : answerPairs.entrySet()) {
+			sb.append(entry.getKey() + ":" + entry.getValue());
+			sb.append(",");			// TODO what if answer contains question mark?
+		}
+		
+		return sb.toString().substring(0, sb.length()-2);
+		
 	}
 	
 }

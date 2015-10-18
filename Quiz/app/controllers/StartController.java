@@ -36,6 +36,8 @@ public class StartController extends Controller {
 				// error with session().get("clearance")
 				return redirect(routes.AdminController.adminHome());
 				// TODO instead of findAll send news by type and priority
+			case "PLAYER":
+				return redirect(routes.PlayerController.playerHome());
 			}
 		}
 		

@@ -39,7 +39,7 @@ public class QuestionEvaluator {
 			
 			QuestionResultPair qrp = evaluateQuestion(question, givenAnswer);
 			
-			qrp.createAnswerRecap();	// TODO add answer provided by user
+			qrp.createAnswerRecap();
 			
 			result.addQuestionResultPair(qrp);
 			
@@ -84,7 +84,13 @@ public class QuestionEvaluator {
 					if (value.equals("")) {
 						value = "EMPTY_STRING";
 					} else {
-						givenAnswerText.append(key + ":" + value);
+						givenAnswerText.append(key + " : ");
+						if (!value.equals("null")) {
+							givenAnswerText.append(value);
+						} else {
+							givenAnswerText.append("/");
+						}
+						
 						givenAnswerText.append(", ");
 					}
 					
@@ -130,7 +136,7 @@ public class QuestionEvaluator {
 				
 				if (givenAnswers.size() != 0) {
 					qrp.givenAnswer = givenAnswerText.toString().substring(0, givenAnswerText.length()-2);
-				}
+				} 
 				
 				MultipleAnswerQuestion maq = (MultipleAnswerQuestion) question;
 				for (String correctAnswer : maq.getCorrectAnswers()) {

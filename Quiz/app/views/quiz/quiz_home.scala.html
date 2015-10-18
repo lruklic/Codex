@@ -1,3 +1,5 @@
+@(subjects: List[models.Subject]) 
+
 @import views.html.adminView._;
 @import views.html.init._;
 
@@ -20,8 +22,9 @@
 		@helper.form(routes.QuizController.startQuiz) {
 
 		<select class="margin-left-15" name="subject">
-			<option value="Povijest">@Messages("HISTORY")</option>
-			<option value="Geografija">@Messages("GEOGRAPHY")</option>
+			@for(subject <- subjects){
+				<option value="@subject.name">@Messages(subject.name)</option>
+			}
 		</select>
 	
 		<button type="submit">@Messages("quiz.choose")</button>
