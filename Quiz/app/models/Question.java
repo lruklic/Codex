@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,6 +14,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import cache.models.ModelCache;
@@ -79,6 +81,9 @@ public abstract class Question extends BaseModel {
 	
 	@Column(name = "approved")
 	public Boolean approved;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	public Image image;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Admin author;

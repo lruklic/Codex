@@ -139,7 +139,7 @@
 
 	<content>
 	<div class="question container">
-		@helper.form(routes.QuestionController.submit) {
+		@helper.form(action = routes.QuestionController.submit, 'enctype -> "multipart/form-data") {
 		<fieldset>
 			<input type="hidden" name="id" value=@form("id").value/>
 			<input type="hidden" name="editChapters" value='@form("chapters").value' />
@@ -198,6 +198,11 @@
 			<div class="extra-trigger">
 				<span class="extra-checkbox"><input name="extra" type="checkbox">@Messages("question.extra")</span>
 			</div>
+			
+			<div>
+				<input type="file" accept=".jpg, .png, .bmp" name="image">
+			</div>
+			
 			
 			@specialTags
 
