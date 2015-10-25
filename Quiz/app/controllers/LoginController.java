@@ -1,9 +1,10 @@
 package controllers;
 
 import java.security.InvalidKeyException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
+import java.util.Date;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
+import play.Play;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
@@ -29,6 +31,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.BodyParser.Json;
 import play.mvc.Http.RequestBody;
+import security.PasswordHash;
 import services.model.FacebookAuthService;
 import services.model.UserService;
 import session.Session;
@@ -88,7 +91,7 @@ public class LoginController extends Controller {
 			
 			JsonNode signedRequest = js.get("authResponse").get("signedRequest");
 				
-			JsonNode envelope = parseSignedRequest(signedRequest.asText(), "96db8f1576269a2e9cf3b3aba168b3d6", 3600);
+			JsonNode envelope = parseSignedRequest(signedRequest.asText(), Play.application().configuration().getString("fb.appSecret"), 3600);
 			
 			if (envelope == null) {
 				return null; // TODO parse of signed request was unsuccessful, write error and repeat
@@ -101,7 +104,7 @@ public class LoginController extends Controller {
 				
 				User user = null;
 				if (facebookAuth == null) {		// prvi login
-					user = new Player(userId.toString(), "some_random_hash", name.get("firstName").asText(), name.get("lastName").asText(), "");
+					user = new Player(userId.toString(), "some_random_hash", name.get("firstName").asText(), name.get("lastName").asText(), "", new Date(System.currentTimeMillis()));
 					
 					FacebookAuth auth = new FacebookAuth(userId, user);
 					
@@ -186,45 +189,13 @@ public class LoginController extends Controller {
 		if (user == null) {
 			return AuthReply.NO_USER;
 		} else {
-			String inputPasswordHash = createPasswordHash(inputPassword);
 
-			String correctPasswordHash = user.passwordHash;
-
-			if (inputPasswordHash.equals(correctPasswordHash)) {
+			if (PasswordHash.validatePassword(inputPassword, user.passwordHash)) {
 				return AuthReply.LOGIN_OK;
 			}
 		}
 
 		return AuthReply.WRONG_PASSWORD;
-	}
-
-	/**
-	 * Method that creates password hash using predefined algorithm.
-	 * 
-	 * @param password
-	 *            password string that will be turned into hash
-	 * @return password hash
-	 */
-	private static String createPasswordHash(String password) {
-
-		String generatedPassword = null;
-
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			md.update(password.getBytes());
-
-			byte[] bytes = md.digest();
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < bytes.length; i++) {
-				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-			}
-
-			generatedPassword = sb.toString();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-
-		return generatedPassword;
 	}
 	
 	private static JsonNode parseSignedRequest(String signedRequest, String secret, int maxAge) {

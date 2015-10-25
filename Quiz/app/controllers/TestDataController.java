@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import models.Admin;
@@ -15,6 +16,7 @@ import com.google.inject.Inject;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import security.PasswordHash;
 import services.model.ChapterService;
 import services.model.GradeService;
 import services.model.NoveltyService;
@@ -60,7 +62,7 @@ public class TestDataController extends Controller {
 		chapterService.save(chapter);
 		
 		// Admin fill
-		Admin admin = new Admin("lruklic", "81dc9bdb52d04dc20036dbd8313ed055", "Luka", "Ruklić", "ruklic.luka@gmail.com");
+		Admin admin = new Admin("lruklic", PasswordHash.createHash("1234"), "Luka", "Ruklić", "ruklic.luka@gmail.com", new Date(System.currentTimeMillis()));
 		
 		List<Subject> permissions = new ArrayList<>();
 		permissions.add(subjectService.getSubjectByName("Povijest"));
@@ -72,7 +74,7 @@ public class TestDataController extends Controller {
 		userService.save(admin);
 		
 		
-		admin = new Admin("kkolak", "ca3e3f85c746511b5f881fe5054d2fc7", "Kruno", "Kolak", "kolak.kruno@gmail.com");
+		admin = new Admin("kkolak", PasswordHash.createHash("1234marija"), "Kruno", "Kolak", "kolak.kruno@gmail.com", new Date(System.currentTimeMillis()));
 		
 		permissions = new ArrayList<>();
 		// permissions.add(Subject.HISTORY);
@@ -82,11 +84,25 @@ public class TestDataController extends Controller {
 		
 		userService.save(admin);
 		
-		Player player = new Player("player", "81dc9bdb52d04dc20036dbd8313ed055", "Igrač", "Igralec", "player@gmail.com");
+		Player player = new Player("player", PasswordHash.createHash("1234"), "Igrač", "Igralec", "player@gmail.com", new Date(System.currentTimeMillis()));
 		
 		userService.save(player);
 		
 		return ok();
+	}
+	
+	private void fillSubjects() {
+		
+		String[] subjectList = {"Hrvatski jezik - književnost", "Hrvatski jezik - gramatika", "Matematika", "Engleski jezik",
+								"Povijest", "Geografija", "Fizika", "Kemija", "Biologija", "Informatika", "Logika", "Sociologija",
+								"Filozofija", "Psihologija", "Politika i gospodarstvo", "Glazbena kultura", "Likovna kultura" };
+		
+		Subject subject;
+		for (String s : subjectList) {
+			subject = new Subject(s);
+			subjectService.save(subject);
+		}
+		
 	}
 	
 }
