@@ -195,14 +195,14 @@
 					<input class="subjectContent-input" name="subjectContent" type="text" id="subjectContent" value='@form("subjectContent").value' />
 				</li>
 			</ul>
+			
+			<div>
+				<p><label>@Messages("question.image")  </label><input type="file" accept=".jpg, .png, .bmp" name="image"></p>
+			</div>
+			
 			<div class="extra-trigger">
 				<span class="extra-checkbox"><input name="extra" type="checkbox">@Messages("question.extra")</span>
 			</div>
-			
-			<div>
-				<input type="file" accept=".jpg, .png, .bmp" name="image">
-			</div>
-			
 			
 			@specialTags
 

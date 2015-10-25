@@ -46,4 +46,7 @@ libraryDependencies += "org.jsoup" % "jsoup" % "1.7.2"
 // HTML to PDF library
 libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-pdf" % "9.0.7"
 
+// Amazon Web Services SDK
+libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.10.27"
+
 play.Project.playJavaSettings

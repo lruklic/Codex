@@ -129,7 +129,9 @@
 			<div class="question-container" id="question-@{index+1}">
 				<div class="question-text custom-font font-size-20">@q.questionText</div>
 				@if(q.image != null) {
-					<div> <img alt="question-text" src="@routes.Assets.at("images/" + q.image.filePath)"></div>
+					<div class="question-image-container"> 
+						<img class="landscape" alt="question-text" src="https://s3.eu-central-1.amazonaws.com/codeximages/images/@q.image.filePath" /> 
+					</div>
 				}
 				<input type="hidden" class="question-id" value="@q.id">
 				<input type="hidden" class="question-type" value="@q.questionType">

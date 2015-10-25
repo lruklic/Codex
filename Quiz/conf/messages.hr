@@ -4,6 +4,7 @@ app.motto2 = Geniuses are made, not born.
 app.motto3 = An investment in knowledge pays the best interest.
 app.motto4 = Education is the best friend. An educated person is respected everywhere. Education beats the beauty and the youth.
 app.motto5 = Poor people cannot rely on the government to come to help you in times of need. You have to get your education. Then nobody can control your destiny.
+app.motto6 = There is no wealth like knowledge, no poverty like ignorance.
 
 navigation.home=Početna
 navigation.questions=Pitanja
@@ -50,6 +51,7 @@ question.type=Vrsta pitanja
 question.grade=Razred
 question.subject=Predmet
 question.chapter=Poglavlje
+question.image=Slika
 question.chapter.multiple=Više poglavlja
 question.content=Sadržaj pitanja
 question.difficulty=Težina

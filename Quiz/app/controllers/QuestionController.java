@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
+
 import models.Admin;
 import models.Image;
 import models.Question;
@@ -21,6 +23,7 @@ import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import services.image.ImageUploader;
 import services.model.QuestionService;
 import services.model.UserService;
 import session.Session;
@@ -47,6 +50,9 @@ public class QuestionController extends Controller {
 	
 	@Inject
 	public static QuestionService questionService;
+	
+	@Inject
+	public static ImageUploader imageUploader;
 	
 	private static ExportFactory exportFactory = new ExportFactory();
 	
@@ -80,15 +86,16 @@ public class QuestionController extends Controller {
 		
 		if (picture != null) {
 		    String fileName = picture.getFilename();
-		    // String contentType = picture.getContentType();
 		    
 		    File file = picture.getFile();
 		    
-		    String newFilePath = "E:\\uploads\\" + fileName;	// put this value in properties
+		    long pictureId = System.currentTimeMillis();
 		    
-		    file.renameTo(new File(newFilePath));
+		    String newFileName = pictureId + "." + FilenameUtils.getExtension(fileName);	// add subject for better hashing
 		    
-		    Image image = new Image(newFilePath);
+		    imageUploader.uploadImage(file, newFileName);
+		    
+		    Image image = new Image(newFileName);
 		    question.image = image;
 		    
 		} else {
@@ -135,6 +142,8 @@ public class QuestionController extends Controller {
 		}
 		
 		questionService.delete(question);
+		
+		imageUploader.deleteImage(question.image.filePath);
 		
 		return redirect(routes.AdminController.adminList());
 		
