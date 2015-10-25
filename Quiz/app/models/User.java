@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -38,7 +39,7 @@ public abstract class User extends BaseModel implements Subject {
 
 	@Column(name = "password_hash")
 	public String passwordHash;
-
+	
 	@Column(name = "first_name")
 	public String firstName;
 
@@ -47,6 +48,9 @@ public abstract class User extends BaseModel implements Subject {
 
 	@Column(name = "email", unique = true)
 	public String email;
+	
+	@Column(name = "createdOn")
+	public Date createdOn;
 
 	@Enumerated(EnumType.STRING)
 	public UserType userType;
@@ -54,13 +58,14 @@ public abstract class User extends BaseModel implements Subject {
 	protected User() {
 	}
 	
-	public User(String username, String passwordHash, String firstName, String lastName, String email) {
+	public User(String username, String passwordHash, String firstName, String lastName, String email, Date createdOn) {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.createdOn = createdOn;
 	}
 
 	public String getName() {

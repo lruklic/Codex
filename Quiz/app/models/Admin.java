@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -24,8 +25,8 @@ public class Admin extends User {
 	protected Admin() {		
 	}
 	
-	public Admin(String username, String passwordHash, String firstName, String lastName, String email) {
-		super(username, passwordHash, firstName, lastName, email);
+	public Admin(String username, String passwordHash, String firstName, String lastName, String email, Date createdOn) {
+		super(username, passwordHash, firstName, lastName, email, createdOn);
 		this.userType = UserType.ADMIN;
 	}
 
