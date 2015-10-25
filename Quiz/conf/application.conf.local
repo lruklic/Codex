@@ -35,13 +35,6 @@ application.langs="hr"
 #
 
 db.default.driver=com.mysql.jdbc.Driver
-
-# Database - Stage
-# db.default.url="jdbc:mysql://46.101.183.205:3306/quizapp?characterEncoding=UTF-8"
-# db.default.user=stijena
-# db.default.password="fiC1991"
-# db.default.host="46.101.183.205"
-
 db.default.url="jdbc:mysql://localhost:3306/quizapp?characterEncoding=UTF-8"
 db.default.user=root
 db.default.password="root"
@@ -84,9 +77,3 @@ deadbolt {
         }
     }
 }
-
-# Amazon
-amazon.accessKey="AKIAIWROYQEHUWVKH2TQ"
-amazon.secretKey="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"
-amazon.imageBucketName=codeximages
-amazon.server.link="https://s3.eu-central-1.amazonaws.com/"

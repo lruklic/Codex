@@ -1,5 +1,7 @@
 import org.h2.engine.Session;
 
+import com.amazonaws.*;
+
 import cache.models.ModelCache;
 
 import com.google.inject.AbstractModule;
@@ -16,8 +18,9 @@ import controllers.TestDataController;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
-import play.mvc.Result;
 import security.SimpleDeadboltHandler;
+import services.image.ImageUploader;
+import services.image.impl.AmazonImageUploader;
 import services.model.ChapterService;
 import services.model.FacebookAuthService;
 import services.model.GradeService;
@@ -50,6 +53,9 @@ public class Global extends GlobalSettings {
 		
 		Logger.info("App has started!");
 		
+		// Property for AWS
+		System.setProperty(SDKGlobalConfiguration.ENABLE_S3_SIGV4_SYSTEM_PROPERTY, "true");
+		
 		injector = Guice.createInjector(new AbstractModule() {
 
 			@Override
@@ -73,6 +79,7 @@ public class Global extends GlobalSettings {
 				bind(ChapterService.class).to(ChapterServiceImpl.class);
 				bind(GradeService.class).to(GradeServiceImpl.class);
 				bind(FacebookAuthService.class).to(FacebookAuthServiceImpl.class);
+				bind(ImageUploader.class).to(AmazonImageUploader.class);
 			}
 			
 		});

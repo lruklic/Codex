@@ -1,8 +1,13 @@
 package controllers;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import models.Question;
 import models.Subject;
@@ -72,7 +77,8 @@ public class QuizController extends Controller {
 		
 		List<Question> ql = getNRandomQuestions(questionService.getQuestionsBySubjects(subjects), (int) questionsForSubject);	// set customizable number of questions
 		
-		QuestionCache.getInstance().addSet(Session.getUsername(), new QuestionSet(ql));; 
+		QuestionCache.getInstance().addSet(Session.getUsername(), new QuestionSet(ql));
+		
 		return ok(quiz_start.render(ql));
 	}
 	 
