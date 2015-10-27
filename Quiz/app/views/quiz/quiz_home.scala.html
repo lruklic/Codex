@@ -21,7 +21,7 @@
 		
 		@helper.form(routes.QuizController.startQuiz) {
 
-		<select class="margin-left-15" name="subject">
+		<select id="subject" class="margin-left-15" name="subject">
 			@for(subject <- subjects){
 				<option value="@subject.name">@Messages(subject.name)</option>
 			}

@@ -1,10 +1,6 @@
 package models.enums;
 
-import java.util.List;
-
-import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
-import be.objectify.deadbolt.core.models.Subject;
 
 /**
  * Enum that defines two types of web app users: players and admins.

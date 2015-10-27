@@ -9,10 +9,6 @@ import models.Chapter;
 import models.Grade;
 import models.Player;
 import models.Subject;
-import cache.models.ModelCache;
-
-import com.google.inject.Inject;
-
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -22,6 +18,8 @@ import services.model.GradeService;
 import services.model.NoveltyService;
 import services.model.SubjectService;
 import services.model.UserService;
+
+import com.google.inject.Inject;
 
 @Transactional
 public class TestDataController extends Controller {
@@ -91,7 +89,7 @@ public class TestDataController extends Controller {
 		return ok();
 	}
 	
-	private void fillSubjects() {
+	public static Result fillSubjects() {
 		
 		String[] subjectList = {"Hrvatski jezik - književnost", "Hrvatski jezik - gramatika", "Matematika", "Engleski jezik",
 								"Povijest", "Geografija", "Fizika", "Kemija", "Biologija", "Informatika", "Logika", "Sociologija",
@@ -103,6 +101,19 @@ public class TestDataController extends Controller {
 			subjectService.save(subject);
 		}
 		
+		return ok();
+		
+	}
+	
+	public static Result fillGrades() {
+		String[] gradesList = {"1. razred", "2. razred", "3. razred", "4. razred"};
+		
+		Grade grade;
+		for (String g : gradesList) {
+			grade = new Grade(g);
+			gradeService.save(grade);
+		}
+		return ok();
 	}
 	
 }
