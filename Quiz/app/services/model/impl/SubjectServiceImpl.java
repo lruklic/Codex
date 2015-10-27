@@ -4,7 +4,6 @@ import javax.persistence.Query;
 
 import play.db.jpa.JPA;
 import models.Subject;
-import models.User;
 import services.model.SubjectService;
 
 public class SubjectServiceImpl extends BaseModelServiceImpl<Subject> implements SubjectService {

@@ -17,10 +17,14 @@ POST	/facebookLogin				controllers.LoginController.facebookAuthenticate()
 POST	/question								controllers.QuestionController.submit()
 GET		/question/edit/:id						controllers.QuestionController.edit(id: Long)
 DELETE	/question/delete/:id					controllers.QuestionController.deleteQuestion(id: Long)
-GET		/question/export/:exportType			controllers.QuestionController.export(exportType: String)
+GET		/question/export/:exportType			controllers.Q uestionController.export(exportType: String)
 
 # Test data fill
 GET		/data						controllers.TestDataController.fill()
+
+# Basic data fill
+POST	/putSubjects				controllers.TestDataController.fillSubjects()
+POST	/putGrades					controllers.TestDataController.fillGrades()
 
 # News
 GET		/news/add					controllers.NewsController.add()

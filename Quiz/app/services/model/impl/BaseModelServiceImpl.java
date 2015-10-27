@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import services.model.BaseModelService;
 import models.BaseModel;
 import play.db.jpa.JPA;
-import play.db.jpa.Transactional;
 
 /**
  * <p>Base model service that implements methods for persisting/removing generic objects from database.</p>
@@ -39,6 +38,12 @@ public abstract class BaseModelServiceImpl<T extends BaseModel> implements BaseM
 	@Override
 	public List<T> findAll() {
 		return (List<T>) JPA.em().createQuery("from " + clazz.getName() + " order by id").getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findAllSorted(String sortOrderBy, String sortOrder) {
+		return (List<T>) JPA.em().createQuery("from " + clazz.getName() + " order by " + sortOrderBy + " " + sortOrder).getResultList();
 	}
 
 	@Override

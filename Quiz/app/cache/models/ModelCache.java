@@ -1,20 +1,19 @@
 package cache.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import services.model.ChapterService;
-import services.model.GradeService;
-import services.model.SubjectService;
-
-import com.google.inject.Inject;
 
 import models.BaseModel;
 import models.Chapter;
 import models.Grade;
 import models.Subject;
+import services.model.ChapterService;
+import services.model.GradeService;
+import services.model.SubjectService;
+
+import com.google.inject.Inject;
 
 /**
  * Singleton class that caches subjects, chapters and grades.
@@ -36,9 +35,9 @@ public class ModelCache {
 	
 	private static ModelCache cache;
 	
-	private static Map<String, Subject> subjectMap = new HashMap<>();
-	private static Map<String, Chapter> chapterMap = new HashMap<>();
-	private static Map<String, Grade> gradeMap = new HashMap<>();
+	private static Map<String, Subject> subjectMap = new LinkedHashMap<>();
+	private static Map<String, Chapter> chapterMap = new LinkedHashMap<>();
+	private static Map<String, Grade> gradeMap = new LinkedHashMap<>();
 
 	private ModelCache() {
 	}
@@ -57,7 +56,7 @@ public class ModelCache {
 				addSet(g.name, g);
 			}
 			
-			List<Subject> subjects = subjectService.findAll();
+			List<Subject> subjects = subjectService.findAllSorted("name", "asc");
 			for (Subject s : subjects) {
 				addSet(s.name, s);
 			}

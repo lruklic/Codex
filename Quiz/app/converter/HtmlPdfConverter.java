@@ -22,19 +22,19 @@ import com.lowagie.text.pdf.PdfWriter;
 
 public class HtmlPdfConverter {
 
-	public static ByteArrayOutputStream convertHtmlToPdf(List<String> scripts) {
-		
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		
-		Document document = new Document();
-		
-		for (String script : scripts) {
-			
-		}
-		
-		return null;
-		
-	}
+//	public static ByteArrayOutputStream convertHtmlToPdf(List<String> scripts) {
+//		
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		
+//		Document document = new Document();
+//		
+//		for (String script : scripts) {
+//			
+//		}
+//		
+//		return null;
+//		
+//	}
 	
 	public static void convertHtmlToPdf(ByteArrayOutputStream baos, Document document, String scriptContent) {
 		

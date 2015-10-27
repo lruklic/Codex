@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import constants.Constants;
+import engines.SpecialTagEngine;
 import enums.AnswerType;
 import forms.QuestionForm;
 import models.Admin;
@@ -37,7 +37,7 @@ public class QuestionFactory {
 		
 		String chapters = createChapterString(form.chapters);
 		
-		String specialTags = createSpecialTags(form);
+		String specialTags = SpecialTagEngine.createSpecialTagString(form);
 		
 		switch(form.questionType) {
 			case MULTIPLE_CHOICE:
@@ -67,28 +67,6 @@ public class QuestionFactory {
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * Method that creates special tags from user inputs in HTML.
-	 * @param form form containing relevant fields
-	 * @return specialTags String
-	 */
-	private static String createSpecialTags(QuestionForm form) {
-		StringBuilder sb = new StringBuilder();
-		
-		// TODO check if some value is not set
-		if (form.competition != null && form.competition.equals("true")) {
-			// Chosen question has previously appeared on competition
-			sb.append(Constants.COMPETITION_ABBR+"-");
-			sb.append(form.competitionLevel+"-");
-			sb.append(form.competitionYear);
-		} else if (form.finalExam != null && form.finalExam.equals("true")) {
-			sb.append(Constants.LEAVING_EXAM_ABBR+"-");
-			sb.append(form.finalsYear);
-		}
-		
-		return sb.toString();
 	}
 	
 	private static Map<String, String> createAnswerPairs(List<String> termColumn1, List<String> termColumn2) {

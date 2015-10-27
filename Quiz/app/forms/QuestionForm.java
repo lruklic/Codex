@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import cache.models.ModelCache;
 import cache.models.ModelCacheType;
-import constants.Constants;
+import engines.SpecialTagEngine;
 import factories.QuestionFactory;
 import models.Admin;
 import models.Grade;
@@ -140,23 +140,7 @@ public class QuestionForm {
 		this.difficulty = question.difficulty;
 		this.explanation = question.explanation;
 		
-		List<String> specialTags = new ArrayList<>();
-		if (question.specialTags != null) {
-			specialTags = Arrays.asList(question.specialTags.split(";"));
-		}
-		
-		for (String tag : specialTags) {
-			if (tag.startsWith(Constants.COMPETITION_ABBR)) {
-				String[] tagParts = tag.split("-");
-				this.competition = "true";
-				this.competitionLevel = tagParts[1];
-				this.competitionYear = tagParts[2];
-			} else if (tag.startsWith(Constants.LEAVING_EXAM_ABBR)) {
-				String[] tagParts = tag.split("-");
-				this.finalExam = "true";
-				this.finalsYear = tagParts[1];
-			}
-		}
+		SpecialTagEngine.fillQuestionForm(question, this);
 		
 		if (question.chapters != null) {
 			List<String> chaptersList = Arrays.asList(question.chapters.split(";"));
