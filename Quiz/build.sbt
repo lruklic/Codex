@@ -34,6 +34,11 @@ libraryDependencies ++= Seq(
   "be.objectify" %% "deadbolt-java" % "2.2-RC5"
 )
 
+// Java Mail
+libraryDependencies += "javax.mail" % "mail" % "1.4.1"
+
+libraryDependencies += "javax.activation" % "activation" % "1.1.1"
+
 // Play Messages in JS
 libraryDependencies += "org.julienrf" %% "play-jsmessages" % "1.6.1"
 

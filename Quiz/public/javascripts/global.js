@@ -22,9 +22,14 @@ function checkLoginState() {
 }
 
 function statusChangeCallback(response) {
-	FB.logout(function(response) {
+	if (response.status === "connected") {
+		FB.logout(function(response) {
+			window.location = "/logout";
+	    });
+	} else {
 		window.location = "/logout";
-    });
+	}
+
 	
 }
 
@@ -37,6 +42,16 @@ $(document).ready(function(){
 		theme: 'tooltipster-default',
 		touchDevices: false,
 		trigger: 'hover'
+	});
+	
+	$('.tooltip-info').tooltipster({		   
+		animation: 'grow',
+		position: 'right',
+		maxWidth: 250,
+		contentAsHTML: true,
+		theme: 'tooltipster-default',
+		touchDevices: false,
+		trigger: 'click'
 	});
 	
 });

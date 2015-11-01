@@ -12,10 +12,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import models.enums.UserType;
 import be.objectify.deadbolt.core.models.Permission;
 import be.objectify.deadbolt.core.models.Role;
 import be.objectify.deadbolt.core.models.Subject;
-import models.enums.UserType;
 
 /**
  * User entity, superclass for Player and Admin entities.
@@ -51,6 +51,9 @@ public abstract class User extends BaseModel implements Subject {
 	
 	@Column(name = "createdOn")
 	public Date createdOn;
+	
+	@Column(name = "activated")
+	public Boolean activated = false;
 
 	@Enumerated(EnumType.STRING)
 	public UserType userType;
