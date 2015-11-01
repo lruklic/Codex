@@ -109,6 +109,12 @@ pagination.last=Posljednje
 pagination.previous=Prethodno
 pagination.next=Iduće
 
+info.register.player = <div>Igrač sustav koristi za učenje, pomoću njega rješava probne ispite i prati svoj napredak.</div><br><div>Registracija za igrača je automatska te nakon uspješno popunjenih polja u obrascu, na e-mail adresu stiže link za potvrdu registracije.</div><br><div>Prijava je također moguća putem <b>Facebooka</b> na početnoj stranici aplikacije</div> 
+info.register.admin = <div>Administrator je korisnik koji dodaje nova pitanja u sustav.</div><br><div>Registracija za administratora nije automatska te je potrebno pričekati određeno vrijeme na odgovor od administratora stranice.</div>
+
+PLAYER=Igrač
+ADMIN=Administrator
+
 SCHOOL = Školsko
 CITY = Općinsko/Gradsko
 REGION = Županijsko

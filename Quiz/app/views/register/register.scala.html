@@ -2,17 +2,26 @@
 
 @import views.html.init._;
 @import views.html.register._;
+@import enums._;
 
 <html>
 
 <head>
+
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/register/register.css")">
 	@head()
+	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+	
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/register/register.js")"></script>
+	
 </head>
 
 <body>
 	
-	@helper.form(action = routes.RegisterController.submit) {
+	@helper.form(action = routes.RegisterController.submit, 'id -> "registerForm") {
 	<fieldset>
 	<legend>@Messages("register")</legend>
 	
@@ -22,7 +31,17 @@
 	<input class="password-input" name="password" type="password" id="password" />
 	<p><label>@Messages("register.password.retype")</label></p>
 	<input class="password-input" name="retype" type="password" id="retype" />
-	
+
+	<div>
+		<p><label>@Messages("register.userType")</label></p>	
+		<select name="userType" id="userType" value='@form("userType").value'> 
+		@for(ut <- UserType.values()){
+			<option value="@ut" @if(form("userType").value !=null && form("userType").value== ut.toString()) {selected="selected"}>@Messages(ut.toString())</option> 
+		}
+		</select>
+		<img id="userType-info" class="tooltip-info" src="@routes.Assets.at("images/info.png")" title="@Messages("info.register.player")" alt="INFO">
+	</div>
+
 	<p><label>@Messages("register.firstName")</label></p>
 	<input class="firstname-input" name="firstName" type="text" id="firstName" />
 	
@@ -32,9 +51,9 @@
 	<p><label>@Messages("register.email")</label></p>
 	<input class="email-input" name="email" type="email" id="email" />
 	
-	<button type="submit">@Messages("register")</button>
-	
 	</fieldset>
+	
+	<button type="submit">@Messages("register")</button>
 	}
 	
 	

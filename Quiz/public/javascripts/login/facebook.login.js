@@ -74,11 +74,6 @@
       statusChangeCallback(response);
       var status = response.status;
       
-      if (status === "connected") {
-    	  var authResponse = response.authResponse;
-    	  window.location = "/player/home";
-      }
-      
     });
 
     };

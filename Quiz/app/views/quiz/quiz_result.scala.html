@@ -17,7 +17,7 @@
 		<div>@Messages("quiz.number.unanswered"): @result.getNumberOfUnansweredQuestions</div>
 		
 		<div>
-			<table class="question-table" width="50%">
+			<table class="question-table">
 			
 				<tbody>
 				@for(qrp <- result.getQuestionResultPairs){
@@ -25,11 +25,11 @@
 					<td>@qrp.question.questionText</td>
 					<td class="right-wrong-cell">
 					@if(qrp.isCorrect.toString().equals("CORRECT")) {
-						<img class="tooltip-custom" src="@routes.Assets.at("images/right.gif")" alt="RIGHT" style="width:30px;height:30px;">
+						<img class="tooltip-custom" src="@routes.Assets.at("images/right.gif")" alt="RIGHT">
 					} else { @if(qrp.isCorrect.toString().equals("INCORRECT")) {
-						<img class="tooltip-custom" src="@routes.Assets.at("images/wrong.gif")" title="@qrp.answerRecap" alt="WRONG" style="width:30px;height:30px;">
+						<img class="tooltip-custom" src="@routes.Assets.at("images/wrong.gif")" title="@qrp.answerRecap" alt="WRONG">
 					} else {
-						<img src="@routes.Assets.at("images/unanswered.gif")" alt="UNANSWERED" style="width:30px;height:30px;">
+						<img src="@routes.Assets.at("images/unanswered.gif")" alt="UNANSWERED">
 					}}
  					</td>
 				</tr>

@@ -57,8 +57,17 @@ th, td {
 	padding: 5px;
 }
 
+img {
+	width: 30px;
+	height: 30px;
+}
+
 td.right-wrong-cell {
 	text-align: center;
+}
+
+.question-table {
+	width: 50%;
 }
 
 .custom-font {
