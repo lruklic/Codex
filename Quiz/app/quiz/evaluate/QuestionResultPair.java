@@ -1,9 +1,9 @@
 package quiz.evaluate;
 
-import enums.AnswerType;
 import models.Question;
-
+import models.enums.QuestionType;
 import play.i18n.Messages;
+import enums.AnswerType;
 
  /**
  * Key value structure for question and evaluated answer provided by player.
@@ -50,12 +50,23 @@ public class QuestionResultPair {
 		sb.append("<html> ");
 		sb.append("<div><b>"+Messages.get("question.text")+":</b> " + question.questionText + "</div>");		// TODO escaping!!
 		sb.append("<br>");
+		
+		String correctAnswer;
+		if (question.questionType == QuestionType.TRUE_FALSE) {
+			givenAnswer = Messages.get("quiz."+givenAnswer);
+			correctAnswer = Messages.get("quiz."+question.getQuestionAnswerText());
+		} else {
+			correctAnswer = question.getQuestionAnswerText();
+		}
+		
 		sb.append("<div><b>"+Messages.get("answer.given")+":</b> " + givenAnswer + "</div>");
 		sb.append("<br>");
-		sb.append("<div><b>"+Messages.get("answer.correct")+":</b> " + question.getQuestionAnswerText() + "</div>");
+		sb.append("<div><b>"+Messages.get("answer.correct")+":</b> " + correctAnswer + "</div>");
 		sb.append("<br>");
 		if (question.explanation.length() > 0) {
-			sb.append("<div><b>"+Messages.get("answer.explanation")+":</b> " + question.explanation + "</div>");		// TODO escaping!!
+			sb.append("<div><b>"+Messages.get("answer.explanation")+":</b></div>");
+			sb.append("<br>");
+			sb.append("<div>" + question.explanation + "</div>");		// TODO escaping!!
 		}
 		sb.append("</html>");
 		

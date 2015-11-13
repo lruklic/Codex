@@ -4,8 +4,10 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import security.SimpleDeadboltHandler;
+import services.EmailService;
 import services.image.ImageUploader;
 import services.image.impl.AmazonImageUploader;
+import services.impl.EmailServiceImpl;
 import services.model.ActivationLinkService;
 import services.model.ChapterService;
 import services.model.FacebookAuthService;
@@ -28,6 +30,7 @@ import com.amazonaws.SDKGlobalConfiguration;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 
+import controllers.ActivationController;
 import controllers.AdminController;
 import controllers.LoginController;
 import controllers.NewsController;
@@ -68,6 +71,7 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(AdminController.class);
 				requestStaticInjection(NewsController.class);
 				requestStaticInjection(QuizController.class);
+				requestStaticInjection(ActivationController.class);
 				requestStaticInjection(SimpleDeadboltHandler.class);
 				requestStaticInjection(Session.class);
 				requestStaticInjection(ModelCache.class);
@@ -81,6 +85,7 @@ public class Global extends GlobalSettings {
 				bind(FacebookAuthService.class).to(FacebookAuthServiceImpl.class);
 				bind(ActivationLinkService.class).to(ActivationLinkServiceImpl.class);
 				bind(ImageUploader.class).to(AmazonImageUploader.class);
+				bind(EmailService.class).to(EmailServiceImpl.class);
 			}
 			
 		});

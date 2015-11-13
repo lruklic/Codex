@@ -42,6 +42,8 @@ news.text=Obavijest
 news.type=Vrsta
 news.priority=Prioritet
 
+register=Registracija
+
 questions=Pitanja
 question.answers=Odgovori
 question.isCorrect=Točno?
@@ -54,7 +56,6 @@ question.chapter=Poglavlje
 question.image=Slika
 question.chapter.multiple=Više poglavlja
 question.content=Sadržaj pitanja
-question.difficulty=Težina
 question.correct=Točan odgovor
 question.incorrect=Pogrešan odgovor
 question.multiple.number=Broj mogućih odgovora
@@ -68,7 +69,8 @@ question.terms=Pojmovi
 question.filter=Filter
 question.filter.type=Filtriraj po
 question.export=Izvezi pitanja
-question.extra = Dodatno
+question.import=Uvezi pitanja
+question.extra=Dodatno
 question.finals=S državne mature
 question.finals.year=Godina
 question.competition=S natjecanja
@@ -102,7 +104,10 @@ answer.correct=Točan odgovor
 answer.given=Vaš odgovor
 answer.explanation=Objašnjenje
 
+success.user.activated=Korisnički račun je uspješno aktiviran!
+
 error.unauthorized.edit=Nemate dozvolu za uređivanje odabranog pitanja. 
+error.user.activated=Niste aktivirali korisnički račun. Provjerite e-mail sandučić i pratite korake poslane u mailu.
 
 pagination.first=Prvo
 pagination.last=Posljednje
@@ -111,6 +116,9 @@ pagination.next=Iduće
 
 info.register.player = <div>Igrač sustav koristi za učenje, pomoću njega rješava probne ispite i prati svoj napredak.</div><br><div>Registracija za igrača je automatska te nakon uspješno popunjenih polja u obrascu, na e-mail adresu stiže link za potvrdu registracije.</div><br><div>Prijava je također moguća putem <b>Facebooka</b> na početnoj stranici aplikacije</div> 
 info.register.admin = <div>Administrator je korisnik koji dodaje nova pitanja u sustav.</div><br><div>Registracija za administratora nije automatska te je potrebno pričekati određeno vrijeme na odgovor od administratora stranice.</div>
+
+email.player.welcome.subject = Dobrodošli u Codex!
+email.player.welcome.content = Registracija je uspješno provedena. Molimo Vas da kliknete na link kako bi završili registraciju.
 
 PLAYER=Igrač
 ADMIN=Administrator

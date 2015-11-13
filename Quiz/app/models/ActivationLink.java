@@ -1,5 +1,6 @@
 package models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -27,7 +28,7 @@ public class ActivationLink extends BaseModel {
 	@Column(name = "link")
 	public String link;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	public User user;
 	
 	public ActivationLink(String link, User user) {

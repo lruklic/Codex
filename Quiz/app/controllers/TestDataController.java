@@ -41,23 +41,9 @@ public class TestDataController extends Controller {
 	
 	public static Result fill() {
 		
-		// Subject fill
-		Subject subject = new Subject("Geografija");
-		subjectService.save(subject);
-		
-		subject = new Subject("Povijest");
-		subjectService.save(subject);
-		
-		subject = new Subject("Matematika");
-		subjectService.save(subject);
-		
-		// Grade fill
-		Grade grade = new Grade("Prvi razred");
-		gradeService.save(grade);
-		
-		// Chapter fill
-		Chapter chapter = new Chapter("Uvod u povijest", gradeService.findById((long) 1), subjectService.findById((long) 1));
-		chapterService.save(chapter);
+		fillSubjects();
+		fillGrades();
+		fillChaptersGeography();
 		
 		// Admin fill
 		Admin admin = new Admin("lruklic", PasswordHash.createHash("1234"), "Luka", "Ruklić", "ruklic.luka@gmail.com", new Date(System.currentTimeMillis()));
@@ -114,6 +100,21 @@ public class TestDataController extends Controller {
 			gradeService.save(grade);
 		}
 		return ok();
+	}
+	
+	public static Result fillChaptersGeography() {
+		
+		String[] chapterList = {"Uvod u geografiju", "Zemlja u Sunčevu sustavu", "Orijentacija i određivanje položaja", "Predočavanje zemljine površine",
+				"Geološke značajke i reljef Zemlje", "Klima na Zemlji", "Voda, tlo i život na Zemlji"};
+		
+		Chapter chapter;
+		for (String c : chapterList) {
+			chapter = new Chapter(c, gradeService.findById((long) 1), subjectService.getSubjectByName("Geografija"));
+			chapterService.save(chapter);
+		}
+		
+		return ok();
+		
 	}
 	
 }

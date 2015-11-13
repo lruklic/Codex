@@ -30,7 +30,7 @@ public class QuestionServiceImpl extends BaseModelServiceImpl<Question> implemen
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Question> findQuestionsByAdmin(String username) {
-		Query query = JPA.em().createQuery("SELECT q FROM Question q WHERE q.admin.username = :username", Question.class);
+		Query query = JPA.em().createQuery("SELECT q FROM Question q WHERE q.author.username = :username", Question.class);
 		query.setParameter("username", username);
 		return query.getResultList();
 	}

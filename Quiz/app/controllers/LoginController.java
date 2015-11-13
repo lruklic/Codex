@@ -9,32 +9,33 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
-
 import models.Admin;
 import models.FacebookAuth;
 import models.Player;
 import models.User;
 import models.enums.UserType;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.inject.Inject;
+import org.apache.commons.codec.binary.Base64;
 
 import play.Play;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
 import play.mvc.BodyParser;
-import play.mvc.Controller;
-import play.mvc.Result;
 import play.mvc.BodyParser.Json;
+import play.mvc.Controller;
 import play.mvc.Http.RequestBody;
+import play.mvc.Result;
 import security.PasswordHash;
 import services.model.FacebookAuthService;
 import services.model.UserService;
 import session.Session;
 import views.html.login;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.Inject;
+
 import enums.AuthReply;
 import forms.LoginForm;
 
@@ -149,26 +150,31 @@ public class LoginController extends Controller {
 		} else {
 			User user = userService.findByUsernameOrEmail(loginForm.get().usernameOrEmail);
 			AuthReply passwordOk = passwordOk(user, loginForm.get().password);
+			
+			if (user.activated) {
+				switch (passwordOk) {
+				case LOGIN_OK:
+					Session.clear();
+					Session.addUserData(user);
 
-			switch (passwordOk) {
-			case LOGIN_OK:
-				Session.clear();
-				Session.addUserData(user);
-
-				if (user.userType.equals(UserType.ADMIN)) {
-					session("clearance", String.valueOf(((Admin) user).clearanceLevel));
-					return redirect(routes.AdminController.adminHome());
-				} else {
-					return redirect(routes.PlayerController.playerHome());
+					if (user.userType.equals(UserType.ADMIN)) {
+						session("clearance", String.valueOf(((Admin) user).clearanceLevel));
+						return redirect(routes.AdminController.adminHome());
+					} else {
+						return redirect(routes.PlayerController.playerHome());
+					}
+				case NO_USER:
+					flash("error", Messages.get("login.error.username"));
+					break;
+				case WRONG_PASSWORD:
+					flash("error", Messages.get("login.error.password"));
+					break;
 				}
-			case NO_USER:
-				flash("error", Messages.get("login.error.username"));
-				break;
-			case WRONG_PASSWORD:
-				flash("error", Messages.get("login.error.password"));
-				break;
+				
+			} else {
+				flash("error", Messages.get("error.user.activated"));
 			}
-
+			
 			return badRequest(login.render(Form.form(LoginForm.class)));
 
 		}
@@ -219,7 +225,7 @@ public class LoginController extends Controller {
 		        throw new Exception("Invalid request. (Unsupported algorithm.)");
 		    }
 
-		    if (((Long) envelopeNode.get("issued_at").asLong()) < System.currentTimeMillis() / 1000 - maxAge) {
+		    if ((envelopeNode.get("issued_at").asLong()) < System.currentTimeMillis() / 1000 - maxAge) {
 		        throw new Exception("Invalid request. (Too old.)");
 		    }
 			

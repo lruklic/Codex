@@ -17,8 +17,6 @@ public enum FilterType {
 	
 	CHAPTER_FILTER,
 	
-	DIFFICULTY_FILTER,
-	
 	SUBMITTER_FILTER
 	
 }

@@ -5,9 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import engines.SpecialTagEngine;
-import enums.AnswerType;
-import forms.QuestionForm;
 import models.Admin;
 import models.Question;
 import models.questions.ConnectCorrectQuestion;
@@ -15,6 +12,9 @@ import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
+import engines.SpecialTagEngine;
+import enums.AnswerType;
+import forms.QuestionForm;
 
 /**
  * Factory for creating questions.
@@ -43,27 +43,27 @@ public class QuestionFactory {
 			case MULTIPLE_CHOICE:
 				String incorrect = createIncorrectAnswers(form.incorrect);
 				return new MultipleChoiceQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
-						specialTags, form.difficulty, form.explanation, currentAdmin, form.multipleCorrect, incorrect);
+						specialTags, form.explanation, currentAdmin, form.multipleCorrect, incorrect);
 			case MULTIPLE_ANSWER:
 				String multipleCorrect = createMultipleAnswersString(form.multiple, form.multipleTrue, AnswerType.CORRECT);
 				String multipleIncorrect = createMultipleAnswersString(form.multiple, form.multipleTrue, AnswerType.INCORRECT);
 				return new MultipleAnswerQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
-						specialTags, form.difficulty, form.explanation, currentAdmin, multipleCorrect, multipleIncorrect);
+						specialTags, form.explanation, currentAdmin, multipleCorrect, multipleIncorrect);
 			case TRUE_FALSE:
 				Boolean trueFalse = false;
 				if (form.trueFalse != null) {
 					trueFalse = true;
 				}
 				return new TrueFalseQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
-						specialTags, form.difficulty, form.explanation, currentAdmin, trueFalse);
+						specialTags, form.explanation, currentAdmin, trueFalse);
 			case INPUT_ANSWER:
 				return new InputAnswerQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
-						specialTags, form.difficulty, form.explanation, currentAdmin, form.inputCorrect);
+						specialTags, form.explanation, currentAdmin, form.inputCorrect);
 			case CONNECT_CORRECT:
 				// prevent creating questions with unpaired left or more left than right
 				Map<String, String> answerPairs = createAnswerPairs(form.termColumn1, form.termColumn2);
 				return new ConnectCorrectQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
-						specialTags, form.difficulty, form.explanation, currentAdmin, answerPairs);
+						specialTags, form.explanation, currentAdmin, answerPairs);
 		}
 		
 		return null;

@@ -2,6 +2,11 @@ function initAdmin() {
 	
 	$("input.autogrow").autoGrowInput({minWidth:100,comfortZone:30,maxWidth:300});
 	
+	tinymce.init({
+		selector:"#explanation",
+		plugins: "link"
+	});
+	
 	// Admin page question input initialization - starting question type is Multiple Choice
 	
 	var editId = $('[name=id]').val();
@@ -15,11 +20,6 @@ function initAdmin() {
     	$('.incorrect-'+int).hide();
 	}
 	
-	// If difficulty is not set, set it to 1 (redundant?)
-	if($('#difficulty').val() === "") {
-		$('#difficulty').val(1);
-	}
-	
 	if($('#multipleNumber').val() === "") {
 		$('#multipleNumber').val(3);
 	} else {
@@ -31,7 +31,6 @@ function initAdmin() {
 	
 	// Set Question Type based on current question
 	setQuestionType();
-	changeDifficultyColor();
 	
 	// Initial subject is HISTORY and initial grade is 1ST
 	var numberOfChapters = $("#chapter > option").length;
@@ -83,32 +82,6 @@ function setQuestionType() {
 	}
 	$("."+qType).show();
 	
-}
-
-function changeDifficultyColor() {
-   	if ($.isNumeric($('#difficulty').val()) && $('#difficulty').val() < 6 && $('#difficulty').val() > 0) {
-		var difficulty = $('#difficulty').val();
-		switch (difficulty) {
-			case "1": 
-				$('#difficulty').css('background-color', '#8CFA70');
-				break;
-			case "2": 
-				$('#difficulty').css('background-color', '#BFFA87');
-				break;
-			case "3": 
-				$('#difficulty').css('background-color', '#ECFF6E');
-				break;
-			case "4": 
-				$('#difficulty').css('background-color', '#F7CE28');
-				break;
-			case "5": 
-				$('#difficulty').css('background-color', '#FA661B');
-				break;
-		}
-		
-	} else {
-		$('#difficulty').val(1);
-	}
 }
 
 function questionNumberChange() {
@@ -207,12 +180,6 @@ $(document).ready(function(){
 //    		type: 'GET'
 //    	});
 //    });
-    
-    // Difficulty picker color change
-    $('#difficulty').on('input',function(){ 
-    	changeDifficultyColor();
-    });
-    
     
     // Method that creates or deletes incorrect answer input forms when number of answers is changed
     $('#multipleNumber').on('input',function(){

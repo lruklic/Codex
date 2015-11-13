@@ -48,9 +48,9 @@ public class MultipleAnswerQuestion extends Question {
 	}
 	
 	public MultipleAnswerQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, String correctAnswers, String incorrectAnswers) {
+			String subjectContent, String specialTags, String explanation, Admin admin, String correctAnswers, String incorrectAnswers) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, explanation, admin);
 		this.correctAnswers = correctAnswers;
 		this.incorrectAnswers = incorrectAnswers;
 	}
@@ -113,12 +113,13 @@ public class MultipleAnswerQuestion extends Question {
 	}
 
 	@Override
-	public String getQuestionSpecificsAsString() {
-		StringBuilder sb = new StringBuilder();
+	public List<String> getQuestionSpecificsAsList() {
+		List<String> questionSpecifics = new ArrayList<>();
 		
-		sb.append(correctAnswers + " | " + incorrectAnswers);
+		questionSpecifics.add(correctAnswers);
+		questionSpecifics.add(incorrectAnswers);
 		
-		return sb.toString();
+		return questionSpecifics;
 	}
 
 	

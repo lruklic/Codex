@@ -10,36 +10,48 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import play.Play;
 import services.EmailService;
 
-public class EmailServiceImpl implements EmailService {
+/**
+ * Implementation of email service, using GMail smtp as default.
+ * 
+ * @author Luka Ruklic
+ *
+ */
 
-	private static String from = "ruklic.luka@gmail.com";
-	private static String host = "localhost";
+public class EmailServiceImpl implements EmailService {
 	
 	@Override
-	public void sendEmail(String recepientAddress) {
+	public void sendEmail(String recepientAddress, String subject, String messageContent) {
 		Properties props = System.getProperties();
-		props.put("mail.smtp.host", "smtp.gmail.com");  
-		props.put("mail.smtp.socketFactory.port", "465");  
-		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");  
-		props.put("mail.smtp.auth", "true");  
-		props.put("mail.smtp.port", "465");  
+		props.put("mail.smtp.host", Play.application().configuration().getString("mail.smtp.host"));
+		props.put("mail.smtp.port", Play.application().configuration().getString("mail.smtp.port"));
 		
-		Session session = Session.getDefaultInstance(props, new Authenticator() {
+		props.put("mail.smtp.auth", "true");  
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		
+		Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-				return new javax.mail.PasswordAuthentication("", "");
+				return new javax.mail.PasswordAuthentication(
+					Play.application().configuration().getString("mail.address"),
+					Play.application().configuration().getString("mail.password")
+				);
 			}
 		});
 		
 		try {
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(from));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("bbruklic@gmail.com"));
-			message.setSubject("Test Mail from Java Program");
-			message.setText("You can send mail from Java program by using mail");
+			
+			message.setFrom(new InternetAddress(Play.application().configuration().getString("mail.address")));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientAddress));
+			message.setSubject(subject);
+			message.setText(messageContent);
+			
 			Transport.send(message);
+			
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}

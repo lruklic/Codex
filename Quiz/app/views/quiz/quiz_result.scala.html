@@ -4,10 +4,6 @@
 
 <html>
 
-<head>
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/start.css")"> 
-</head>
-
 <body>
 	<label class="padding-left-15 custom-font font-size-36 italic">@result.getNumberOfCorrectAnswers / @result.getNumberOfQuestions</label>
 
@@ -22,12 +18,12 @@
 				<tbody>
 				@for(qrp <- result.getQuestionResultPairs){
 				<tr>
-					<td>@qrp.question.questionText</td>
+					<td class="result-question-text-cell">@qrp.question.questionText</td>
 					<td class="right-wrong-cell">
 					@if(qrp.isCorrect.toString().equals("CORRECT")) {
 						<img class="tooltip-custom" src="@routes.Assets.at("images/right.gif")" alt="RIGHT">
 					} else { @if(qrp.isCorrect.toString().equals("INCORRECT")) {
-						<img class="tooltip-custom" src="@routes.Assets.at("images/wrong.gif")" title="@qrp.answerRecap" alt="WRONG">
+						<img class="tooltip-custom cursor-pointer" src="@routes.Assets.at("images/wrong.gif")" title="@qrp.answerRecap" alt="WRONG">
 					} else {
 						<img src="@routes.Assets.at("images/unanswered.gif")" alt="UNANSWERED">
 					}}
@@ -46,11 +42,20 @@
 		position: 'right',
 		contentAsHTML: true,
 		animation: 'grow',
-		delay: 300,
+		interactive: true,
+		autoclose: false,
+		delay: 200,
 		theme: 'tooltipster-default',
 		touchDevices: false,
-		trigger: 'hover'
+		trigger: 'click'
 	});
+	
+	$('.result-question-text').quickfit({
+		min: 14,
+		max: 24,
+		truncate: false
+	});
+	
 	</script>
 </body>
 
