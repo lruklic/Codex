@@ -5,10 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 
-import cache.models.ModelCache;
-import cache.models.ModelCacheType;
-import engines.SpecialTagEngine;
-import factories.QuestionFactory;
 import models.Admin;
 import models.Grade;
 import models.Question;
@@ -20,6 +16,10 @@ import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
 import play.data.validation.Constraints.Required;
+import cache.models.ModelCache;
+import cache.models.ModelCacheType;
+import engines.SpecialTagEngine;
+import factories.QuestionFactory;
 
 /**
  * Form that stores question fields from user input and contains methods that create <code>Question</code> 
@@ -55,11 +55,6 @@ public class QuestionForm {
 	
 	public String gradeName;
 	public String subjectName;
-	/**
- 	 * Question difficulty from 1 to 5, required for every question.
-	 */
-	@Required
-	public int difficulty;
 	/**
 	 * Chapters for question.
 	 */
@@ -137,7 +132,6 @@ public class QuestionForm {
 		this.grade = question.grade;
 		this.subject = question.subject;
 		this.subjectContent = question.subjectContent;
-		this.difficulty = question.difficulty;
 		this.explanation = question.explanation;
 		
 		SpecialTagEngine.fillQuestionForm(question, this);

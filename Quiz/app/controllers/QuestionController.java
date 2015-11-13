@@ -4,17 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.commons.io.FilenameUtils;
-
 import models.Admin;
 import models.Image;
 import models.Question;
 import models.User;
-import be.objectify.deadbolt.java.actions.Group;
-import be.objectify.deadbolt.java.actions.Restrict;
-import cache.models.ModelCache;
 
-import com.google.inject.Inject;
+import org.apache.commons.io.FilenameUtils;
 
 import play.data.Form;
 import play.db.jpa.Transactional;
@@ -29,6 +24,12 @@ import services.model.UserService;
 import session.Session;
 import views.html.admin_question;
 import views.html.admin_questionlist;
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
+import cache.models.ModelCache;
+
+import com.google.inject.Inject;
+
 import factories.export.ExportFactory;
 import forms.QuestionForm;
 
@@ -93,7 +94,7 @@ public class QuestionController extends Controller {
 		    
 		    String newFileName = pictureId + "." + FilenameUtils.getExtension(fileName);	// add subject for better hashing
 		    
-		    imageUploader.uploadImage(file, newFileName);
+		    imageUploader.uploadImage(question.subject.name, file, newFileName);
 		    
 		    Image image = new Image(newFileName);
 		    question.image = image;
@@ -143,7 +144,10 @@ public class QuestionController extends Controller {
 		
 		questionService.delete(question);
 		
-		imageUploader.deleteImage(question.image.filePath);
+		// If question contains image, delete it from file server
+		if (question.image != null) {
+			imageUploader.deleteImage(question.subject.name, question.image.filePath);
+		}
 		
 		return redirect(routes.AdminController.adminList());
 		

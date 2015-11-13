@@ -25,7 +25,6 @@ question.subject=Subject
 question.chapter=Subject chapter
 question.chapter.multiple=Multiple chapters
 question.content=Subject content
-question.difficulty=Difficulty
 question.correct=Correct Answer
 question.incorrect=Incorrect Answer
 question.multiple.number=# of answers

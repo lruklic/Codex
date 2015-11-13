@@ -98,10 +98,8 @@ function getColumnNumber(filterType) {
 			return 2;
 		case "CHAPTER_FILTER":
 			return 3
-		case "DIFFICULTY_FILTER":
-			return 4;
 		case "SUBMITTER_FILTER":
-			return 5;
+			return 4;
 		default:
 			return 1;
 	}

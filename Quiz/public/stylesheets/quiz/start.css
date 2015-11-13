@@ -47,6 +47,10 @@
 	
 }
 
+.result-question-text {
+	width: 400px;
+}
+
 table, th, td {
 	margin-top: 10px;
 	background-color: #fff;
@@ -92,6 +96,10 @@ td.right-wrong-cell {
 
 .font-size-14 {
 	font-size: 14px;
+}
+
+.cursor-pointer {
+	cursor: pointer;
 }
 
 .question-text {

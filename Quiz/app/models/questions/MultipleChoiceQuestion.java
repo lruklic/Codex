@@ -17,7 +17,7 @@ import models.Subject;
 import models.enums.QuestionType;
 
 /**
- * Question with multiple options.
+ * Question with multiple answer options where only one is correct.
  * 
  * @author Luka Ruklic
  *
@@ -43,13 +43,18 @@ public class MultipleChoiceQuestion extends Question {
 	}
 	
 	public MultipleChoiceQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, String correctAnswer, String incorrectAnswers) {
+			String subjectContent, String specialTags, String explanation, Admin admin, String correctAnswer, String incorrectAnswers) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, explanation, admin);
 		this.correctAnswer = correctAnswer;
 		this.incorrectAnswers = incorrectAnswers;
 	}
 	
+	/**
+	 * Method that returns the list of all incorrect answers.
+	 * 
+	 * @return list containing all of the incorrect answers
+	 */
 	public List<String> getIncorrectAnswers() {
 		List<String> incorrectAnswersList = new ArrayList<String>();
 		String[] incorrectAnswerArray = incorrectAnswers.split(";");
@@ -87,12 +92,13 @@ public class MultipleChoiceQuestion extends Question {
 	}
 
 	@Override
-	public String getQuestionSpecificsAsString() {
-		StringBuilder sb = new StringBuilder();
+	public List<String> getQuestionSpecificsAsList() {
+		List<String> questionSpecifics = new ArrayList<>();
 		
-		sb.append(correctAnswer + " | " + incorrectAnswers);
+		questionSpecifics.add(correctAnswer);
+		questionSpecifics.add(incorrectAnswers);
 		
-		return sb.toString();
+		return questionSpecifics;
 	}
 
 	

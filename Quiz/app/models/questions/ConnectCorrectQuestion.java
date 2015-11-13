@@ -61,15 +61,14 @@ public class ConnectCorrectQuestion extends Question {
 	 * @param chapters chapters which this question references; usually equivalent to official literature chapters 
 	 * @param subjectContent tags that more precisely define question content
 	 * @param specialTags tags that define if this question appeared on some high school competition or national leaving exam 
-	 * @param difficulty question difficulty
 	 * @param explanation explanation why is the correct answer correct and/or how to solve the question
 	 * @param admin administrator that added the question
 	 * @param answerPairs map containing both columns with terms that have to be joined to solve the question
 	 */
 	public ConnectCorrectQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, Map<String, String> answerPairs) {
+			String subjectContent, String specialTags, String explanation, Admin admin, Map<String, String> answerPairs) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, explanation, admin);
 		this.answerPairs = answerPairs;
 	}
 	
@@ -145,15 +144,15 @@ public class ConnectCorrectQuestion extends Question {
 	}
 
 	@Override
-	public String getQuestionSpecificsAsString() {
-		StringBuilder sb = new StringBuilder();
+	public List<String> getQuestionSpecificsAsList() {
+		List<String> questionSpecifics = new ArrayList<>();
 		
 		for (Map.Entry<String, String> entry : answerPairs.entrySet()) {
-			sb.append(entry.getKey() + ":" + entry.getValue());
-			sb.append(",");			// TODO what if answer contains question mark?
+			questionSpecifics.add(entry.getKey() + ":" + entry.getValue());
+			// TODO what if answer contains question mark?
 		}
 		
-		return sb.toString().substring(0, sb.length()-2);
+		return questionSpecifics;
 		
 	}
 	

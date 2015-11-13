@@ -3,12 +3,6 @@ package quiz.evaluate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.google.common.collect.Lists;
-
-import quiz.QuizResult;
-import cache.question.QuestionSet;
-import enums.AnswerType;
 import models.Question;
 import models.enums.QuestionType;
 import models.questions.ConnectCorrectQuestion;
@@ -16,6 +10,13 @@ import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
+import quiz.QuizResult;
+import cache.question.QuestionSet;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.collect.Lists;
+
+import enums.AnswerType;
 
 public class QuestionEvaluator {
 	
@@ -33,13 +34,8 @@ public class QuestionEvaluator {
 		for (JsonNode givenAnswer : questionList) {
 			Long id = givenAnswer.get("id").asLong();
 			Question question = questionSet.getQuestion(id);
-//			AnswerType answerResult = evaluateQuestion(question, givenAnswer);
-//			
-//			QuestionResultPair qrp = new QuestionResultPair(question);
 			
 			QuestionResultPair qrp = evaluateQuestion(question, givenAnswer);
-			
-			qrp.createAnswerRecap();
 			
 			result.addQuestionResultPair(qrp);
 			
@@ -189,6 +185,8 @@ public class QuestionEvaluator {
 			
 			break;
 		}
+		
+		qrp.createAnswerRecap();
 		
 		return qrp;
 		

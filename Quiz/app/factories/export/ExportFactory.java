@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Question;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -12,7 +14,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import play.i18n.Messages;
-import models.Question;
 
 /**
  * Class that implements methods that receive question list and return 
@@ -97,11 +98,23 @@ public class ExportFactory {
 		question.add(String.valueOf(q.id));
 		question.add(q.questionText);
 		question.add(q.questionType.toString());
-		question.add(q.grade.toString());
-		question.add(q.subject.toString());
+		question.add(q.grade.name);
+		question.add(q.subject.name);
 		question.add(q.chapters);
 		question.add(q.subjectContent);
-		question.add(String.valueOf(q.difficulty));
+		question.add(q.specialTags);
+		
+		if (q.image != null) {
+			question.add(q.image.filePath);
+		} else {
+			question.add("");
+		}
+		
+		
+		for (String specificData : q.getQuestionSpecificsAsList()) {
+			question.add(specificData);
+		}
+		
 		question.add(q.author.username);
 		
 		return question;

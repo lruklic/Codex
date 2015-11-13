@@ -17,6 +17,7 @@
 	
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.twbsPagination.min.js")"></script>
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz/start.js")"></script>
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.quickfit.js")"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/svg/component.css")">
@@ -130,7 +131,7 @@
 				<div class="question-text custom-font font-size-20">@q.questionText</div>
 				@if(q.image != null) {
 					<div class="question-image-container"> 
-						<img class="landscape" alt="question-text" src="https://s3.eu-central-1.amazonaws.com/codeximages/images/@q.image.filePath" /> 
+						<img class="landscape" alt="question-text" src="https://s3.eu-central-1.amazonaws.com/codeximages/images/@q.subject.name/@q.image.filePath" /> 
 					</div>
 				}
 				<input type="hidden" class="question-id" value="@q.id">

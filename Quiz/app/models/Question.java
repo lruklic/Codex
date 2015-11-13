@@ -17,9 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import models.enums.QuestionType;
 import cache.models.ModelCache;
 import cache.models.ModelCacheType;
-import models.enums.QuestionType;
 
 /**
  * <p>Question <code>class</code> represents quiz questions contained in the application.</p>
@@ -27,9 +27,8 @@ import models.enums.QuestionType;
  * <p>Every class has inherited <code>long</code> identificator from BaseModel, <code>questionText</code>
  * that contains question text, <code>questionType</code> that determines type of the question, grade that 
  * specifies at which level of school curriculum can answer to this question be found, <code>subject</code> 
- * ,<code>chapter</code> and <code>subjectContent</code> which define which subject content question references 
- * and <code>difficulty</code> which is a somewhat subjective rank how difficult the question is. Also,
- * each question can have optional <code>explanation</code> that closely explains correct answer and special
+ * ,<code>chapter</code> and <code>subjectContent</code> which define which subject content question references. 
+ * Also, each question can have optional <code>explanation</code> that closely explains correct answer and special
  * tags that note that same question already appeared on competition or nationwide leaving exam. </p> 
  * 
  * 
@@ -71,9 +70,6 @@ public abstract class Question extends BaseModel {
 	@Column(name = "specialTags")
 	public String specialTags;
 	
-	@Column(name = "difficulty")
-	public int difficulty;	// maybe Enum?
-	
 	@Lob
 	@Basic(fetch=FetchType.LAZY)		// prevent eager loading because explanation can be big chunk of text
 	@Column(name = "explanation")
@@ -102,11 +98,10 @@ public abstract class Question extends BaseModel {
 	 * @param subject
 	 * @param chapters
 	 * @param subjectContent
-	 * @param difficulty
 	 * @param admin
 	 */
 	public Question(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, String specialTags, int difficulty, String explanation, Admin author) {
+			String subjectContent, String specialTags, String explanation, Admin author) {
 		this.lastEdited = System.currentTimeMillis();
 		this.questionText = questionText;
 		this.questionType = questionType;
@@ -115,7 +110,6 @@ public abstract class Question extends BaseModel {
 		this.chapters = chapters;
 		this.subjectContent = subjectContent;
 		this.specialTags = specialTags;
-		this.difficulty = difficulty;
 		this.explanation = explanation;
 		this.approved = false;
 		this.author = author;
@@ -130,7 +124,7 @@ public abstract class Question extends BaseModel {
 	 * Method that returns question specific details for question (i.e. 
 	 * @return
 	 */
-	public abstract String getQuestionSpecificsAsString();
+	public abstract List<String> getQuestionSpecificsAsList();
 	
 	/**
 	 * Getter for chapters that turns string into list of Chapters.

@@ -10,6 +10,7 @@
 <head>
 
 @head()
+<script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionInput.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/questionInput.js")"></script>
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/autogrow.js")"></script>
@@ -165,10 +166,6 @@
 					}
 					</select>
 				</li>
-				<li class="question difficulty">
-					<p><label>@Messages("question.difficulty")</label></p>
-					<input class="difficulty-input" type="number" name="difficulty" id="difficulty" min="1" max="5" value='@form("difficulty").value' />
-				</li>
 			</ul>
 			
 			<ul class="question">
@@ -219,7 +216,7 @@
 			@connectCorrect
 		
 			<p><label>@Messages("question.explanation")</label></p>
-			<textarea name="explanation" rows="4" cols="50"/>@form("explanation").value</textarea>
+			<textarea id="explanation" name="explanation" rows="4" cols="50">@form("explanation").value</textarea>
 			
 			<button class="submit-button" type="submit">@Messages("question.submit")</button>
 		</fieldset>

@@ -1,5 +1,8 @@
 package models.questions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -35,10 +38,25 @@ public class TrueFalseQuestion extends Question {
 	public TrueFalseQuestion() {
 	}
 	
+	/**
+	 * Constructor. 
+	 * 
+	 * @param questionText
+	 * @param questionType
+	 * @param grade
+	 * @param subject
+	 * @param chapters
+	 * @param subjectContent
+	 * @param specialTags
+	 * @param difficulty
+	 * @param explanation
+	 * @param admin
+	 * @param answer
+	 */
 	public TrueFalseQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, Boolean answer) {
+			String subjectContent, String specialTags, String explanation, Admin admin, Boolean answer) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, explanation, admin);
 		this.answer = answer;
 	}
 
@@ -52,11 +70,10 @@ public class TrueFalseQuestion extends Question {
 	}
 
 	@Override
-	public String getQuestionSpecificsAsString() {
-		return getQuestionAnswerText();
+	public List<String> getQuestionSpecificsAsList() {
+		List<String> questionSpecifics = new ArrayList<>();
+		questionSpecifics.add(answer.toString());
+		return questionSpecifics;
 	}
-	
-	
-
 	
 }

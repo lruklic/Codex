@@ -59,7 +59,6 @@
 					<th>@Messages("question.type")</th>
 					<th>@Messages("question.subject")</th>
 					<th>@Messages("question.chapter")</th>
-					<th>@Messages("question.difficulty")</th>
 					<th>@Messages("question.submitter")</th>
 					<th></th>
 				</tr>
@@ -72,7 +71,6 @@
 					<td class="table-questionType">@Messages(q.questionType.toString())</td>
 					<td class="table-subject">@Messages(q.subject.name)</td>
 					<td class="table-chapters">@if(q.chapters != null && q.chapters.contains(";")) { @Messages("question.chapter.multiple") } else { @Messages(q.chapters) }</td>
-					<td class="table-difficulty">@q.difficulty</td>
 					<td class="table-submitter">@q.author.username</td>
 					
 					<td>

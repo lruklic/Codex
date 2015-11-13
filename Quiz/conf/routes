@@ -15,6 +15,7 @@ POST	/facebookLogin				controllers.LoginController.facebookAuthenticate()
 # Register
 GET		/register					controllers.RegisterController.register()
 POST	/register					controllers.RegisterController.submit()
+GET		/activation/:link			controllers.ActivationController.activate(link: String)
 
 # Question
 POST	/question								controllers.QuestionController.submit()
@@ -23,7 +24,7 @@ DELETE	/question/delete/:id					controllers.QuestionController.deleteQuestion(id
 GET		/question/export/:exportType			controllers.QuestionController.export(exportType: String)
 
 # Test data fill
-GET		/data						controllers.TestDataController.fill()
+POST	/data						controllers.TestDataController.fill()
 
 # Basic data fill
 POST	/putSubjects				controllers.TestDataController.fillSubjects()

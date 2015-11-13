@@ -1,5 +1,8 @@
 package models.questions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -35,9 +38,9 @@ public class InputAnswerQuestion extends Question {
 	}
 	
 	public InputAnswerQuestion(String questionText, QuestionType questionType, Grade grade, Subject subject, String chapters,
-			String subjectContent, String specialTags, int difficulty, String explanation, Admin admin, String answer) {
+			String subjectContent, String specialTags, String explanation, Admin admin, String answer) {
 		
-		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, difficulty, explanation, admin);
+		super(questionText, questionType, grade, subject, chapters, subjectContent, specialTags, explanation, admin);
 		this.answer = answer;
 	}
 
@@ -47,8 +50,10 @@ public class InputAnswerQuestion extends Question {
 	}
 
 	@Override
-	public String getQuestionSpecificsAsString() {
-		return answer;
+	public List<String> getQuestionSpecificsAsList() {
+		List<String> questionSpecifics = new ArrayList<>();
+		questionSpecifics.add(answer);
+		return questionSpecifics;
 	}
 	
 }
