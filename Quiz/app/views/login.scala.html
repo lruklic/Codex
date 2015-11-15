@@ -1,4 +1,4 @@
-@(form: Form[forms.LoginForm])
+@(form: Form[forms.LoginForm], mottoNumber: Integer)
 
 @import views.html.init._;
 
@@ -6,8 +6,9 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	
 	@head()
+	
 	<script type="text/javascript" src="@routes.Assets.at("/javascripts/login.js")"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
 	
@@ -16,39 +17,49 @@
 
 </head>
 <body>
-	<script>
 
-	</script>
-	<header>
-
-	</header>
-
-	<h1>@Messages("app.name") - <span class="motto">@Messages("app.motto")</span></h1>
-
-	<div class="container">
-		
-		@helper.form(routes.LoginController.authenticate) {
-		<h2>@Messages("login.signin")</h2>
-		
-		@alert()
-		
-		<p>
-			<input class="loginTextBox loginBoxFont" id="username" type="text" name="usernameOrEmail" placeholder="@Messages("login.usernameoremail")" value="@form("email").value">
-		</p>
-		<p>
-			<input class="loginTextBox loginBoxFont" id="password" type="password" name="password" placeholder="@Messages("login.password")">
-		</p>
-		<p>
-			<button class="loginBtn loginBtnFont" type="submit">@Messages("login")</button>
-		</p>
-		
-		<fb:login-button scope="email" onlogin="checkLoginState();"></fb:login-button>
-		<a href='@routes.RegisterController.register'>@Messages("register")</a>
-		
-		}
-		
+	<div class="middlePage">
+	<div class="page-header">
+  		<h1 class="logo">@Messages("app.name") <span class="motto">@Messages("app.motto" + mottoNumber)</span></h1>
 	</div>
 
+	<div class="panel panel-info">
+  		<div class="panel-heading">
+    		<h3 class="panel-title">@Messages("login.signin")</h3>
+  		</div>
+  		<div class="panel-body">
+  		<div class="row">
+  		
+  			<div class="col-md-5">
+				<a href="#" onclick="fb_login();"><img src="http://techulus.com/buttons/fb.png" /></a><br/>
+				<a href="#"><img src="http://techulus.com/buttons/tw.png" /></a><br/>
+				<a href="#"><img src="http://techulus.com/buttons/gplus.png" /></a>
+			</div>
+	
+			<div class="col-md-7" style="border-left:1px solid #ccc;height:220px">
+		
+				<div class="form-horizontal">
+				@alert()
+					@helper.form(routes.LoginController.authenticate) {
+					<fieldset>
+						<input id="username" name="usernameOrEmail" type="text" placeholder="@Messages("login.usernameoremail")" value="@form("email").value" class="form-control input-md">
+						<div class="spacing"></div>
+						<input id="password" name="password" type="password" placeholder="@Messages("login.password")" class="form-control input-md">
+						<div class="spacing">
+							<a href="#"><small>@Messages("login.password.forgot")</small></a>
+							<a class="register-link" href='@routes.RegisterController.register'><small>@Messages("login.register")</small></a><br/>
+						</div>
+						<button class="btn btn-info btn-sm pull-right" type="submit">@Messages("login")</button>
+					</fieldset>
+					}
+				</div>
+		
+			</div>
+			
+		</div>
+		</div>
+	</div>
+	<a href="#">@Messages("login.about")</a>
 
 </body>
 </html>

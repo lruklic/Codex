@@ -15,9 +15,9 @@ import services.model.NoveltyService;
 import services.model.QuestionService;
 import services.model.UserService;
 import session.Session;
-import views.html.admin_question;
-import views.html.admin_home;
-import views.html.admin_questionlist;
+import views.html.admin.admin_question;
+import views.html.admin.admin_home;
+import views.html.admin.admin_questionlist;
 import forms.QuestionForm;
 
 /**
