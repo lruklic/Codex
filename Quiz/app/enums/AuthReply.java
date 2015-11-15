@@ -19,6 +19,10 @@ public enum AuthReply {
 	/**
 	 * User credentials are ok.
 	 */
-	LOGIN_OK
+	LOGIN_OK, 
+	/**
+	 * User account is not activated.
+	 */
+	NOT_ACTIVATED
 
 }

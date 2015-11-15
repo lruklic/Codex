@@ -4,7 +4,11 @@ function initAdmin() {
 	
 	tinymce.init({
 		selector:"#explanation",
-		plugins: "link"
+		plugins: "link",
+		paste_postprocess : function(pl, o) {
+	        // remove extra line breaks
+	        o.node.innerHTML = o.node.innerHTML.replace(/&nbsp;/ig, " ");
+	    }
 	});
 	
 	// Admin page question input initialization - starting question type is Multiple Choice

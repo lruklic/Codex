@@ -2,12 +2,25 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import models.Question;
 import models.Subject;
+import play.data.Form;
+import play.db.jpa.Transactional;
+import play.mvc.BodyParser;
+import play.mvc.BodyParser.Json;
+import play.mvc.Controller;
+import play.mvc.Http.RequestBody;
+import play.mvc.Result;
+import quiz.QuizResult;
+import quiz.evaluate.QuestionEvaluator;
+import services.model.NoveltyService;
+import services.model.QuestionService;
+import session.Session;
+import views.html.quiz.quiz_home;
+import views.html.quiz.quiz_result;
+import views.html.quiz.quiz_start;
 import cache.models.ModelCache;
 import cache.models.ModelCacheType;
 import cache.question.QuestionCache;
@@ -18,21 +31,6 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 import forms.QuizForm;
-import play.data.Form;
-import play.db.jpa.Transactional;
-import play.mvc.BodyParser.Json;
-import play.mvc.Controller;
-import play.mvc.BodyParser;
-import play.mvc.Http.RequestBody;
-import play.mvc.Result;
-import quiz.QuizResult;
-import quiz.evaluate.QuestionEvaluator;
-import services.model.NoveltyService;
-import services.model.QuestionService;
-import session.Session;
-import views.html.quiz.quiz_home;
-import views.html.quiz.quiz_start;
-import views.html.quiz.quiz_result;
  
 /**
  * Controller that handles quiz page.
@@ -101,6 +99,13 @@ public class QuizController extends Controller {
 		return ok(quiz_result.render(result));
 	}
 	
+	/**
+	 * Returns list with specified number of random questions from question list.
+	 * 
+	 * @param questionList input question list
+	 * @param numberOfQuestions number of questions that will be randomly chosen from input list
+	 * @return output list with specified number of questions picked randomly from input list
+	 */
 	private static List<Question> getNRandomQuestions(List<Question> questionList, int numberOfQuestions) {
 		Collections.shuffle(questionList);
 		List<Question> picked = questionList.subList(0, numberOfQuestions);

@@ -4,6 +4,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -18,6 +19,7 @@ import models.enums.UserType;
 import org.apache.commons.codec.binary.Base64;
 
 import play.Play;
+import play.api.templates.Html;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
@@ -61,10 +63,10 @@ public class LoginController extends Controller {
 	 * @return rendered login.scala.html view
 	 */
 	public static Result login() {
-
+		
 		String userType = Session.getUserType();
 		if (userType == null) {
-			return ok(login.render(Form.form(LoginForm.class)));
+			return ok(login.render(Form.form(LoginForm.class), getRandomMottoNumber()));
 		} else {
 			return redirect(routes.StartController.redirect());
 		}
@@ -134,7 +136,7 @@ public class LoginController extends Controller {
 	public static Result logout() {
 		Session.clear();
 
-		return ok(login.render(Form.form(LoginForm.class)));
+		return login();
 	}
 
 	/**
@@ -146,14 +148,13 @@ public class LoginController extends Controller {
 		Form<LoginForm> loginForm = Form.form(LoginForm.class).bindFromRequest();
 		if (loginForm.hasErrors()) {
 			flash("error", Messages.get("login.error.values"));
-			return ok(login.render(Form.form(LoginForm.class)));
+			return login();
 		} else {
 			User user = userService.findByUsernameOrEmail(loginForm.get().usernameOrEmail);
 			AuthReply passwordOk = passwordOk(user, loginForm.get().password);
 			
-			if (user.activated) {
-				switch (passwordOk) {
-				case LOGIN_OK:
+			switch (passwordOk) {
+			case LOGIN_OK:
 					Session.clear();
 					Session.addUserData(user);
 
@@ -163,19 +164,18 @@ public class LoginController extends Controller {
 					} else {
 						return redirect(routes.PlayerController.playerHome());
 					}
-				case NO_USER:
-					flash("error", Messages.get("login.error.username"));
-					break;
-				case WRONG_PASSWORD:
-					flash("error", Messages.get("login.error.password"));
-					break;
-				}
-				
-			} else {
+			case NO_USER:
+				flash("error", Messages.get("login.error.username"));
+				break;
+			case WRONG_PASSWORD:
+				flash("error", Messages.get("login.error.password"));
+				break;
+			case NOT_ACTIVATED:
 				flash("error", Messages.get("error.user.activated"));
-			}
+				break;
+			}	
 			
-			return badRequest(login.render(Form.form(LoginForm.class)));
+			return badRequest(login.render(Form.form(LoginForm.class), 0));
 
 		}
 	}
@@ -194,7 +194,10 @@ public class LoginController extends Controller {
 		if (user == null) {
 			return AuthReply.NO_USER;
 		} else {
-
+			if (!user.activated) {
+				return AuthReply.NOT_ACTIVATED;
+			}
+			
 			if (PasswordHash.validatePassword(inputPassword, user.passwordHash)) {
 				return AuthReply.LOGIN_OK;
 			}
@@ -246,6 +249,13 @@ public class LoginController extends Controller {
 			return null;
 		}
 		
+	}
+	
+	private static Integer getRandomMottoNumber() {
+		Random rand = new Random();
+	    int mottoNumber = rand.nextInt(4) + 1;	// TODO number of viable mottos from messages.hr
+	    
+	    return mottoNumber;
 	}
 
 }
