@@ -47,14 +47,14 @@ public class QuestionForm {
 	/**
 	 * Question grade, required for every question.
 	 */
-	public Grade grade;
+	public String grade;
 	/**
 	 * Question subject, required for every question.
 	 */
-	public Subject subject;
+	public String subject;
 	
-	public String gradeName;
-	public String subjectName;
+	public String filePath;
+	
 	/**
 	 * Chapters for question.
 	 */
@@ -109,8 +109,8 @@ public class QuestionForm {
 	
 	public Question createQuestion(Admin admin) {
 		
-		this.subject = (Subject) ModelCache.getInstance().getSet(ModelCacheType.SUBJECT, subjectName);
-		this.grade = (Grade) ModelCache.getInstance().getSet(ModelCacheType.GRADE, gradeName);
+		// this.subject = ((Subject) ModelCache.getInstance().getSet(ModelCacheType.SUBJECT, subjectName)).name;
+		// this.grade = ((Grade) ModelCache.getInstance().getSet(ModelCacheType.GRADE, gradeName)).name;
 		
 		Question question = QuestionFactory.createQuestion(this, admin);
 		
@@ -129,10 +129,14 @@ public class QuestionForm {
 		
 		this.questionText = question.questionText;
 		this.questionType = question.questionType;
-		this.grade = question.grade;
-		this.subject = question.subject;
+		this.grade = question.grade.name;
+		this.subject = question.subject.name;
 		this.subjectContent = question.subjectContent;
 		this.explanation = question.explanation;
+		
+		if (question.image != null) {
+			this.filePath = question.image.filePath;
+		}
 		
 		SpecialTagEngine.fillQuestionForm(question, this);
 		

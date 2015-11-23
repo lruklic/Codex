@@ -74,6 +74,12 @@ public class QuestionController extends Controller {
 			return badRequest(admin_question.render(questionForm, ((Admin)user).subjectPermissions, ModelCache.getInstance().getAllChapters(), ModelCache.getInstance().getAllGrades()));	// TODO check for admin twice? refactor!
 		}
 		
+		// Check whether submit is create or edit; look for id
+		boolean isEdit = false;
+		if (questionForm.get().id != null) {
+			isEdit = true;
+		}
+		
 		// Create question
 		Question question = null;
 		if (user instanceof Admin) {
@@ -99,8 +105,14 @@ public class QuestionController extends Controller {
 		    Image image = new Image(newFileName);
 		    question.image = image;
 		    
+		    // TODO if new picture is uploaded, delete old picture from file server
+		    
 		} else {
-		    flash("error", "Missing file");  
+			// If submit is edit and no picture is uploaded, leave the old picture
+			if (isEdit) {
+				Question oldQuestion = questionService.findById(Long.parseLong(questionForm.get().id));
+				question.image = oldQuestion.image;
+			}
 		}
 		
 		questionService.save(question);

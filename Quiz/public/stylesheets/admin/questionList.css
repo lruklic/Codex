@@ -7,7 +7,6 @@
 }
 
 .questionlist-panel {
-	background-color: #2CA3C4;
 	padding-left: 50px;
 	padding-right: 50px;
 }
@@ -36,7 +35,11 @@
 	width: 300px;
 }
 
-.table-questionType, .table-subject{
+.table-submitter {
+	width: 150px;
+}
+
+.table-questionType, .table-subject {
 	width: 150px;
 }
 

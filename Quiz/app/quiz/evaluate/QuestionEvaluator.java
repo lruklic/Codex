@@ -16,6 +16,7 @@ import cache.question.QuestionSet;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
 
+import engines.InputAnswerEvaluateEngine;
 import enums.AnswerType;
 
 public class QuestionEvaluator {
@@ -101,10 +102,11 @@ public class QuestionEvaluator {
 			qrp.givenAnswer = givenAnswerText.toString().substring(0, givenAnswerText.length()-2);
 			break;
 		case INPUT_ANSWER:
-			String questionAnswer = ((InputAnswerQuestion) question).answer;
-			// check for capital letters
 			if (answersNode != null && answersNode.asText().length() > 0) {
-				if ((answersNode.asText().equals(questionAnswer))) {
+				
+				boolean answerCorrect = InputAnswerEvaluateEngine.evaluate(answersNode.asText(), (InputAnswerQuestion) question);
+				
+				if (answerCorrect) {
 					qrp.isCorrect = AnswerType.CORRECT;
 				} else {
 					qrp.isCorrect = AnswerType.INCORRECT;

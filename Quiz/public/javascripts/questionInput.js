@@ -1,10 +1,15 @@
 function initAdmin() {
 	
-	$("input.autogrow").autoGrowInput({minWidth:100,comfortZone:30,maxWidth:300});
+	// Custom multiple select for chapters
+	$('.selectpicker').selectpicker();
 	
+	// Activate and customize TinyMCE WYSIWYG embedded text editor
 	tinymce.init({
-		selector:"#explanation",
+		selector:".rich-text",
+		menubar: false,
+		toolbar: "undo redo | styleselect | bold italic | link image",
 		plugins: "link",
+		content_css: '/assets/stylesheets/content.min.css',
 		paste_postprocess : function(pl, o) {
 	        // remove extra line breaks
 	        o.node.innerHTML = o.node.innerHTML.replace(/&nbsp;/ig, " ");
@@ -12,11 +17,10 @@ function initAdmin() {
 	});
 	
 	// Admin page question input initialization - starting question type is Multiple Choice
-	
 	var editId = $('[name=id]').val();
 	var editChapters = $('[name=editChapters]').val();
 	
-	// Question type - 
+	// Hide all extra fields
 	$('.extra').hide();
 	
 	// Default number of answers is set to 3
@@ -50,7 +54,7 @@ function initAdmin() {
 	for (int = 0; int < numberOfChapters; int++) {
 		var chapter = $("#check-"+int).val();
 		var chapterValues = chapter.split('-');
-		var currentChapters = editChapters.replace(/\[|\]| /g, "").split(',');
+		var currentChapters = editChapters.replace(/\[|\]|/g, "").split(',');
 		
 		if (chapterValues[0] !== $("#grade").val() || chapterValues[1] !== $("#subject").val()) {	// why gimn_1st
 			$("#check-"+int).hide();
@@ -66,7 +70,10 @@ function initAdmin() {
 					$("#check-"+int).prop('selected', true);
 				}
 			}	
-		} 
+		}
+		
+		$('.selectpicker').selectpicker('refresh');
+			
 	}
 }
 
@@ -142,6 +149,9 @@ function chapterChange() {
 			$("#check-"+int).show();
 		}
 	}
+	
+	$("#chapter option:selected").removeAttr("selected");
+	$('.selectpicker').selectpicker('refresh');
 }
 
 $(document).ready(function(){
@@ -156,7 +166,7 @@ $(document).ready(function(){
     	chapterChange();
     });
     
-    $(".extra-trigger").change(function(){
+    $("#extra-trigger").change(function(){
     	$('.extra').toggle();
     });
     

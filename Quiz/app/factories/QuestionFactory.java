@@ -5,8 +5,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import services.model.ChapterService;
+import services.model.GradeService;
+import services.model.SubjectService;
+
+import com.google.inject.Inject;
+
 import models.Admin;
+import models.Grade;
 import models.Question;
+import models.Subject;
 import models.questions.ConnectCorrectQuestion;
 import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
@@ -25,6 +33,12 @@ import forms.QuestionForm;
 
 public class QuestionFactory {
 
+	@Inject
+	public static SubjectService subjectService;
+	
+	@Inject
+	public static GradeService gradeService;
+	
 	/**
 	 * Static method that creates question instance from data received in question form.
 	 * 
@@ -39,30 +53,34 @@ public class QuestionFactory {
 		
 		String specialTags = SpecialTagEngine.createSpecialTagString(form);
 		
+		Grade grade = gradeService.findByName(form.grade);
+		Subject subject = subjectService.findByName(form.subject);
+		
 		switch(form.questionType) {
+		
 			case MULTIPLE_CHOICE:
 				String incorrect = createIncorrectAnswers(form.incorrect);
-				return new MultipleChoiceQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
+				return new MultipleChoiceQuestion(form.questionText, form.questionType, grade, subject, chapters, form.subjectContent,
 						specialTags, form.explanation, currentAdmin, form.multipleCorrect, incorrect);
 			case MULTIPLE_ANSWER:
 				String multipleCorrect = createMultipleAnswersString(form.multiple, form.multipleTrue, AnswerType.CORRECT);
 				String multipleIncorrect = createMultipleAnswersString(form.multiple, form.multipleTrue, AnswerType.INCORRECT);
-				return new MultipleAnswerQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
+				return new MultipleAnswerQuestion(form.questionText, form.questionType, grade, subject, chapters, form.subjectContent,
 						specialTags, form.explanation, currentAdmin, multipleCorrect, multipleIncorrect);
 			case TRUE_FALSE:
 				Boolean trueFalse = false;
 				if (form.trueFalse != null) {
 					trueFalse = true;
 				}
-				return new TrueFalseQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
+				return new TrueFalseQuestion(form.questionText, form.questionType, grade, subject, chapters, form.subjectContent,
 						specialTags, form.explanation, currentAdmin, trueFalse);
 			case INPUT_ANSWER:
-				return new InputAnswerQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
+				return new InputAnswerQuestion(form.questionText, form.questionType, grade, subject, chapters, form.subjectContent,
 						specialTags, form.explanation, currentAdmin, form.inputCorrect);
 			case CONNECT_CORRECT:
 				// prevent creating questions with unpaired left or more left than right
 				Map<String, String> answerPairs = createAnswerPairs(form.termColumn1, form.termColumn2);
-				return new ConnectCorrectQuestion(form.questionText, form.questionType, form.grade, form.subject, chapters, form.subjectContent,
+				return new ConnectCorrectQuestion(form.questionText, form.questionType, grade, subject, chapters, form.subjectContent,
 						specialTags, form.explanation, currentAdmin, answerPairs);
 		}
 		

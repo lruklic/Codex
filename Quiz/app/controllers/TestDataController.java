@@ -49,8 +49,8 @@ public class TestDataController extends Controller {
 		Admin admin = new Admin("lruklic", PasswordHash.createHash("1234"), "Luka", "Ruklić", "ruklic.luka@gmail.com", new Date(System.currentTimeMillis()));
 		
 		List<Subject> permissions = new ArrayList<>();
-		permissions.add(subjectService.getSubjectByName("Povijest"));
-		permissions.add(subjectService.getSubjectByName("Geografija"));
+		permissions.add(subjectService.findByName("Povijest"));
+		permissions.add(subjectService.findByName("Geografija"));
 		admin.subjectPermissions = permissions;
 		
 		admin.clearanceLevel = 3;
@@ -109,7 +109,7 @@ public class TestDataController extends Controller {
 		
 		Chapter chapter;
 		for (String c : chapterList) {
-			chapter = new Chapter(c, gradeService.findById((long) 1), subjectService.getSubjectByName("Geografija"));
+			chapter = new Chapter(c, gradeService.findById((long) 1), subjectService.findByName("Geografija"));
 			chapterService.save(chapter);
 		}
 		

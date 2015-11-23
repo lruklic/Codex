@@ -10,8 +10,12 @@
 <head>
 
 @head()
-<script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-select.min.css")">
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionInput.css")">
+
+<script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/bootstrap-select.min.js")"></script>
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/questionInput.js")"></script>
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/autogrow.js")"></script>
 
@@ -23,27 +27,31 @@
 	 @if(form(formFieldName).value != null && form(formFieldName).value == compareValue.toString()) {checked}
 } 
 
-@numberOfAnswers = {
-	<p class="numberOfAnswers">
-		<label>@Messages("question.multiple.number"):</label>
-		<input class="multiple-number" type="number" name="multipleNumber" id="multipleNumber" value='@form("numberOfAnswers").value' />
-	</p>
+@numberOfAnswers = {	
+	<div class="col-xs-3 numberOfAnswers">
+		<label class="control-label">@Messages("question.multiple.number"):</label>
+		<input class="form-control multiple-number" type="number" name="multipleNumber" id="multipleNumber" value='@form("numberOfAnswers").value' />
+	</div>
 }
 
 @multipleChoiceForm = {
-	<div class="multiple_choice">
-		<div class="multiple-row">
-			<label>@Messages("question.correct"): </label><input class="autogrow" type="text" name="multipleCorrect" id="correct" value='@form("multipleCorrect").value'/>
+	
+		<div class="multiple_choice">
+			<div class="row">
+				<div class="col-xs-4 multiple-row">
+					<label class="control-label">@Messages("question.correct"): </label>
+					<input class="form-control correct-answer-border" type="text" name="multipleCorrect" id="correct" value='@form("multipleCorrect").value'/>
+				</div>
+						
+				@for(i <- 0 to 4) {
+				<div class="col-xs-4 multiple-row incorrect-@i">
+					<label class="control-label incorrect-label">@Messages("question.incorrect"): </label>
+					<input class="form-control answer-input incorrect-answer-border" type="text" name="incorrect[]" id="incorrect-@i" value="@form("incorrect["+i+"]").value()"/>
+				</div>
+				}
+			</div>
+					
 		</div>
-				
-		@for(i <- 0 to 4) {
-		<div class="multiple-row incorrect-@i">
-			<label class="incorrect-label">@Messages("question.incorrect"): </label>
-			<input class="autogrow answer-input" type="text" name="incorrect[]" id="incorrect-@i" value="@form("incorrect["+i+"]").value()"/>
-		</div>
-		}
-		
-	</div>
 }
 
 @trueFalseForm = {
@@ -60,25 +68,33 @@
 
 @inputAnswerForm = {
 	<div class="input_answer">
-		<p>
-		<label>@Messages("question.correct"): </label><input class="autogrow" type="text" name="inputCorrect" id="input-correct" value='@form("inputCorrect").value' />
-		</p>
+		<div class="col-xs-5">
+			<label class="control-label">@Messages("question.correct") </label>
+			<input class="form-control" type="text" name="inputCorrect" id="input-correct" value='@form("inputCorrect").value' />
+			<small><label class="tooltip-info input-advanced pull-right" title='@Messages("info.question.inputAnswer")'>@Messages("question.input.advanced") </label></small>
+		</div>
 	</div>
 }
 
 @multipleAnswerForm = {
-	<div class="multiple_answer">
-		
-		<table>
-			<th> @Messages("question.answers") </th>
-			<th> @Messages("question.isCorrect") </th>
+	<div class="row multiple_answer">
+	
+		<div class="row">
 			@for(i <- 0 to 5) {
-			<tr class="multiple-@i">
-				<td><input class="autogrow" type="text" name="multiple[]" id="multiple-@i" value="@form("multiple["+i+"]").value()"/></td>
-				<td><input type="checkbox" name="multipleTrue[]" id="multipleTrue-@i" value=@i @if(form("multipleTrue["+i+"]").value() != "") {checked}/></td>
-			</tr>
+			<div class="col-xs-4 multiple-@i">
+				<div class="col-xs-10">
+					<label class="control-label">@Messages("question.answer")</label>
+					<input class="form-control" type="text" name="multiple[]" id="multiple-@i" value="@form("multiple["+i+"]").value()"/>
+				</div>
+				
+				<div class="col-xs-2">
+					<label class="control-label">@Messages("question.isCorrect")</label>
+					<input class="form-control" type="checkbox" name="multipleTrue[]" id="multipleTrue-@i" value=@i @if(form("multipleTrue["+i+"]").value() != "") {checked}/>
+				</div>
+			</div>
 			} 
-		</table>
+		</div>
+
 	</div>
 }
 
@@ -100,129 +116,168 @@
 
 @specialTags = {
 
+	<div class="col-xs-2">
+		<input id="extra-trigger" name="extra" type="checkbox">
+		<label class="control-label">@Messages("question.extra")</label>
+    </div>
+
 	<div class="extra">
-		<div>
-			<span class="finals-checkbox">
-				<input id="finalExam" name="finalExam" type="checkbox" value="true" @setChecked("finalExam", "true")>@Messages("question.finals")
-			</span> 
-			<span><label>@Messages("question.finals.year"):</label>
-				<select name="finalsYear" id="finalsYear" value='@form("finalsYear").value'>
+	
+		<div class="col-xs-4">
+			<div class="col-xs-6">
+				<input id="finalExam" name="finalExam" type="checkbox" value="true" @setChecked("finalExam", "true")> 
+				<label class="control-label">@Messages("question.finals")</label>
+			</div>
+	
+			<div class="col-xs-6">
+				<label class="control-label">@Messages("question.finals.year"):</label> 
+				<select name="finalsYear" id="finalsYear" value='@form("finalsYear").value'> 
 				@for(i <- Constants.LEAVING_EXAM_FIRST_YEAR to Constants.CURRENT_YEAR) {
- 					<option value="@i" @if(form("finalsYear").value != null && form("finalsYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
+					<option value="@i" @if(form("finalsYear").value !=null && form("finalsYear").value== i.toString()) {selected="selected"}>@Messages(i.toString())</option>
+				}
+				</select>
+			</div>
+		</div>
+		
+		<div class="col-xs-6">
+			<div class="col-xs-3">
+				<input id="competition" name="competition" type="checkbox" value="true" @setChecked("competition", "true")>
+				<label class="control-label">@Messages("question.competition")</label>
+			</div>
+			<div class="col-xs-4">
+				<label class="control-label">@Messages("question.competition.year")</label>
+				<select name="competitionYear" id="competitionYear" value='@form("competitionYear").value'>
+				@for(i <- 2010 to Constants.CURRENT_YEAR) {
+ 					<option value="@i" @if(form("competitionYear").value != null && form("competitionYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
 				}	
 				</select>
-			</span>
-		</div>
-		<div>
-			<span class="competition-checkbox">
-				<input id="competition" name="competition" type="checkbox" value="true" @setChecked("competition", "true") />@Messages("question.competition")
-			</span>
-			<span><label>@Messages("question.competition.year"):</label>
-			<select name="competitionYear" id="competitionYear" value='@form("competitionYear").value'>
-			@for(i <- 2010 to Constants.CURRENT_YEAR) {
- 				<option value="@i" @if(form("competitionYear").value != null && form("competitionYear").value == i.toString()) {selected="selected"}> @Messages(i.toString())</option>
-			}	
-			</select>
-			</span>
-			<span><label>@Messages("question.competition.level"):</label>
-			<select name="competitionLevel" id="competitionLevel" value='@form("competitionLevel").value'>
+			</div>
+			<div class="col-xs-5">
+				<label class="control-label">@Messages("question.competition.level")</label>
+				<select name="competitionLevel" id="competitionLevel" value='@form("competitionLevel").value'>
 				@for(cl <- CompetitionLevelType.values()){
 					<option value="@cl" @if(form("competitionLevel").value != null && form("competitionLevel").value == cl.toString()) {selected="selected"}> @Messages(cl.toString())</option> 
 				}				
-			</select>
-			</span>
+				</select>
+			</div>
 		</div>
+
 	</div>
+	
 }
 
 <body>
+	<div class="container">
+	
 	<header> @adminHeader() </header>
-
-	<content>
-	<div class="question container">
+	
 		@helper.form(action = routes.QuestionController.submit, 'enctype -> "multipart/form-data") {
-		<fieldset>
-			<input type="hidden" name="id" value=@form("id").value/>
+		<form class="form-horizontal">
+			<input type="hidden" name="id" value=@form("id").value />
 			<input type="hidden" name="editChapters" value='@form("chapters").value' />
-			
-			<legend>@Messages("question.input")</legend>
-			<p><label>@Messages("question.text")</label></p>
-			<textarea name="questionText" rows="4" cols="50"/>@form("questionText").value</textarea>
-			
-			<ul class="question">
-				<li class="question qType">
-					<p><label>@Messages("question.type")</label></p>
-					<select name="questionType" id="qType" value='@form("questionType").value'> 
-					@for(qType <- QuestionType.values()){
-						<option value="@qType" @if(form("questionType").value != null && form("questionType").value == qType.toString()) {selected="selected"}>@Messages(qType.toString())</option> 
-					}
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-xs-4 selectContainer">
+						<label>@Messages("question.grade")</label>
+						<select class="form-control chapter-trigger" name="grade" id="grade" value='@form("grade").value'> 
+						@for(grade <- grades){
+							<option value="@grade.name" @if(form("grade").value != null && form("grade").value == grade.name.toString()) {selected="selected"}> @Messages(grade.name)</option> 
+						}
+						</select>
+						
+					</div>
+				
+					<div class="col-xs-4 selectContainer">
+						<label class="control-label">@Messages("question.subject")</label> 
+						<select class="form-control chapter-trigger" name="subject" id="subject" value='@form("subject").value'> 
+						@for(subject <- subjects){
+							<option value="@subject.name" @if(form("subject").value != null && form("subject").value == subject.name.toString()) {selected="selected"}>@Messages(subject.name)</option> 
+						}
 					</select>
-				</li>
-				<li class="question grade">
-					<p><label>@Messages("question.grade")</label></p>
-					<select class="chapter-trigger" name="gradeName" id="grade" value='@form("grade").value'> 
-					@for(grade <- grades){
-						<option value="@grade.name" @if(form("grade").value != null && form("grade").value == grade.toString()) {selected="selected"}> @Messages(grade.name)</option> 
-					}
-					</select>
-				</li>
-			</ul>
-			
-			<ul class="question">
-				<li class="question subject">
-					<p><label>@Messages("question.subject")</label></p>
-					<select class="chapter-trigger" name="subjectName" id="subject" value='@form("subject").value'> 
-					@for(subject <- subjects){
-						<option value="@subject.name" @if(form("subject").value != null && form("subject").value == subject.toString()) {selected="selected"}>@Messages(subject.name)</option> 
-					}
-					</select>
-				</li>
-				<li class="question chapter">
-					<p><label>@Messages("question.chapter")</label></p>
-					<select class="chapter" multiple name="chapters[]" id="chapter"> 
-					@for((chapter, l) <- chapters.zipWithIndex){
-						<option id="check-@l" value="@chapter.grade.name-@chapter.subject.name-@chapter.name" >
-							@Messages(chapter.name)
-						</option>
-					}
-					</select>
-				</li>
-				<li class="question subjectContent">
-					<p><label>@Messages("question.content")</label></p>
-					<input class="subjectContent-input" name="subjectContent" type="text" id="subjectContent" value='@form("subjectContent").value' />
-				</li>
-			</ul>
-			
-			<div>
-				<p><label>@Messages("question.image")  </label><input type="file" accept=".jpg, .png, .bmp" name="image"></p>
+					</div>
+					
+					<div class="col-xs-4 selectContainer">
+						<label class="control-label">@Messages("question.type")</label> 
+						<select class="form-control" name="questionType" id="qType" value='@form("questionType").value'> 
+						@for(qType <- QuestionType.values()){
+							<option value="@qType" @if(form("questionType").value != null && form("questionType").value == qType.toString()) {selected="selected"}>@Messages(qType.toString())</option> 
+						}
+						</select>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-xs-6">
+						<label class="control-label">@Messages("question.chapter")</label>
+						<select class="form-control selectpicker chapter" multiple title="@Messages("question.chapter.noSelected")" name="chapters[]" id="chapter"> 
+						@for((chapter, l) <- chapters.zipWithIndex){
+							<option id="check-@l" value="@chapter.grade.name-@chapter.subject.name-@chapter.name">@Messages(chapter.name)</option>
+						}
+						</select>
+					</div>
+					
+					<div class="col-xs-6">
+						<label>@Messages("question.content")</label>
+						<input class="form-control subjectContent-input" name="subjectContent" type="text" id="subjectContent" value='@form("subjectContent").value' />
+					</div>
+				</div>	
 			</div>
 			
-			<div class="extra-trigger">
-				<span class="extra-checkbox"><input name="extra" type="checkbox">@Messages("question.extra")</span>
-			</div>
-			
-			@specialTags
+			<div class="form-group">
+				<div class="row">
+					<div class="col-xs-4">
+        				<label class="control-label">@Messages("question.text")</label>
+        				<textarea class="form-control" name="questionText" rows="11" cols="50">@form("questionText").value</textarea>
+    				</div>
+    				
+    				<div class="col-xs-4">
+        				<label class="control-label">@Messages("question.explanation")</label>
+        				<textarea class="form-control rich-text" name="explanation" rows="8" cols="50">@form("explanation").value</textarea>
+    				</div>
+    				
+    				<div class="col-xs-4">
+        				<label class="control-label">@Messages("question.image")</label>
+        				@if(form("filePath").value != null) {
+        					<img class="form-control image-preview" alt="question-text" src="https://s3.eu-central-1.amazonaws.com/codeximages/images/@form("subject").value/@form("filePath").value"/>
+        				} else {
+        					<label class="form-control">@Messages("question.image.noImage")</label> 
+        				}
+        				
+        				<input class="form-control" type="file" accept=".jpg, .png, .bmp" name="image">
+    				</div>
+    			</div>
+    		</div>
+    		
+    		<div class="form-group">
+    			<div class="row">
+    				@specialTags
+    			</div>
+    		</div>
+    		
+    		<div class="form-group">
+    			<div class="row">
+    				@numberOfAnswers
+    				
+					@inputAnswerForm
+    			</div>
+    			
+    			@multipleChoiceForm
+    			
+    			@multipleAnswerForm
+    			
+    		</div>
+    		
+    		<div class="form-group">
+    			<button class="submit-button" type="submit">@Messages("question.submit")</button>
+    		</div>
 
-			@numberOfAnswers
-
-			@multipleChoiceForm
-			
-			@trueFalseForm
-			
-			@inputAnswerForm
-			
-			@multipleAnswerForm
-			
-			@connectCorrect
-		
-			<p><label>@Messages("question.explanation")</label></p>
-			<textarea id="explanation" name="explanation" rows="4" cols="50">@form("explanation").value</textarea>
-			
-			<button class="submit-button" type="submit">@Messages("question.submit")</button>
-		</fieldset>
+		</form>
 		}
 	</div>
-	</content>
 </body>
 
 </html>

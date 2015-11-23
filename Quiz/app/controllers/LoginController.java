@@ -19,7 +19,6 @@ import models.enums.UserType;
 import org.apache.commons.codec.binary.Base64;
 
 import play.Play;
-import play.api.templates.Html;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;

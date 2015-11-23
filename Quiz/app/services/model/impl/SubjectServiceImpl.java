@@ -13,7 +13,7 @@ public class SubjectServiceImpl extends BaseModelServiceImpl<Subject> implements
 	}
 
 	@Override
-	public Subject getSubjectByName(String subjectName) {
+	public Subject findByName(String subjectName) {
 		Query query = JPA.em().createQuery("SELECT s FROM Subject s WHERE s.name = :name", Subject.class);
 		query.setParameter("name", subjectName);
 		return (Subject) singleResultOrNull(query);
