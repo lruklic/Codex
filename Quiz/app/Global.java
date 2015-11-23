@@ -39,6 +39,7 @@ import controllers.QuizController;
 import controllers.RegisterController;
 import controllers.StartController;
 import controllers.TestDataController;
+import factories.QuestionFactory;
 
 
 /**
@@ -75,6 +76,7 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(SimpleDeadboltHandler.class);
 				requestStaticInjection(Session.class);
 				requestStaticInjection(ModelCache.class);
+				requestStaticInjection(QuestionFactory.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
 				bind(QuestionService.class).to(QuestionServiceImpl.class);

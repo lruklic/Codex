@@ -8,11 +8,7 @@
 <html>
 <head>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
 @head()
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionList.css")">
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/admin/questionList.js")"></script>
@@ -41,51 +37,46 @@
 }
 
 <body>
-	<header> 
-		@adminHeader() 
-	</header>
-	
-	<div class="questionlist-panel">
-		<h2 class="questionslist-title">@Messages("questions")</h2>
-		<p>
-			@filter
-			@export
-			@alert()
-		</p>
-		<table id="question-table" class="display cell-border" width="100%">
-			<thead>
-				<tr>
-					<th>@Messages("question.text")</th>
-					<th>@Messages("question.type")</th>
-					<th>@Messages("question.subject")</th>
-					<th>@Messages("question.chapter")</th>
-					<th>@Messages("question.submitter")</th>
-					<th></th>
-				</tr>
-			</thead>
+		@adminHeader()
 
-			<tbody class="dt-right">
-				@for(q <- questions) {
-				<tr id="question-@q.id">
-					<td class="table-questionText">@q.questionText</td>
-					<td class="table-questionType">@Messages(q.questionType.toString())</td>
-					<td class="table-subject">@Messages(q.subject.name)</td>
-					<td class="table-chapters">@if(q.chapters != null && q.chapters.contains(";")) { @Messages("question.chapter.multiple") } else { @Messages(q.chapters) }</td>
-					<td class="table-submitter">@q.author.username</td>
-					
-					<td>
-					@if(q.author.username.equals(Session.getUsername())) {
-						<a class="tooltip-custom btn btn-primary" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")">@Messages("question.edit")</a>
-						<!-- <a class="tooltip-custom btn btn-info" href="#" title="@Messages("tooltip.question.explanation")">@Messages("question.explanation")</a> -->
-						<a class="tooltip-custom delete-button btn btn-danger" href="@routes.QuestionController.deleteQuestion(q.id)" title="@Messages("tooltip.question.delete")">@Messages("question.delete")</a>
+		<div class="questionlist-panel">
+			<h2 class="questionslist-title">@Messages("questions")</h2>
+			<p>@filter @export @alert()</p>
+			<table id="question-table" class="display cell-border" width="100%">
+				<thead>
+					<tr>
+						<th>@Messages("question.text")</th>
+						<th>@Messages("question.type")</th>
+						<th>@Messages("question.subject")</th>
+						<th>@Messages("question.chapter")</th>
+						<th>@Messages("question.submitter")</th>
+						<th></th>
+					</tr>
+				</thead>
+
+				<tbody class="dt-right">
+					@for(q <- questions) {
+					<tr id="question-@q.id">
+						<td class="table-questionText">@q.questionText</td>
+						<td class="table-questionType">@Messages(q.questionType.toString())</td>
+						<td class="table-subject">@Messages(q.subject.name)</td>
+						<td class="table-chapters">@if(q.chapters != null && q.chapters.contains(";")) { @Messages("question.chapter.multiple") } else {
+							@Messages(q.chapters) }</td>
+						<td class="table-submitter">@q.author.getName()</td>
+
+						<td>
+							@if(q.author.username.equals(Session.getUsername())) { 
+							<a class="tooltip-custom btn btn-primary" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")">@Messages("question.edit")</a> 
+							<!-- <a class="tooltip-custom btn btn-info" href="#" title="@Messages("tooltip.question.explanation")">@Messages("question.explanation")</a> -->
+							<a class="tooltip-custom delete-button btn btn-danger" href="@routes.QuestionController.deleteQuestion(q.id)" title="@Messages("tooltip.question.delete")">@Messages("question.delete")</a>
+							}
+						</td>
+					</tr>
 					}
-					</td>
-				</tr>
-				}
-			</tbody>
+				</tbody>
 
-		</table>
-	</div>
+			</table>
+		</div>
 
 </body>
 </html>

@@ -1,63 +1,13 @@
-.news-panel {
-	position: relative;
-	padding-left: 50px;
-	width: 550px;
-}
-
-.novelty-box {
-	position: relative;
-	width: 550px;
-	height: 220px;
-	border-width: 2px;
+#postlist {
+	margin-top: 5px;
+	border-width: 1px;
 	border-style: groove;
-	border-color: #444;
-	background-color: #fff;
-	margin-top: 15px;
-	
-}
-
-.novelty-title {
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	padding-left: 20px;
+	border-color: #000;
 }
 
 .novelty-text {
 	font-family: Verdana, Geneva, sans-serif;
-	padding-left: 10px;
-}
-
-.novelty-datetime {
-	position: absolute;
-	left: 0px;
-	bottom: 0px;
-	padding-left: 10px;
-	padding-bottom: 5px;
-	font-size: 0.875em;
-}
-
-.novelty-author {
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
-	padding-right: 10px;
-	padding-bottom: 5px;
-}
-
-.novelty-add {
-	position: absolute;
-	right: 0px;
-	padding-top: 30px;
-}
-
-.news ul {
-	margin: 0;
-	padding: 0;
-}
-
-.news li {
-	display: inline-block;
-}
-
-.news .newsPriority {
 	padding-left: 20px;
+	color: #000;
+	padding-bottom: 20px;
 }
