@@ -23,3 +23,7 @@
 	font-style: italic;
 	text-decoration: underline;
 }
+
+.bootstrap-switch { 
+	height: 2.0em 
+}
