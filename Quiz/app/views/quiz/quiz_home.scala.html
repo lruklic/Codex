@@ -1,4 +1,4 @@
-@(subjects: List[models.Subject]) 
+@(grades: List[models.Grade], subjects: List[models.Subject], chapters: List[models.Chapter]) 
 
 @import views.html.adminView._;
 @import views.html.init._;
@@ -6,29 +6,83 @@
 <html>
 
 <head>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	
 	@head()
 	
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-select.min.css")">
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/home.css")">
+	
+	<script type="text/javascript" src="@routes.Assets.at("/javascripts/bootstrap-select.min.js")"></script>
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz/home.js")"></script>
 </head>
 
 <body>
-		
-		<h1 class="margin-left-15"> @Messages("player.quizzes") </h1>
-		
-		@helper.form(routes.QuizController.startQuiz) {
+	<div class="container">
 
-		<select id="subject" class="margin-left-15" name="subject">
-			@for(subject <- subjects){
-				<option value="@subject.name">@Messages(subject.name)</option>
-			}
-		</select>
-	
-		<button type="submit">@Messages("quiz.choose")</button>
+		<header> </header>
+
+		@helper.form(routes.QuizController.startQuiz) {
+		<form class="form-horizontal">
+
+			<div class="form-group">
+				<div class="grade-picker">
+					<label class="control-label">@Messages("question.grade")</label>
+					<select class="form-control selectpicker" id="grade" name="grade">
+						<option value="not-selected">@Messages("grade.notSelected")</option>
+						@for(grade <- grades){
+						<option value="@grade.name">@Messages(grade.name)</option> 
+						}
+					</select>
+				</div>
+				<div class="subject-picker">
+					<label class="control-label">@Messages("question.subject")</label> 
+					<select class="form-control selectpicker" id="subject" name="subject">
+					@for(subject <- subjects){
+						<option value="@subject.name">@Messages(subject.name)</option> 
+					}
+					</select>
+				</div>
+				
+				<div class="chapter-picker">
+					<label class="control-label">@Messages("question.chapters")</label>
+					<select class="form-control selectpicker" multiple title="@Messages("question.chapter.allChapters")" name="chapters[]" id="chapter"> 
+					@for((chapter, l) <- chapters.zipWithIndex){
+						<option id="check-@l" value="@chapter.grade.name-@chapter.subject.name-@chapter.name">@Messages(chapter.name)</option>
+					}
+					</select>
+				</div>
+
+				<div class="additional-picker">
+					<div class="row">
+						<div class="col-xs-4">
+							<label class="control-label">@Messages("quiz.type")</label>
+							<select class="form-control selectpicker" name="quizType" id="quizType">
+								<option value="normal">@Messages("quiz.type.normal")</option>
+								<option value="competition">@Messages("quiz.type.competition")</option>
+							</select>
+						</div>
+						<div class="col-xs-4">
+							<label class="control-label">@Messages("quiz.numberOfQuestions")</label> 
+							<select class="form-control selectpicker" name="numberOfQuestions" id="numberOfQuestions">
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="btn-submit form-group">
+				<button type="submit">@Messages("quiz.start")</button>
+			</div>
+
+		</form>
+
+		
 		}
+	</div>
 
 </body>
 </html>

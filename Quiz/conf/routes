@@ -26,10 +26,6 @@ GET		/question/export/:exportType			controllers.QuestionController.export(export
 # Test data fill
 POST	/data						controllers.TestDataController.fill()
 
-# Basic data fill
-POST	/putSubjects				controllers.TestDataController.fillSubjects()
-POST	/putGrades					controllers.TestDataController.fillGrades()
-
 # News
 GET		/news/add					controllers.NewsController.add()
 POST	/news/add					controllers.NewsController.submit()
