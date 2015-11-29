@@ -1,5 +1,6 @@
 package factories.export;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 
 import play.i18n.Messages;
 
@@ -90,6 +96,29 @@ public class ExportFactory {
 		
 		return wb.getBytes();
 		
+	}
+	
+	public byte[] exportAsPDF(List<Question> questionList) {
+		
+		Document document = new Document();
+		document.open();
+		
+		try {
+			PdfWriter.getInstance(document, new ByteArrayOutputStream());
+			
+			for (Question question : questionList) {
+				document.add(new Paragraph(question.questionText));
+			}
+			
+			
+			
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
+		
+		document.close();
+		
+		return null;
 	}
 	
 	private List<String> questionsAsList(Question q) {
