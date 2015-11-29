@@ -31,6 +31,10 @@ public class Image extends BaseModel {
 	@Column(name = "filePath")
 	public String filePath;
 	
+	@Column(name = "height")
+	public int height;
 	
+	@Column(name = "width")
+	public int width;
 	
 }
