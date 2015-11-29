@@ -1,8 +1,11 @@
 package controllers;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import models.Admin;
 import models.Image;
@@ -76,9 +79,13 @@ public class QuestionController extends Controller {
 		
 		// Check whether submit is create or edit; look for id
 		boolean isEdit = false;
-		if (questionForm.get().id != null) {
+		try {
+			Long.parseLong(questionForm.get().id);
 			isEdit = true;
+		} catch (NumberFormatException ex){
+			// Not an edit
 		}
+			
 		
 		// Create question
 		Question question = null;
@@ -92,26 +99,55 @@ public class QuestionController extends Controller {
 		FilePart picture = body.getFile("image");
 		
 		if (picture != null) {
+			
+			// If the old picture is being replaced, delete it from file server
+			if (isEdit) {
+				Question oldQuestion = questionService.findById(Long.parseLong(questionForm.get().id));
+				if (oldQuestion.image != null) {
+					imageUploader.deleteImage(oldQuestion.subject.name, oldQuestion.image.filePath);
+				}
+			}
+			
 		    String fileName = picture.getFilename();
 		    
 		    File file = picture.getFile();
 		    
-		    long pictureId = System.currentTimeMillis();
+		    long pictureId = System.currentTimeMillis();	// TODO is current time random enough for pictureId
 		    
 		    String newFileName = pictureId + "." + FilenameUtils.getExtension(fileName);	// add subject for better hashing
 		    
 		    imageUploader.uploadImage(question.subject.name, file, newFileName);
 		    
 		    Image image = new Image(newFileName);
-		    question.image = image;
 		    
-		    // TODO if new picture is uploaded, delete old picture from file server
+		    BufferedImage bimg;
+			try {
+				bimg = ImageIO.read(file);
+				image.height = bimg.getHeight();
+				image.width = bimg.getWidth();
+			} catch (IOException e) {
+				
+			}
+			
+			question.image = image;
 		    
 		} else {
 			// If submit is edit and no picture is uploaded, leave the old picture
 			if (isEdit) {
 				Question oldQuestion = questionService.findById(Long.parseLong(questionForm.get().id));
 				question.image = oldQuestion.image;
+			}
+		}
+		
+		if (isEdit) {
+			Question oldQuestion = questionService.findById(Long.parseLong(questionForm.get().id));
+			if (!oldQuestion.questionType.equals(question.questionType)) {
+				// If question is edited and question type has changed, delete old and create new question with same id - Hibernate can't handle this
+				questionService.delete(oldQuestion);
+				question.id = oldQuestion.id;
+				questionService.save(question);
+				
+				return redirect(routes.AdminController.adminList());
 			}
 		}
 		

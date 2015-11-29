@@ -16,6 +16,12 @@ function initAdmin() {
 	    }
 	});
 	
+	// Initialize Bootstrap Switch
+	$("[name='trueFalse']").bootstrapSwitch({
+		onColor:'success',
+		offColor:'danger',
+	});
+	
 	// Admin page question input initialization - starting question type is Multiple Choice
 	var editId = $('[name=id]').val();
 	var editChapters = $('[name=editChapters]').val();
