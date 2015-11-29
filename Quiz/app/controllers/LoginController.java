@@ -250,7 +250,12 @@ public class LoginController extends Controller {
 		
 	}
 	
-	private static Integer getRandomMottoNumber() {
+	/**
+	 * Returns random number that represents one of the viable mottos in messages file.
+	 * 
+	 * @return motto number
+	 */
+	public static Integer getRandomMottoNumber() {
 		Random rand = new Random();
 	    int mottoNumber = rand.nextInt(4) + 1;	// TODO number of viable mottos from messages.hr
 	    

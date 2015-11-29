@@ -29,7 +29,7 @@ public class PlayerController extends Controller {
 
 	@SubjectPresent
 	public static Result playerHome() {
-		return ok(player_home.render());
+		return ok(player_home.render(LoginController.getRandomMottoNumber()));
 	}
 
 }

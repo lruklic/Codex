@@ -30,6 +30,8 @@ login.error.values=Molimo Vas da popunite sva polja
 login.error.username=Korisničko ime ne postoji
 login.error.password=Lozinka nije ispravna
 
+logout=Odjava
+
 tooltip.question.edit=Uredi ovo pitanje
 tooltip.question.explanation=Dodaj objašnjenje odgovora za ovo pitanje
 tooltip.question.delete=Obriši ovo pitanje
@@ -58,6 +60,7 @@ question.type=Vrsta pitanja
 question.grade=Razred
 question.subject=Predmet
 question.chapter=Poglavlje
+question.chapters=Poglavlja
 question.image=Slika
 question.chapter.noSelected=Nijedno poglavlje nije označeno
 question.chapter.multiple=Više poglavlja
@@ -82,6 +85,7 @@ question.finals.year=Godina
 question.competition=S natjecanja
 question.competition.year=Godina
 question.competition.level=Razina
+question.trueFalse.followingQuestionIs=Tvrdnja navedena u pitanju je:
 
 script.submit=Predaj skriptu
 
