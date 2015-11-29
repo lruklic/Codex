@@ -13,13 +13,15 @@
 
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-select.min.css")">
 <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionInput.css")">
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css">
 
 <script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/bootstrap-select.min.js")"></script>
-<script type="text/javascript" src="@routes.Assets.at("/javascripts/questionInput.js")"></script>
-<script type="text/javascript" src="@routes.Assets.at("/javascripts/autogrow.js")"></script>
+<script type="text/javascript" src="@routes.Assets.at("/javascripts/admin/questionInput.js")"></script>
 
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+
 
 </head>
 
@@ -56,13 +58,10 @@
 
 @trueFalseForm = {
 	<div class="true_false">
-		<div class="onoffswitch">
-    		<input type="checkbox" class="onoffswitch-checkbox" name="trueFalse" id="myonoffswitch" @if(form("trueFalse").value == "on") {checked}>
-    		<label class="onoffswitch-label" for="myonoffswitch">
-       		<span class="onoffswitch-inner"></span>
-       		<span class="onoffswitch-switch"></span>
-    		</label>
-		</div>
+		<div class="col-xs-3">
+			<label class="control-label">@Messages("question.trueFalse.followingQuestionIs") </label>
+			<input class="form-control" type="checkbox" name="trueFalse" data-off-text="@Messages("quiz.false")" data-on-text="@Messages("quiz.true")" @if(form("trueFalse").value == "on") {checked}>
+		</div>		
 	</div>
 }
 
@@ -100,17 +99,18 @@
 
 @connectCorrect = {
 	<div class="connect_correct">
-	
-		<table>
+		<div class="col-xs-6">
+			<table>
 			<th> @Messages("question.terms") </th>
 			<th> @Messages("question.answers") </th>
 			@for(i <- 0 to 5) {
 			<tr class="connect-@i">
-				<td><input type="text" name="termColumn1[]" id="multiple-@i" value="@form("termColumn1["+i+"]").value()"/></td>
-				<td><input type="text" name="termColumn2[]" id="multipleTrue-@i" value="@form("termColumn2["+i+"]").value()"/></td>
+				<td><input class="form-control" type="text" name="termColumn1[]" id="multiple-@i" value="@form("termColumn1["+i+"]").value()"/></td>
+				<td><input class="form-control" type="text" name="termColumn2[]" id="multipleTrue-@i" value="@form("termColumn2["+i+"]").value()"/></td>
 			</tr>
 			} 
-		</table>
+			</table>
+		</div>
 	</div>
 }
 
@@ -173,7 +173,7 @@
 	
 		@helper.form(action = routes.QuestionController.submit, 'enctype -> "multipart/form-data") {
 		<form class="form-horizontal">
-			<input type="hidden" name="id" value=@form("id").value />
+			<input type="hidden" name="id" value='@form("id").value' />
 			<input type="hidden" name="editChapters" value='@form("chapters").value' />
 
 			<div class="form-group">
@@ -263,6 +263,10 @@
     				@numberOfAnswers
     				
 					@inputAnswerForm
+					
+					@trueFalseForm
+					
+					@connectCorrect
     			</div>
     			
     			@multipleChoiceForm
