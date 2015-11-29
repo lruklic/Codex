@@ -64,6 +64,7 @@ question.chapters=Poglavlja
 question.image=Slika
 question.chapter.noSelected=Nijedno poglavlje nije označeno
 question.chapter.multiple=Više poglavlja
+question.chapter.allChapters=Sva poglavlja
 question.content=Sadržaj pitanja
 question.correct=Točan odgovor
 question.incorrect=Pogrešan odgovor
@@ -87,6 +88,8 @@ question.competition.year=Godina
 question.competition.level=Razina
 question.trueFalse.followingQuestionIs=Tvrdnja navedena u pitanju je:
 
+grade.notSelected=Razred nije odabran
+
 script.submit=Predaj skriptu
 
 export.csv=kao CSV
@@ -104,11 +107,17 @@ quiz.start=Započni kviz
 quiz.finish=Završi kviz
 quiz.confirm=Potvrdi kviz
 quiz.choose=Odaberi kviz
+quiz.numberOfQuestions=Broj pitanja
 quiz.number.correct=Broj točnih odgovora
 quiz.number.incorrect=Broj netočnih odgovora
 quiz.number.unanswered=Broj neodgovorenih pitanja
 quiz.true=Točno
 quiz.false=Netočno
+quiz.normal=Klasičan kviz
+quiz.type=Vrsta kviza
+quiz.type.normal=Klasični kviz
+quiz.type.competition=Kviz za natjecanja
+quiz.type.timeBattle=Borba s vremenom
 
 answer.correct=Točan odgovor
 answer.given=Vaš odgovor

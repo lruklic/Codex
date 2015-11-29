@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import models.Chapter;
 import models.Question;
 import models.Subject;
 import play.data.Form;
@@ -49,13 +50,16 @@ public class QuizController extends Controller {
 	public static NoveltyService noveltyService;
 
 	public static Result quizHome() {
-		return ok(quiz_home.render(ModelCache.getInstance().getAllSubjects()));
+		List<Chapter> ch = ModelCache.getInstance().getAllChapters();
+		return ok(quiz_home.render(ModelCache.getInstance().getAllGrades(), ModelCache.getInstance().getAllSubjects(), ModelCache.getInstance().getAllChapters()));
 	}
 
 	public static Result startQuiz() {
 		
 		Form<QuizForm> quizForm = Form.form(QuizForm.class).bindFromRequest();
-		Subject subject = (Subject) ModelCache.getInstance().getSet(ModelCacheType.SUBJECT, quizForm.get().subject.name);
+		Subject subject = (Subject) ModelCache.getInstance().getSet(ModelCacheType.SUBJECT, quizForm.get().subject);
+		
+		QuizForm qf = quizForm.get();
 		
 		List<Subject> subjects = new ArrayList<Subject>();
 		subjects.add(subject);
