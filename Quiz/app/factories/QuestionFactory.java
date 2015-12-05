@@ -20,7 +20,7 @@ import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
-import engines.SpecialTagEngine;
+import engines.tags.SpecialTagEngine;
 import enums.AnswerType;
 import forms.QuestionForm;
 

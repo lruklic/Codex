@@ -18,7 +18,7 @@ import models.questions.TrueFalseQuestion;
 import play.data.validation.Constraints.Required;
 import cache.models.ModelCache;
 import cache.models.ModelCacheType;
-import engines.SpecialTagEngine;
+import engines.tags.SpecialTagEngine;
 import factories.QuestionFactory;
 
 /**

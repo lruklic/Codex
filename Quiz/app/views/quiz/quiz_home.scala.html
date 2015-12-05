@@ -1,6 +1,6 @@
 @(grades: List[models.Grade], subjects: List[models.Subject], chapters: List[models.Chapter]) 
 
-@import views.html.adminView._;
+@import views.html.playerView._;
 @import views.html.init._;
 
 <html>
@@ -19,7 +19,9 @@
 <body>
 	<div class="container">
 
-		<header> </header>
+		@playerHeader()
+
+		<header><h1>@Messages("quiz")</h1></header>
 
 		@helper.form(routes.QuizController.startQuiz) {
 		<form class="form-horizontal">
@@ -59,11 +61,13 @@
 							<select class="form-control selectpicker" name="quizType" id="quizType">
 								<option value="normal">@Messages("quiz.type.normal")</option>
 								<option value="competition">@Messages("quiz.type.competition")</option>
+								<option value="timeBattle" disabled>@Messages("quiz.type.timeBattle")</option>
 							</select>
 						</div>
 						<div class="col-xs-4">
 							<label class="control-label">@Messages("quiz.numberOfQuestions")</label> 
 							<select class="form-control selectpicker" name="numberOfQuestions" id="numberOfQuestions">
+								<option value="3">3</option>
 								<option value="10">10</option>
 								<option value="20">20</option>
 								<option value="30">30</option>

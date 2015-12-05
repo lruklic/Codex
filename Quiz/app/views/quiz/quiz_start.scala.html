@@ -1,18 +1,19 @@
 @(questionList: List[Question])
 
-@import views.html.adminView._;
+@import views.html.playerView._;
 @import views.html.init._;
 @import enums._;
 @import models.questions._;
+@import engines.tags._;
  
 <html>
 
 <head>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	
 	@head()
+	
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/start.css")">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-	
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
 	
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.twbsPagination.min.js")"></script>
@@ -121,39 +122,55 @@
 }
 <body>
 	
-	<h1 class="margin-left-30"> @Messages("quiz") </h1>
+	<div class="container">
 	
-	<div class="quiz-container hidden">
-		<div class="center"><ul id="pagination" class="pagination-sm"></ul></div>
-		<div class="questions-container" id="questions">
-			@for((q, index) <- questionList.zipWithIndex){
-			<div class="question-container" id="question-@{index+1}">
-				<div class="question-text custom-font font-size-20">@q.questionText</div>
-				@if(q.image != null) {
-					<div class="question-image-container"> 
-						<img class="landscape" alt="question-text" src="https://s3.eu-central-1.amazonaws.com/codeximages/images/@q.subject.name/@q.image.filePath" /> 
-					</div>
-				}
-				<input type="hidden" class="question-id" value="@q.id">
-				<input type="hidden" class="question-type" value="@q.questionType">
-				@q.questionType match {
-					case QuestionType.MULTIPLE_CHOICE => {@multipleChoice(q)}
-					case QuestionType.MULTIPLE_ANSWER => {@multipleAnswer(q)}
-					case QuestionType.INPUT_ANSWER => {@inputAnswer(q)}
-					case QuestionType.TRUE_FALSE => {@trueFalse(q)}
-					case QuestionType.CONNECT_CORRECT => {@connectCorrect(q)}
-					case _ => {<span>Not yet implemented</span>}
-			}
+		@playerHeader()
+		
+		<header><h1>@Messages("quiz")</h1></header>
+		
+		<div class="quiz-container center-block hidden">
+			<div>
+				<ul id="pagination" class="pagination-sm"></ul>
 			</div>
-		}
+			<div class="questions-container" id="questions">
+				@for((q, index) <- questionList.zipWithIndex){
+				
+				<div class="question-container" id="question-@{index+1}">
+					
+					@for(tag <- SpecialTagEngine.createSpecialTagsFromString(q.specialTags)) {
+						<div><span class="label label-@tag.tagType">@tag.displayName</span></div>
+					}
+					
+					<div class="question-text custom-font font-size-20">@q.questionText</div>
+					@if(q.image != null) {
+					<div class="question-image-container">
+						<img class="landscape" alt="question-text" src="@{play.Play.application().configuration().getString("amazon.server.link")}/codeximages/images/@q.subject.name/@q.image.filePath" />
+					</div>
+					} 
+					<input type="hidden" class="question-id" value="@q.id"> 
+					<input type="hidden" class="question-type" value="@q.questionType">
+					
+					@q.questionType match { 
+						case QuestionType.MULTIPLE_CHOICE => {@multipleChoice(q)} 
+						case QuestionType.MULTIPLE_ANSWER => {@multipleAnswer(q)} 
+						case QuestionType.INPUT_ANSWER => {@inputAnswer(q)} 
+						case QuestionType.TRUE_FALSE => {@trueFalse(q)} 
+						case QuestionType.CONNECT_CORRECT => {@connectCorrect(q)} 
+						case _ => {<span>Not yet implemented</span>} }
+				</div>
+				}
+			</div>
+			<button class="finish-button" id="finishQuizBtn">@Messages("quiz.finish")</button>
 		</div>
-		<button class="finish-button" id="finishQuizBtn"> @Messages("quiz.finish")</button>
+		
+		<button id="startQuizBtn"> @Messages("quiz.start")</button>
+
+		<div class="result"></div>
+	
+		<script type="text/javascript" src="@routes.Assets.at("javascripts/svg/svgcheckbx.js")"></script>
+
 	</div>
 	
-	<button class="margin-left-30" id="startQuizBtn"> @Messages("quiz.start")</button>
-
-	<div class="result"></div>
 	
-	<script type="text/javascript" src="@routes.Assets.at("javascripts/svg/svgcheckbx.js")"></script>
 </body>
 </html>

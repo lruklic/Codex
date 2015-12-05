@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import models.Chapter;
+import models.Grade;
 import models.Question;
 import models.Subject;
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.i18n.Messages;
 import play.mvc.BodyParser;
 import play.mvc.BodyParser.Json;
 import play.mvc.Controller;
@@ -50,31 +51,43 @@ public class QuizController extends Controller {
 	public static NoveltyService noveltyService;
 
 	public static Result quizHome() {
-		List<Chapter> ch = ModelCache.getInstance().getAllChapters();
 		return ok(quiz_home.render(ModelCache.getInstance().getAllGrades(), ModelCache.getInstance().getAllSubjects(), ModelCache.getInstance().getAllChapters()));
 	}
 
 	public static Result startQuiz() {
 		
 		Form<QuizForm> quizForm = Form.form(QuizForm.class).bindFromRequest();
+		
+		if (quizForm.hasErrors()) {
+			flash("error", Messages.get("quiz.error.values"));
+			return ok();	// TODO redirect
+		}
+		
+		Grade grade = (Grade) ModelCache.getInstance().getSet(ModelCacheType.GRADE, quizForm.get().grade);
 		Subject subject = (Subject) ModelCache.getInstance().getSet(ModelCacheType.SUBJECT, quizForm.get().subject);
+		
+		List<String> chapters = new ArrayList<>();
+		if (quizForm.get().chapters != null) {
+			for (String chapter : quizForm.get().chapters) { 
+				chapters.add(chapter.split("-")[2]);
+			}
+		}
 		
 		QuizForm qf = quizForm.get();
 		
-		List<Subject> subjects = new ArrayList<Subject>();
-		subjects.add(subject);
+		long questionsForSubject = questionService.countQuestions(grade, subject, chapters);
 		
-		
-		long questionsForSubject = questionService.countQuestionsBySubject(subject);
-		
-		// TODO if there is not enough questions TODO custom number of questions
-		if(questionsForSubject > 10) {
-			questionsForSubject = 10;
+		// If there is not enough for the given subject and/or chapter, show maximum available
+		// If there are no questions, redirect to start page 
+		if(questionsForSubject >= qf.numberOfQuestions) {
+			questionsForSubject = qf.numberOfQuestions;
 		} else if (questionsForSubject == 0) {
 			return redirect(routes.StartController.redirect());
 		}
 		
-		List<Question> ql = getNRandomQuestions(questionService.getQuestionsBySubjects(subjects), (int) questionsForSubject);	// set customizable number of questions
+		List<Question> questionList = questionService.getQuestions(grade, subject, chapters);
+		
+		List<Question> ql = getNRandomQuestions(questionList, (int) questionsForSubject);
 		
 		QuestionCache.getInstance().addSet(Session.getUsername(), new QuestionSet(ql));
 		
