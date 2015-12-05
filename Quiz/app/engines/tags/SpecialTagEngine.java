@@ -1,9 +1,11 @@
-package engines;
+package engines.tags;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import play.i18n.Messages;
 import models.Question;
 import forms.QuestionForm;
 
@@ -71,6 +73,34 @@ public class SpecialTagEngine {
 			}
 		}
 		
+	}
+	
+	public static List<SpecialTag> createSpecialTagsFromString(String specialTagString) {
+		
+		List<SpecialTag> specialTagsList = new ArrayList<>();
+		
+		String[] specialTags = specialTagString.split(";");
+		
+		for (String tag : specialTags) {
+			if (tag.startsWith(COMPETITION_ABBR)) {
+				String[] tagParts = tag.split("-");
+				
+				String displayName = Messages.get(tagParts[1]) + " " + Messages.get("specialTag.competition") + " " + tagParts[2];
+				
+				SpecialTag specialTag = new SpecialTag(SpecialTagType.LEAVING_EXAM, displayName, Color.GREEN, tagParts[1], tagParts[2], null);
+				specialTagsList.add(specialTag);
+				
+			} else if (tag.startsWith(LEAVING_EXAM_ABBR)) {
+				String[] tagParts = tag.split("-");
+				
+				String displayName = Messages.get("specialTag.leavingExam") + " " + tagParts[1];
+				
+				SpecialTag specialTag = new SpecialTag(SpecialTagType.COMPETITION, displayName, Color.BLUE, tagParts[1], null, null);
+				specialTagsList.add(specialTag);
+			}
+		}
+		
+		return specialTagsList;
 	}
 	
 	

@@ -88,6 +88,9 @@ question.competition.year=Godina
 question.competition.level=Razina
 question.trueFalse.followingQuestionIs=Tvrdnja navedena u pitanju je:
 
+specialTag.leavingExam=Državna matura
+specialTag.competition=natjecanje
+
 grade.notSelected=Razred nije odabran
 
 script.submit=Predaj skriptu

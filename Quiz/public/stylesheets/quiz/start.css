@@ -14,17 +14,13 @@
 }
 
 .quiz-container {
-	position: relative;
-	margin-left: 30px;
 	text-align: center;
 	border: 2px solid #000; 
 	border-radius: 10px;
 	background-color: #fff;
-	width: 800px;
 }
 
 .questions-container {
-	width: 800px;
 	height: 500px; 
 }
 
@@ -43,35 +39,23 @@
 	height: 256px;
 }
 
-.question-container {
-	
-}
-
-.result-question-text {
-	width: 400px;
-}
-
-table, th, td {
-	margin-top: 10px;
-	background-color: #fff;
-	border: 2px solid #000;
-}
-
-th, td {
-	padding: 5px;
-}
-
 img {
 	width: 30px;
 	height: 30px;
 }
 
-td.right-wrong-cell {
-	text-align: center;
+.label-LEAVING_EXAM {
+    background-color:#8080c0;
+    color:#fff;
 }
 
-.question-table {
-	width: 50%;
+.label-COMPETITION {
+    background-color:#408080;
+    color:#fff;
+}
+
+.center {
+	text-align: center;
 }
 
 .custom-font {
@@ -82,8 +66,8 @@ td.right-wrong-cell {
 	font-style: italic;
 }
 
-.font-size-36 {
-	font-size: 36px;
+.font-size-40 {
+	font-size: 40px;
 }
 
 .font-size-20 {
@@ -139,6 +123,10 @@ td.right-wrong-cell {
 
 .margin-left-30 {
 	margin-left: 30px;
+}
+
+.margin-top-10 {
+	margin-top: 10px;
 }
 
 .padding-top-10 {
