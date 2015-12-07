@@ -1,10 +1,9 @@
-package quiz;
+package quiz.evaluate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import enums.AnswerType;
-import quiz.evaluate.QuestionResultPair;
 
 /**
  * Class that contains details about quiz that was recently completed.
@@ -15,7 +14,7 @@ import quiz.evaluate.QuestionResultPair;
 
 public class QuizResult {
 	
-	public List<QuestionResultPair> questionResultPairs = new ArrayList<>();
+	public List<EvaluatedQuestion> evaluatedQuestions = new ArrayList<>();
 	
 	/**
 	 * Empty constructor.
@@ -23,16 +22,16 @@ public class QuizResult {
 	public QuizResult() {	
 	}
 	
-	public List<QuestionResultPair> getQuestionResultPairs() {
-		return questionResultPairs;
+	public List<EvaluatedQuestion> getEvaluatedQuestions() {
+		return evaluatedQuestions;
 	}
 
-	public void addQuestionResultPair(QuestionResultPair qrp) {
-		questionResultPairs.add(qrp);
+	public void addEvaluatedQuestion(EvaluatedQuestion evaluatedQuestion) {
+		evaluatedQuestions.add(evaluatedQuestion);
 	}
 
 	public int getNumberOfQuestions() {
-		return questionResultPairs.size();
+		return evaluatedQuestions.size();
 	}
 
 	public int getNumberOfCorrectAnswers() {
@@ -47,12 +46,12 @@ public class QuizResult {
 		return countAnswers(AnswerType.NOT_ANSWERED);
 	}
 	
-	private int countAnswers(AnswerType at) {
+	private int countAnswers(AnswerType answerType) {
 		
 		int counter = 0;
 		
-		for (QuestionResultPair qrp : questionResultPairs) {
-			if (qrp.isCorrect().equals(at)) {
+		for (EvaluatedQuestion evaluatedQuestion : evaluatedQuestions) {
+			if (evaluatedQuestion.isCorrect().equals(answerType)) {
 				counter++;
 			}
 		}

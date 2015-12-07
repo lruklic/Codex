@@ -3,6 +3,8 @@ package cache.question;
 import java.util.HashMap;
 import java.util.Map;
 
+import quiz.Quiz;
+
 /**
  * Singleton class that caches questions.
  * 
@@ -14,7 +16,7 @@ public class QuestionCache {
 
 	private static QuestionCache questionCache;
 	
-	private static Map<String, QuestionSet> questionSetMap = new HashMap<>();
+	private static Map<String, Quiz> quizMap = new HashMap<>();
 	
 	private QuestionCache() {
 	}
@@ -33,20 +35,20 @@ public class QuestionCache {
 		
 	}
 	
-	public QuestionSet getSet(String key) {
-		return questionSetMap.get(key);
+	public Quiz getQuiz(String key) {
+		return quizMap.get(key);
 	}
 	
 	/**
-	 * Add question set to cache. If already exists set with same key, it is replaced.
-	 * @param key set key; username of user playing the quiz
-	 * @param qs
+	 * Add quiz to cache. If already exists quiz with same key, it is replaced.
+	 * @param key quiz key; username of user playing the quiz
+	 * @param quiz
 	 */
-	public void addSet(String key, QuestionSet qs) {
-		questionSetMap.put(key, qs);
+	public void addQuiz(String key, Quiz quiz) {
+		quizMap.put(key, quiz);
 	}
 	
 	public void removeSet(String key) {
-		questionSetMap.remove(key);
+		quizMap.remove(key);
 	}
 }
