@@ -15,8 +15,13 @@ import play.mvc.BodyParser.Json;
 import play.mvc.Controller;
 import play.mvc.Http.RequestBody;
 import play.mvc.Result;
-import quiz.QuizResult;
+import quiz.DetailedQuestion;
+import quiz.QuestionSet;
+import quiz.Quiz;
+import quiz.QuizType;
+import quiz.ScoringType;
 import quiz.evaluate.QuestionEvaluator;
+import quiz.evaluate.QuizResult;
 import services.model.NoveltyService;
 import services.model.QuestionService;
 import session.Session;
@@ -26,7 +31,6 @@ import views.html.quiz.quiz_start;
 import cache.models.ModelCache;
 import cache.models.ModelCacheType;
 import cache.question.QuestionCache;
-import cache.question.QuestionSet;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
@@ -54,6 +58,10 @@ public class QuizController extends Controller {
 		return ok(quiz_home.render(ModelCache.getInstance().getAllGrades(), ModelCache.getInstance().getAllSubjects(), ModelCache.getInstance().getAllChapters()));
 	}
 
+	/**
+	 * Generates quiz from user input about quiz type, grade and chapters.
+	 */
+	
 	public static Result startQuiz() {
 		
 		Form<QuizForm> quizForm = Form.form(QuizForm.class).bindFromRequest();
@@ -86,14 +94,17 @@ public class QuizController extends Controller {
 		}
 		
 		List<Question> questionList = questionService.getQuestions(grade, subject, chapters);
+		List<Question> randomQuestionList = getNRandomQuestions(questionList, (int) questionsForSubject);
 		
-		List<Question> ql = getNRandomQuestions(questionList, (int) questionsForSubject);
+		QuestionCache.getInstance().addQuiz(Session.getUsername(), new Quiz(new QuestionSet(randomQuestionList, null, null), QuizType.CLASSIC));
 		
-		QuestionCache.getInstance().addSet(Session.getUsername(), new QuestionSet(ql));
-		
-		return ok(quiz_start.render(ql));
+		return ok(quiz_start.render(randomQuestionList));
 	}
-	 
+
+	/**
+	 * Evaluates quiz answers that user provided.
+	 */
+	
 	@BodyParser.Of(Json.class)
 	public static Result evaluateQuiz() {
 		// Get JSON array with questions
@@ -104,12 +115,12 @@ public class QuizController extends Controller {
 		List<JsonNode> jsList = Lists.newArrayList(js.elements());
 		
 		// Get current questions for current player
-		QuestionSet questionSet = QuestionCache.getInstance().getSet(Session.getUsername());
+		Quiz quiz = QuestionCache.getInstance().getQuiz(Session.getUsername());
 		
 		// Iterate over all questions
-		QuestionEvaluator qe = new QuestionEvaluator();
+		QuestionEvaluator evaluator = new QuestionEvaluator();
 		
-		QuizResult result = qe.evaulateQuiz(jsList, questionSet);
+		QuizResult result = evaluator.evaulateQuiz(jsList, quiz);
 		
 		QuestionCache.getInstance().removeSet(Session.getUsername());
 		

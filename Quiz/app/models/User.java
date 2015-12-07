@@ -58,6 +58,9 @@ public abstract class User extends BaseModel implements Subject {
 	@Enumerated(EnumType.STRING)
 	public UserType userType;
 	
+	@Column(name = "biography")
+	public String biography;
+	
 	protected User() {
 	}
 	

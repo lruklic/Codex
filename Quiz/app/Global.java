@@ -34,6 +34,7 @@ import controllers.ActivationController;
 import controllers.AdminController;
 import controllers.LoginController;
 import controllers.NewsController;
+import controllers.ProfileController;
 import controllers.QuestionController;
 import controllers.QuizController;
 import controllers.RegisterController;
@@ -72,6 +73,7 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(AdminController.class);
 				requestStaticInjection(NewsController.class);
 				requestStaticInjection(QuizController.class);
+				requestStaticInjection(ProfileController.class);
 				requestStaticInjection(ActivationController.class);
 				requestStaticInjection(SimpleDeadboltHandler.class);
 				requestStaticInjection(Session.class);

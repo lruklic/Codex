@@ -30,6 +30,9 @@ POST	/data						controllers.TestDataController.fill()
 GET		/news/add					controllers.NewsController.add()
 POST	/news/add					controllers.NewsController.submit()
 
+# Profile
+GET		/profile					controllers.ProfileController.profile()
+
 # Admin
 GET		/admin/home					controllers.AdminController.adminHome()
 GET		/admin/list					controllers.AdminController.adminList()

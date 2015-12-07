@@ -10,14 +10,23 @@ import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
-import quiz.QuizResult;
-import cache.question.QuestionSet;
+import quiz.DetailedQuestion;
+import quiz.QuestionSet;
+import quiz.Quiz;
+import quiz.evaluate.EvaluatedQuestion;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
 
 import engines.InputAnswerEvaluateEngine;
 import enums.AnswerType;
+
+/**
+ * Class that contains methods for evaluating and scoring quizes.
+ * 
+ * @author Luka Ruklic
+ *
+ */
 
 public class QuestionEvaluator {
 	
@@ -28,17 +37,23 @@ public class QuestionEvaluator {
 	 * @param questionSet set of questions for one quiz
 	 * @return result of a quiz
 	 */
-	public QuizResult evaulateQuiz(List<JsonNode> questionList, QuestionSet questionSet) {
+	public QuizResult evaulateQuiz(List<JsonNode> questionList, Quiz quiz) {
 		
 		QuizResult result = new QuizResult();
 		
+		QuestionSet questionSet = quiz.getQuestionSet();
+		
 		for (JsonNode givenAnswer : questionList) {
+			
 			Long id = givenAnswer.get("id").asLong();
-			Question question = questionSet.getQuestion(id);
+			DetailedQuestion detailedQuestion = questionSet.getDetailedQuestion(id);
 			
-			QuestionResultPair qrp = evaluateQuestion(question, givenAnswer);
+			QuestionResult questionResult = evaluateQuestion(detailedQuestion.question, givenAnswer);
+			QuestionScore questionScore = gradeQuestion(questionResult, detailedQuestion);
 			
-			result.addQuestionResultPair(qrp);
+			EvaluatedQuestion evaluatedQuestion = new EvaluatedQuestion(questionResult, questionScore);
+			
+			result.addEvaluatedQuestion(evaluatedQuestion);
 			
 		}
 		
@@ -47,15 +62,15 @@ public class QuestionEvaluator {
 	}
 	
 	/**
-	 * Method that evaluates answer given by user.
+	 * Method that evaluates if the answer given by user is correct.
 	 * 
 	 * @param question given question
 	 * @param givenAnswer answer given by user
-	 * @return QuestionResultPair that contains all the information about question and given answer
+	 * @return QuestionResult that contains all the information about question and given answer
 	 */
-	private QuestionResultPair evaluateQuestion(Question question, JsonNode givenAnswer) {
+	private QuestionResult evaluateQuestion(Question question, JsonNode givenAnswer) {
 		
-		QuestionResultPair qrp = new QuestionResultPair(question);
+		QuestionResult qrp = new QuestionResult(question);
 		
 		QuestionType qType = question.questionType;
 		
@@ -72,11 +87,18 @@ public class QuestionEvaluator {
 			// if no answer is provided, mark as Unanswered
 			if (answersNode != null) {
 				List<JsonNode> answersNodes = Lists.newArrayList(answersNode.elements());
+				
+				boolean unanswered = true;
+				
 				for (JsonNode answerNode : answersNodes) {
 					List<JsonNode> elements = Lists.newArrayList(answerNode.elements());
 					
 					String value = elements.get(0).asText();
 					String key = elements.get(1).asText();
+					
+					if (!value.equals("null")) {
+						unanswered = false;
+					}
 					
 					if (value.equals("")) {
 						value = "EMPTY_STRING";
@@ -92,8 +114,9 @@ public class QuestionEvaluator {
 					}
 					
 					String correctValueForKey = ccq.getAnswerPairs().get(key);
-					
-					if (!correctValueForKey.equals(value)) {
+					if (unanswered) {
+						qrp.isCorrect = AnswerType.NOT_ANSWERED;
+					} else if (!correctValueForKey.equals(value)) {
 						qrp.isCorrect = AnswerType.INCORRECT;
 					}
 				}
@@ -157,13 +180,14 @@ public class QuestionEvaluator {
 			String answer = "";
 			if (answersNode != null) {
 				answer = answersNode.asText();
+				
+				if (answer.equals(((MultipleChoiceQuestion)question).correctAnswer)) {
+					qrp.isCorrect = AnswerType.CORRECT;
+				} else {
+					qrp.isCorrect = AnswerType.INCORRECT;
+				}
 			} else {
 				qrp.isCorrect = AnswerType.NOT_ANSWERED;
-			}
-			if (answer.equals(((MultipleChoiceQuestion)question).correctAnswer)) {
-				qrp.isCorrect = AnswerType.CORRECT;
-			} else {
-				qrp.isCorrect = AnswerType.INCORRECT;
 			}
 			
 			qrp.givenAnswer = answer;
@@ -194,4 +218,19 @@ public class QuestionEvaluator {
 		
 	}
 	
+	/**
+	 * Method that assigns appropriate amount of points to the question.
+	 * 
+	 * @param questionResult
+	 * @return
+	 */
+	private QuestionScore gradeQuestion(QuestionResult questionResult, DetailedQuestion detailedQuestion) {
+		
+		// TODO other scoring types; this is only ALL_OR_NOTHING
+		// Regardless of scoring type for question, CORRECT answer bring max amount of points
+		if (questionResult.isCorrect == AnswerType.CORRECT) {
+			return new QuestionScore(detailedQuestion.maxPoints);
+		}
+		return null;
+	}
 }

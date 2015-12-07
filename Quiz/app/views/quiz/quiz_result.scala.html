@@ -1,6 +1,6 @@
-@(result: _root_.quiz.QuizResult) 
+@(result: _root_.quiz.evaluate.QuizResult) 
 
-@import _root_.quiz._;
+@import _root_.quiz.evaluate.QuizResult;
 
 <html>
 	<div>
@@ -26,15 +26,15 @@
 				</thead>
 				
 				<tbody>
-				@for((qrp, index) <- result.getQuestionResultPairs.zipWithIndex){
+				@for((eq, index) <- result.getEvaluatedQuestions.zipWithIndex){
 				<tr>
 					<td>@index</td>
-					<td class="result-question-text-cell">@qrp.question.questionText</td>
+					<td class="result-question-text-cell">@eq.questionResult.question.questionText</td>
 					<td class="right-wrong-cell">
-					@if(qrp.isCorrect.toString().equals("CORRECT")) {
+					@if(eq.questionResult.isCorrect.toString().equals("CORRECT")) {
 						<img class="tooltip-custom" src="@routes.Assets.at("images/right.gif")" alt="RIGHT">
-					} else { @if(qrp.isCorrect.toString().equals("INCORRECT")) {
-						<img class="tooltip-custom cursor-pointer" src="@routes.Assets.at("images/animated.gif")" title="@qrp.answerRecap" alt="WRONG">
+					} else { @if(eq.questionResult.isCorrect.toString().equals("INCORRECT")) {
+						<img class="tooltip-custom cursor-pointer" src="@routes.Assets.at("images/animated.gif")" title="@eq.questionResult.answerRecap" alt="WRONG">
 					} else {
 						<img src="@routes.Assets.at("images/unanswered.gif")" alt="UNANSWERED">
 					}}

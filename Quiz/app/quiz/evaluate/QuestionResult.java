@@ -12,7 +12,7 @@ import enums.AnswerType;
  *
  */
 
-public class QuestionResultPair {
+public class QuestionResult {
 	
 	/**
 	 * Question asked.
@@ -37,7 +37,7 @@ public class QuestionResultPair {
 	 * 
 	 * @param question given question
 	 */
-	public QuestionResultPair(Question question) {
+	public QuestionResult(Question question) {
 		this.question = question;
 	}
 
