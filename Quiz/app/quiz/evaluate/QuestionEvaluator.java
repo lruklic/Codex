@@ -14,6 +14,8 @@ import quiz.DetailedQuestion;
 import quiz.QuestionSet;
 import quiz.Quiz;
 import quiz.evaluate.EvaluatedQuestion;
+import quiz.evaluate.grade.QuestionGrader;
+import quiz.evaluate.grade.QuestionScore;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
@@ -49,7 +51,7 @@ public class QuestionEvaluator {
 			DetailedQuestion detailedQuestion = questionSet.getDetailedQuestion(id);
 			
 			QuestionResult questionResult = evaluateQuestion(detailedQuestion.question, givenAnswer);
-			QuestionScore questionScore = gradeQuestion(questionResult, detailedQuestion);
+			QuestionScore questionScore = QuestionGrader.gradeQuestion(questionResult, detailedQuestion);
 			
 			EvaluatedQuestion evaluatedQuestion = new EvaluatedQuestion(questionResult, questionScore);
 			
@@ -218,19 +220,4 @@ public class QuestionEvaluator {
 		
 	}
 	
-	/**
-	 * Method that assigns appropriate amount of points to the question.
-	 * 
-	 * @param questionResult
-	 * @return
-	 */
-	private QuestionScore gradeQuestion(QuestionResult questionResult, DetailedQuestion detailedQuestion) {
-		
-		// TODO other scoring types; this is only ALL_OR_NOTHING
-		// Regardless of scoring type for question, CORRECT answer bring max amount of points
-		if (questionResult.isCorrect == AnswerType.CORRECT) {
-			return new QuestionScore(detailedQuestion.maxPoints);
-		}
-		return null;
-	}
 }

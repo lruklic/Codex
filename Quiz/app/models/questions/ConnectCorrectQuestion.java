@@ -155,5 +155,10 @@ public class ConnectCorrectQuestion extends Question {
 		return questionSpecifics;
 		
 	}
+
+	@Override
+	public Integer getNumberOfPossibleAnswers() {
+		return answerPairs.size();
+	}
 	
 }

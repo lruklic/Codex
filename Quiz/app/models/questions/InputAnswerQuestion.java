@@ -55,5 +55,10 @@ public class InputAnswerQuestion extends Question {
 		questionSpecifics.add(answer);
 		return questionSpecifics;
 	}
+
+	@Override
+	public Integer getNumberOfPossibleAnswers() {
+		return Integer.MAX_VALUE;
+	}
 	
 }

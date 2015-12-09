@@ -91,10 +91,6 @@ public class MultipleAnswerQuestion extends Question {
 		
 		return allAnswers;
 	}
-	
-	public int getNumberOfAnswers() {
-		return getIncorrectAnswers().size() + getCorrectAnswers().size();
-	}
 
 	@Override
 	public String getQuestionAnswerText() {
@@ -120,6 +116,16 @@ public class MultipleAnswerQuestion extends Question {
 		questionSpecifics.add(incorrectAnswers);
 		
 		return questionSpecifics;
+	}
+
+	public Integer getNumberOfAnswers() {
+		return getIncorrectAnswers().size() + getCorrectAnswers().size();
+	}
+	
+	@Override
+	public Integer getNumberOfPossibleAnswers() {
+		// This value is not correct, but common practice dictates that questions with multiple answers don't contribute to negative points
+		return Integer.MAX_VALUE;
 	}
 
 	
