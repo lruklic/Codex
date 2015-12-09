@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import models.Admin;
-import models.Grade;
 import models.Question;
-import models.Subject;
 import models.enums.QuestionType;
 import models.questions.ConnectCorrectQuestion;
 import models.questions.InputAnswerQuestion;
@@ -16,8 +14,6 @@ import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
 import play.data.validation.Constraints.Required;
-import cache.models.ModelCache;
-import cache.models.ModelCacheType;
 import engines.tags.SpecialTagEngine;
 import factories.QuestionFactory;
 
@@ -149,7 +145,7 @@ public class QuestionForm {
 			case MULTIPLE_CHOICE:
 				MultipleChoiceQuestion mq = ((MultipleChoiceQuestion)question);
 				this.multipleCorrect = mq.correctAnswer;
-				this.numberOfAnswers = mq.getNumberOfAnswers();
+				this.numberOfAnswers = mq.getNumberOfPossibleAnswers();
 				this.incorrect = mq.getIncorrectAnswers();
 				break;
 			case MULTIPLE_ANSWER:

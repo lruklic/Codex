@@ -90,12 +90,5 @@ public class QuestionResult {
 	public AnswerType isCorrect() {
 		return isCorrect;
 	}
-
-	public void setCorrect(AnswerType isCorrect) {
-		this.isCorrect = isCorrect;
-	}
-
-	
-	
 	
 }

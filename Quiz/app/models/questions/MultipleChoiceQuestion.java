@@ -81,10 +81,6 @@ public class MultipleChoiceQuestion extends Question {
 		
 		return allAnswers;
 	}
-	
-	public int getNumberOfAnswers() {
-		return getIncorrectAnswers().size() + 1;
-	}
 
 	@Override
 	public String getQuestionAnswerText() {
@@ -99,6 +95,11 @@ public class MultipleChoiceQuestion extends Question {
 		questionSpecifics.add(incorrectAnswers);
 		
 		return questionSpecifics;
+	}
+
+	@Override
+	public Integer getNumberOfPossibleAnswers() {
+		return getIncorrectAnswers().size() + 1;
 	}
 
 	

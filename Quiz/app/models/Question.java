@@ -127,6 +127,13 @@ public abstract class Question extends BaseModel {
 	public abstract List<String> getQuestionSpecificsAsList();
 	
 	/**
+	 * Returns number of possible answers that can be given for this question.
+	 * 
+	 * @return number of possible answers
+	 */
+	public abstract Integer getNumberOfPossibleAnswers();
+	
+	/**
 	 * Getter for chapters that turns string into list of Chapters.
 	 * 
 	 * @return Chapter list

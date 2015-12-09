@@ -32,7 +32,7 @@ public class QuestionSet {
 	 * @param questionCollection collection of questions
 	 */
 	
-	public QuestionSet(Collection<Question> questionCollection, List<Integer> maxPoints, ScoringType scoringType) {
+	public QuestionSet(Collection<Question> questionCollection, List<Double> maxPoints, ScoringType scoringType) {
 		
 		if (maxPoints == null || scoringType == null || questionCollection.size() != maxPoints.size()) {
 			for (Question question : questionCollection) {
@@ -41,7 +41,7 @@ public class QuestionSet {
 		} else {
 			int index = 0;
 			for (Question question : questionCollection) {
-				questionMap.put(question.id, new DetailedQuestion(question, (float) maxPoints.get(index), scoringType));
+				questionMap.put(question.id, new DetailedQuestion(question, maxPoints.get(index), scoringType));
 			}
 		}
 		

@@ -75,5 +75,10 @@ public class TrueFalseQuestion extends Question {
 		questionSpecifics.add(answer.toString());
 		return questionSpecifics;
 	}
+
+	@Override
+	public Integer getNumberOfPossibleAnswers() {
+		return 2;
+	}
 	
 }
