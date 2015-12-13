@@ -26,7 +26,7 @@ public class ProfileController extends Controller {
 	public static UserService userService;
 
 	@SubjectPresent
-	public static Result profile() {
+	public static Result profileHome() {
 		
 		User currentUser = userService.findByUsernameOrEmail(Session.getUsername());
 		

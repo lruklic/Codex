@@ -60,5 +60,5 @@ public class InputAnswerQuestion extends Question {
 	public Integer getNumberOfPossibleAnswers() {
 		return Integer.MAX_VALUE;
 	}
-	
+
 }

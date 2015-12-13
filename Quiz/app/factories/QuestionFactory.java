@@ -97,7 +97,7 @@ public class QuestionFactory {
 				if (term1.length() > 0) {
 					answerPairs.put(term1, term2);
 				} else {
-					answerPairs.put("EMPTY_STRING"+i, term2);	// what if someone enters EMPTY_STRING as an answer?
+					answerPairs.put("EMPTY_STRING"+i, term2);	// TODO what if someone enters EMPTY_STRING as an answer?
 				}
 			}
 		}

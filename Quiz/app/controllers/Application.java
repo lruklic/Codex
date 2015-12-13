@@ -15,6 +15,7 @@ public class Application extends Controller {
 	    return ok(
 	        Routes.javascriptRouter("jsRoutes",
 	            routes.javascript.QuestionController.deleteQuestion(),
+	            routes.javascript.PortController.importQuestions(),
 	            routes.javascript.QuizController.quizHome()
 	            //inside somepackage
 	            // controllers.somepackage.routes.javascript.Application.updateItem()

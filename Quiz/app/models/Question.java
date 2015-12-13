@@ -121,7 +121,7 @@ public abstract class Question extends BaseModel {
 	 */
 	public abstract String getQuestionAnswerText();
 	/**
-	 * Method that returns question specific details for question (i.e. 
+	 * Method that returns question specific details for question which other question types don't have.
 	 * @return
 	 */
 	public abstract List<String> getQuestionSpecificsAsList();
@@ -132,7 +132,7 @@ public abstract class Question extends BaseModel {
 	 * @return number of possible answers
 	 */
 	public abstract Integer getNumberOfPossibleAnswers();
-	
+
 	/**
 	 * Getter for chapters that turns string into list of Chapters.
 	 * 

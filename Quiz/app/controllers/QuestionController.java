@@ -22,6 +22,7 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import services.image.ImageUploader;
+import services.impl.PortServiceImpl;
 import services.model.QuestionService;
 import services.model.UserService;
 import session.Session;
@@ -33,7 +34,6 @@ import cache.models.ModelCache;
 
 import com.google.inject.Inject;
 
-import factories.export.ExportFactory;
 import forms.QuestionForm;
 
 /**
@@ -58,7 +58,7 @@ public class QuestionController extends Controller {
 	@Inject
 	public static ImageUploader imageUploader;
 	
-	private static ExportFactory exportFactory = new ExportFactory();
+	private static PortServiceImpl exportFactory = new PortServiceImpl();
 	
 	/**
 	 * Mapped to POST method under adminQuestion
@@ -180,6 +180,7 @@ public class QuestionController extends Controller {
 		
 	}
 	
+	@Restrict(@Group("ADMIN"))
 	public static Result deleteQuestion(Long id) {
 		
 		// TODO deadbolt or some other handler to disable attempts for non-admin users to change question values

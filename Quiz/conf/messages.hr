@@ -99,7 +99,7 @@ export.csv=kao CSV
 export.xls=kao XLS
 export.pdf=kao PDF
 
-admin.header.hello=Pozdrav
+navbar.hello=Pozdrav
 
 player.quizzes=Kvizovi
 player.scripts=Skripte

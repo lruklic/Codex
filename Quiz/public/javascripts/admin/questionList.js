@@ -2,6 +2,8 @@ $(document).ready(function(){
 	
 	// Hide detailed export buttons
 	$(".export").hide();
+	$("#import-input").hide();
+	$("#import-button").hide();
 	
 	// Predefined method for table sorting
 	$('#question-table').DataTable( {
@@ -25,6 +27,32 @@ $(document).ready(function(){
 	
 	$(".export-questions").on("click", function() {
 		$(".export").toggle();
+	});
+	
+	$(".import-questions").on("click", function() {
+		$("#import-input").toggle();
+		$("#import-button").toggle();
+	});
+	
+	$("#import-button").on("click", function() {
+		
+		var file = $('#import-input')[0].files[0];
+		
+		var data = new FormData();
+		data.append('import-input', file);
+		
+		$.ajax({
+			url: "/import",
+			data: data,
+			type: "POST",
+			cache: false,
+			contentType: false,
+			processData: false,
+			success: function(response) {
+				alert("I did it");
+			}
+		});
+		
 	});
 	
 	// Starts dialog button on delete
