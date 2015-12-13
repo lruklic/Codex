@@ -23,6 +23,9 @@ GET		/question/edit/:id						controllers.QuestionController.edit(id: Long)
 DELETE	/question/delete/:id					controllers.QuestionController.deleteQuestion(id: Long)
 GET		/question/export/:exportType			controllers.QuestionController.export(exportType: String)
 
+# Port
+POST	/import						controllers.PortController.importQuestions()
+
 # Test data fill
 POST	/data						controllers.TestDataController.fill()
 
@@ -31,7 +34,7 @@ GET		/news/add					controllers.NewsController.add()
 POST	/news/add					controllers.NewsController.submit()
 
 # Profile
-GET		/profile					controllers.ProfileController.profile()
+GET		/profile					controllers.ProfileController.profileHome()
 
 # Admin
 GET		/admin/home					controllers.AdminController.adminHome()

@@ -5,9 +5,11 @@ import play.GlobalSettings;
 import play.Logger;
 import security.SimpleDeadboltHandler;
 import services.EmailService;
+import services.PortService;
 import services.image.ImageUploader;
 import services.image.impl.AmazonImageUploader;
 import services.impl.EmailServiceImpl;
+import services.impl.PortServiceImpl;
 import services.model.ActivationLinkService;
 import services.model.ChapterService;
 import services.model.FacebookAuthService;
@@ -34,6 +36,7 @@ import controllers.ActivationController;
 import controllers.AdminController;
 import controllers.LoginController;
 import controllers.NewsController;
+import controllers.PortController;
 import controllers.ProfileController;
 import controllers.QuestionController;
 import controllers.QuizController;
@@ -74,11 +77,13 @@ public class Global extends GlobalSettings {
 				requestStaticInjection(NewsController.class);
 				requestStaticInjection(QuizController.class);
 				requestStaticInjection(ProfileController.class);
+				requestStaticInjection(PortController.class);
 				requestStaticInjection(ActivationController.class);
 				requestStaticInjection(SimpleDeadboltHandler.class);
 				requestStaticInjection(Session.class);
 				requestStaticInjection(ModelCache.class);
 				requestStaticInjection(QuestionFactory.class);
+				requestStaticInjection(PortServiceImpl.class);
 				
 				bind(UserService.class).to(UserServiceImpl.class);
 				bind(QuestionService.class).to(QuestionServiceImpl.class);
@@ -90,6 +95,7 @@ public class Global extends GlobalSettings {
 				bind(ActivationLinkService.class).to(ActivationLinkServiceImpl.class);
 				bind(ImageUploader.class).to(AmazonImageUploader.class);
 				bind(EmailService.class).to(EmailServiceImpl.class);
+				bind(PortService.class).to(PortServiceImpl.class);
 			}
 			
 		});

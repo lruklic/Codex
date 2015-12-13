@@ -1,4 +1,4 @@
-package models.questions;
+ package models.questions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -145,13 +145,16 @@ public class ConnectCorrectQuestion extends Question {
 
 	@Override
 	public List<String> getQuestionSpecificsAsList() {
-		List<String> questionSpecifics = new ArrayList<>();
+		StringBuilder sb = new StringBuilder();
 		
 		for (Map.Entry<String, String> entry : answerPairs.entrySet()) {
-			questionSpecifics.add(entry.getKey() + ":" + entry.getValue());
+			sb.append(entry.getKey() + ":" + entry.getValue());
+			sb.append("|");
 			// TODO what if answer contains question mark?
 		}
 		
+		List<String> questionSpecifics = new ArrayList<>();
+		questionSpecifics.add(sb.toString().substring(0, sb.length()));
 		return questionSpecifics;
 		
 	}
