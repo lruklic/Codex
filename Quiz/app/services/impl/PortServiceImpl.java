@@ -183,7 +183,7 @@ public class PortServiceImpl implements PortService {
 		return null;
 	}
 	
-	public void importQuestions(File file) {
+	public Map<Integer,String> importQuestions(File file) {
 	
 		Map<Integer,String> importResultMap = new HashMap<>();
 		 
@@ -196,15 +196,15 @@ public class PortServiceImpl implements PortService {
 				Map<String,String> map = new HashMap<>();
 				String importResult = null;
 				
-				boolean importOk = createQuestion(record);
-				if (importOk) {
-			        map.put(IMPORT_STATUS, "true");
-			        importResult = new ObjectMapper().writeValueAsString(map);
-				} else {
+				try {
+					createQuestion(record);
+					map.put(IMPORT_STATUS, "true");
+				} catch (IllegalArgumentException e) {
 					map.put(IMPORT_STATUS, "false");
 					map.put(IMPORT_ERROR, Messages.get("error.import.question"));	// TODO više vrsta errora
 				}
 				
+				importResult = new ObjectMapper().writeValueAsString(map);
 				importResultMap.put(i, importResult);
 				i++;
 			}
@@ -212,6 +212,8 @@ public class PortServiceImpl implements PortService {
 		} catch (IOException e) {	
 			importResultMap.put(0, Messages.get("error.import.file"));		
 		}
+		
+		return importResultMap;
 	
 	}
 	

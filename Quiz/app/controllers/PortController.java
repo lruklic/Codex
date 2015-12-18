@@ -7,16 +7,22 @@ import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import services.EmailService;
 import services.PortService;
+import services.model.QuestionService;
 import services.model.UserService;
 import session.Session;
 import views.html.profile.profile;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
 import be.objectify.deadbolt.java.actions.Group;
 import be.objectify.deadbolt.java.actions.Restrict;
+import models.Question;
 import models.User;
 
 /**
@@ -29,6 +35,9 @@ import models.User;
 @Transactional
 public class PortController extends Controller {
 
+	@Inject
+	public static QuestionService questionService;
+	
 	@Inject
 	public static UserService userService;
 
@@ -52,10 +61,40 @@ public class PortController extends Controller {
 		MultipartFormData body = request().body().asMultipartFormData();
 		FilePart file = body.getFile("import-input");
 		
-		portService.importQuestions(file.getFile());
+		Map<Integer, String> importResults = portService.importQuestions(file.getFile());
 		
-		return TODO;
+		String mapAsJson = null;
+		try {
+			mapAsJson = new ObjectMapper().writeValueAsString(importResults);
+		} catch (JsonProcessingException e) {
+			// bad import results
+		}
 		
+		return ok(mapAsJson);
+		
+	}
+	
+	@Restrict(@Group("ADMIN"))
+	public static Result exportQuestions(String exportType) throws IOException {
+		
+		byte[] output = null;
+		
+		List<Question> questionList = questionService.findQuestionsByAdmin(Session.getUsername());
+		
+		// return error if user has no questions
+		
+		if (exportType.equals("csv")) {
+			output = portService.exportAsCSV(questionList);
+		} else if (exportType.equals("xls")) {
+			output = portService.exportAsXLS(questionList);
+		} else {
+			return TODO;
+		}
+		
+		response().setContentType("application/x-download");
+		response().setHeader("Content-disposition", "attachment; filename=questionList."+exportType);
+		return ok(output);
+				
 	}
 
 }
