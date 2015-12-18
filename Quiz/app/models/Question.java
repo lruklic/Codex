@@ -65,7 +65,7 @@ public abstract class Question extends BaseModel {
 	public String chapters;
 	
 	@Column(name = "subjectContent")
-	public String subjectContent;	// maybe Enum?
+	public String subjectContent;
 	
 	@Column(name = "specialTags")
 	public String specialTags;
@@ -147,20 +147,6 @@ public abstract class Question extends BaseModel {
 		}
 		
 		return chaptersList;
-	}
-	
-	/**
-	 * Setter for chapters.
-	 * @param chaptersList list of Chapter
-	 */
-	public void setChapters(List<Chapter> chaptersList) {
-		StringBuilder sb = new StringBuilder();
-		for (Chapter c : chaptersList) {
-			sb.append(c.toString());
-			sb.append(";");
-		}
-		
-		this.chapters = sb.toString();
 	}
 	
 }

@@ -21,6 +21,7 @@ import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
+import services.PortService;
 import services.image.ImageUploader;
 import services.impl.PortServiceImpl;
 import services.model.QuestionService;
@@ -58,7 +59,8 @@ public class QuestionController extends Controller {
 	@Inject
 	public static ImageUploader imageUploader;
 	
-	private static PortServiceImpl exportFactory = new PortServiceImpl();
+	@Inject
+	public static PortService portService;
 	
 	/**
 	 * Mapped to POST method under adminQuestion
@@ -201,33 +203,5 @@ public class QuestionController extends Controller {
 		return redirect(routes.AdminController.adminList());
 		
 	}
-	
-	@Restrict(@Group("ADMIN"))
-	public static Result export(String exportType) throws IOException {
-		
-		byte[] output = null;
-		
-		List<Question> questionList = questionService.findQuestionsByAdmin(Session.getUsername());
-		
-		// return error if user has no questions
-		
-		if (exportType.equals("csv")) {
-			output = exportFactory.exportAsCSV(questionList);
-		} else if (exportType.equals("xls")) {
-			output = exportFactory.exportAsXLS(questionList);
-		} else {
-			return TODO;
-		}
-		
-		response().setContentType("application/x-download");
-		response().setHeader("Content-disposition", "attachment; filename=questionList."+exportType);
-		return ok(output);
-				
-	}
-	
-//	public static Result getChapters(String grade, String subject) {
-//		// JsonNode json = Json.toJson(Chapter.getByGradeAndSubject(Grade.valueOf(grade), Subject.valueOf(subject)));
-//		return ok();
-//	}
 	
 }

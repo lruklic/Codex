@@ -18,12 +18,13 @@ POST	/register					controllers.RegisterController.submit()
 GET		/activation/:link			controllers.ActivationController.activate(link: String)
 
 # Question
-POST	/question								controllers.QuestionController.submit()
-GET		/question/edit/:id						controllers.QuestionController.edit(id: Long)
-DELETE	/question/delete/:id					controllers.QuestionController.deleteQuestion(id: Long)
-GET		/question/export/:exportType			controllers.QuestionController.export(exportType: String)
+POST	/question					controllers.QuestionController.submit()
+GET		/question/edit/:id			controllers.QuestionController.edit(id: Long)
+DELETE	/question/delete/:id		controllers.QuestionController.deleteQuestion(id: Long)
+
 
 # Port
+GET		/question/export/:exportType			controllers.PortController.exportQuestions(exportType: String)
 POST	/import						controllers.PortController.importQuestions()
 
 # Test data fill
