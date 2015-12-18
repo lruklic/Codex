@@ -30,9 +30,9 @@
 @exportQuestions = {
 	<span class="export-panel">
 		<span class="tooltip-custom export-questions" title="@Messages("tooltip.question.export.detailed")">@Messages("question.export"):</span>
-		<a class="tooltip-custom export export-csv" href="@routes.QuestionController.export("csv")" title="@Messages("tooltip.export.csv.detailed")">@Messages("export.csv")</a>
-		<a class="tooltip-custom export export-xls" href="@routes.QuestionController.export("xls")" title="@Messages("tooltip.export.xls.detailed")">@Messages("export.xls")</a>
-		<a class="export export-pdf" href="@routes.QuestionController.export("pdf")">@Messages("export.pdf")</a>
+		<a class="tooltip-custom export export-csv" href="@routes.PortController.exportQuestions("csv")" title="@Messages("tooltip.export.csv.detailed")">@Messages("export.csv")</a>
+		<a class="tooltip-custom export export-xls" href="@routes.PortController.exportQuestions("xls")" title="@Messages("tooltip.export.xls.detailed")">@Messages("export.xls")</a>
+		<a class="export export-pdf" href="@routes.PortController.exportQuestions("pdf")">@Messages("export.pdf")</a>
 	</span>
 }
 
@@ -111,7 +111,10 @@
 					<h4 class="modal-title">@Messages("file.import")</h4>
 				</div>
 				<div class="modal-body">
-					<p>Some text in the modal.</p>
+					<table class="modal-table">
+						<thead></thead>
+						<tbody></tbody>
+					</table>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">@Messages("modal.close")</button>
@@ -120,5 +123,6 @@
 
 		</div>
 	</div>
+	
 </body>
 </html>

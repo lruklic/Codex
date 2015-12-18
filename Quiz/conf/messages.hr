@@ -17,6 +17,11 @@ navigation.scripts.add=Dodaj skriptu
 navigation.logout=Odjava
 navigation.back=Nazad
 
+footer.terms=Uvjeti pružanja usluge
+footer.contact=Kontakt
+footer.authors=Autori sadržaja
+footer.programmers=Programeri
+
 login=Prijava
 login.signin=Prijavi se
 login.username=Korisničko ime
@@ -87,6 +92,11 @@ question.competition=S natjecanja
 question.competition.year=Godina
 question.competition.level=Razina
 question.trueFalse.followingQuestionIs=Tvrdnja navedena u pitanju je:
+
+import=Uvezi
+file.import=Uvoz iz datoteke
+
+modal.close=Zatvori
 
 specialTag.leavingExam=Državna matura
 specialTag.competition=natjecanje

@@ -46,7 +46,7 @@ function initAdmin() {
 	// Set Question Type based on current question
 	setQuestionType();
 	
-	// Initial subject is HISTORY and initial grade is 1ST
+	// Initial subject
 	var numberOfChapters = $("#chapter > option").length;
 	
 	var isEdit = false;
@@ -72,7 +72,7 @@ function initAdmin() {
 		if (isEdit) {
 			
 			for (var j = 0; j < currentChapters.length; j++) {
-				if (currentChapters[j] === chapterValues[2]) {
+				if (currentChapters[j].trim() === chapterValues[2]) {
 					$("#check-"+int).prop('selected', true);
 				}
 			}	
