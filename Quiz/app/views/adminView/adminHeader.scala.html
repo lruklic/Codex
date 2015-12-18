@@ -1,5 +1,6 @@
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/adminHeader.js")"></script>
 
+
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -16,7 +17,6 @@
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="@routes.AdminController.adminList">@Messages("navigation.questions.list")</a></li>
 						<li><a href="@routes.AdminController.adminQuestion">@Messages("navigation.questions.add")</a></li>
-						<li><a href="#">@Messages("navigation.question.importexport")</a></li>
 					</ul>
 				</li>
 				<li><a href="@routes.PlayerController.playerHome"><span class="fa fa-trophy"></span> @Messages("navigation.quiz")</a></li>

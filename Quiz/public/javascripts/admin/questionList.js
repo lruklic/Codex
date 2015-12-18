@@ -49,7 +49,10 @@ $(document).ready(function(){
 			contentType: false,
 			processData: false,
 			success: function(response) {
-				alert("I did it");
+				$('.modal-table > tbody').empty();
+				$('#import-modal').modal('show');
+				$('.modal-table > tbody').html(generateImportTable(response));
+				table.ajax.reload();
 			}
 		});
 		
@@ -94,6 +97,20 @@ $(document).ready(function(){
 	    });
 	});
 });
+
+
+function generateImportTable(response) {
+	
+	var tableContent;
+	
+	$.each(JSON.parse(response), function(index, element) {
+		var importResult = JSON.parse(JSON.parse(response)[index]);	
+	    tableContent += "<tr><td>" + importResult['import.status'] + "</td><td>" + importResult['import.error'] + "</td></tr>";
+	});
+	
+	return tableContent;
+}
+
 /**
  * Function that invokes DataTables search method with filter parameter
  * and re-draws the whole question table with filtered results.
