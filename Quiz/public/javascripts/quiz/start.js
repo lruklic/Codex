@@ -4,6 +4,8 @@
 
 $(document).ready(function(){
 	
+	zoomImage();
+	
     $( ".draggable" ).draggable({ 
     	cursor: "pointer", 
     	revert: false,
@@ -26,6 +28,7 @@ $(document).ready(function(){
     	}
     });
 	
+    // Set up pagination using twbsPagination plugin
 	var numberOfQuestions = $('#questions').children().size();
 	var visiblePages = (numberOfQuestions < 5 ? 5 : numberOfQuestions);
 	
@@ -42,6 +45,22 @@ $(document).ready(function(){
         }
     });
 	
+	// List questions left/right using keyboard arrows
+	$(document).keydown(function(e) {
+	    switch(e.which) {
+	        case 37: // left
+	        	$(".prev > a").trigger("click");
+	        break;
+	        
+	        case 39: // right
+	        	$(".next > a").trigger("click");
+	        break;
+
+	        default: return; // exit this handler for other keys
+	    }
+	    e.preventDefault(); // prevent the default action (scroll / move caret)
+	});
+	
 	$("#startQuizBtn").click(function() {
 		$("#startQuizBtn").hide();
 		$(".quiz-container").removeClass('hidden');
@@ -56,6 +75,21 @@ $(document).ready(function(){
 	});
 });
 
+function zoomImage() {
+
+        $('img.fancybox').each(function(){
+            var src = $(this).attr('data-big') || $(this).attr('src');
+            var a = $('<a href="#" class="fancybox"></a>').attr('href', src);
+            $(this).wrap(a);
+        });
+
+        $('a.fancybox').fancybox({
+            transitionIn: 'none',
+            speedIn: 1000
+        });
+        
+}
+    
 function getConnectCorrect(questionId) {
 	
 	var answerPairs = [];
