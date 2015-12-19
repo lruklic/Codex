@@ -17,11 +17,14 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/quiz/start.css")">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+	<link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.css" />
 	
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.twbsPagination.min.js")"></script>
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/quiz/start.js")"></script>
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/jquery.quickfit.js")"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.pack.min.js"></script>
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/svg/component.css")">
 	
@@ -146,7 +149,7 @@
 					<div class="question-text custom-font font-size-20">@q.questionText</div>
 					@if(q.image != null) {
 					<div class="question-image-container">
-						<img class="landscape" alt="question-text" src="@{play.Play.application().configuration().getString("amazon.server.link")}/codeximages/images/@q.subject.name/@q.image.filePath" />
+						<img class="fancybox landscape" alt="question-text" src="@{play.Play.application().configuration().getString("amazon.server.link")}/codeximages/images/@q.subject.name/@q.image.filePath" />
 					</div>
 					} 
 					<input type="hidden" class="question-id" value="@q.id"> 

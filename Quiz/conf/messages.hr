@@ -55,6 +55,7 @@ news.priority=Prioritet
 register=Registracija
 
 questions=Pitanja
+question.hashtag=#
 question.answer=Odgovor
 question.answers=Odgovori
 question.isCorrect=Točno?
@@ -67,6 +68,7 @@ question.subject=Predmet
 question.chapter=Poglavlje
 question.chapters=Poglavlja
 question.image=Slika
+question.image.noImage=Nema slike
 question.chapter.noSelected=Nijedno poglavlje nije označeno
 question.chapter.multiple=Više poglavlja
 question.chapter.allChapters=Sva poglavlja
@@ -91,6 +93,7 @@ question.finals.year=Godina
 question.competition=S natjecanja
 question.competition.year=Godina
 question.competition.level=Razina
+question.points=Bodovi
 question.trueFalse.followingQuestionIs=Tvrdnja navedena u pitanju je:
 
 import=Uvezi
