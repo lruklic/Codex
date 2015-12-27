@@ -21,8 +21,6 @@
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/bootstrap-select.min.js")"></script>
 <script type="text/javascript" src="@routes.Assets.at("/javascripts/admin/questionInput.js")"></script>
 
-
-
 </head>
 
 @setChecked(formFieldName: String, compareValue: Object) = {
@@ -58,7 +56,7 @@
 
 @trueFalseForm = {
 	<div class="true_false">
-		<div class="col-xs-3">
+		<div class="col-xs-3 col-xs-offset-5 text-center">
 			<label class="control-label">@Messages("question.trueFalse.followingQuestionIs") </label>
 			<input class="form-control" type="checkbox" name="trueFalse" data-off-text="@Messages("quiz.false")" data-on-text="@Messages("quiz.true")" @if(form("trueFalse").value == "on") {checked}>
 		</div>		
@@ -97,7 +95,7 @@
 	</div>
 }
 
-@connectCorrect = {
+@connectCorrectForm = {
 	<div class="connect_correct">
 		<div class="col-xs-6">
 			<table>
@@ -114,6 +112,22 @@
 	</div>
 }
 
+@composedForm = {
+	<div class="composed">
+	@for(i <- 0 to 5) {
+		<div class="col-xs-7">
+			<label class="control-label">@Messages("question.text") </label>
+			<input class="form-control" type="text" name="composedQuestionText[]" id="composedQuestionText-@i" value="@form("composedQuestionText["+i+"]").value()" />
+		</div>
+		<div class="col-xs-5">
+			<label class="control-label">@Messages("question.correct") </label>
+			<input class="form-control" type="text" name="composedQuestionInputAnswer[]" id="composedQuestionInputAnswer-@i" value="@form("composedQuestionInputAnswer["+i+"]").value()" />
+			<small><label class="tooltip-info input-advanced pull-right" title='@Messages("info.question.inputAnswer")'>@Messages("question.input.advanced") </label></small>
+		</div>
+	}
+	</div>
+}
+
 @specialTags = {
 
 	<div class="col-xs-2">
@@ -123,13 +137,13 @@
 
 	<div class="extra">
 	
-		<div class="col-xs-4">
+		<div class="specialTags col-xs-4">
 			<div class="col-xs-6">
-				<input id="finalExam" name="finalExam" type="checkbox" value="true" @setChecked("finalExam", "true")> 
+				<input class="specialTagCheckbox" id="finalExam" name="finalExam" type="checkbox" value="true" @setChecked("finalExam", "true")> 
 				<label class="control-label">@Messages("question.finals")</label>
 			</div>
 	
-			<div class="col-xs-6">
+			<div class="col-xs-6 finalExam-details">
 				<label class="control-label">@Messages("question.finals.year"):</label> 
 				<select name="finalsYear" id="finalsYear" value='@form("finalsYear").value'> 
 				@for(i <- Constants.LEAVING_EXAM_FIRST_YEAR to Constants.CURRENT_YEAR) {
@@ -141,10 +155,10 @@
 		
 		<div class="col-xs-6">
 			<div class="col-xs-3">
-				<input id="competition" name="competition" type="checkbox" value="true" @setChecked("competition", "true")>
+				<input class="specialTagCheckbox" id="competition" name="competition" type="checkbox" value="true" @setChecked("competition", "true")>
 				<label class="control-label">@Messages("question.competition")</label>
 			</div>
-			<div class="col-xs-4">
+			<div class="col-xs-4 competition-details">
 				<label class="control-label">@Messages("question.competition.year")</label>
 				<select name="competitionYear" id="competitionYear" value='@form("competitionYear").value'>
 				@for(i <- 2010 to Constants.CURRENT_YEAR) {
@@ -152,7 +166,7 @@
 				}	
 				</select>
 			</div>
-			<div class="col-xs-5">
+			<div class="col-xs-5 competition-details">
 				<label class="control-label">@Messages("question.competition.level")</label>
 				<select name="competitionLevel" id="competitionLevel" value='@form("competitionLevel").value'>
 				@for(cl <- CompetitionLevelType.values()){
@@ -258,7 +272,7 @@
     			</div>
     		</div>
     		
-    		<div class="form-group">
+    		<div class="hidden form-group">
     			<div class="row">
     				@numberOfAnswers
     				
@@ -266,7 +280,9 @@
 					
 					@trueFalseForm
 					
-					@connectCorrect
+					@connectCorrectForm
+					
+					@composedForm
     			</div>
     			
     			@multipleChoiceForm
@@ -275,8 +291,9 @@
     			
     		</div>
     		
-    		<div class="form-group">
-    			<button class="submit-button" type="submit">@Messages("question.submit")</button>
+    		<div class="form-group top-buffer">
+    			<button class="btn btn-default btn-margin" type="submit">@Messages("question.submit")</button>
+    			<a href="@routes.AdminController.adminList" class="btn btn-default btn-margin">@Messages("question.cancel")</a>
     		</div>
 
 		</form>

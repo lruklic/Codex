@@ -7,6 +7,8 @@ import java.util.Map;
 
 import services.model.GradeService;
 import services.model.SubjectService;
+import services.model.UserService;
+import session.Session;
 
 import com.google.inject.Inject;
 
@@ -14,11 +16,14 @@ import models.Admin;
 import models.Grade;
 import models.Question;
 import models.Subject;
+import models.questions.ComposedQuestion;
 import models.questions.ConnectCorrectQuestion;
 import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
+import models.questions.sub.InputAnswerSubQuestion;
+import models.questions.sub.SubQuestion;
 import engines.tags.SpecialTagEngine;
 import enums.AnswerType;
 import forms.QuestionForm;
@@ -33,6 +38,9 @@ import forms.QuestionForm;
 public class QuestionFactory {
 
 	@Inject
+	public static UserService userService;
+	
+	@Inject
 	public static SubjectService subjectService;
 	
 	@Inject
@@ -46,7 +54,9 @@ public class QuestionFactory {
 	 * @return newly created question subclass
 	 */
 	
-	public static Question createQuestion(QuestionForm form, Admin currentAdmin) {
+	public static Question createQuestion(QuestionForm form) {
+		
+		Admin currentAdmin = (Admin) userService.findByUsernameOrEmail(Session.getUsername());
 		
 		String chapters = createChapterString(form.chapters);
 		
@@ -77,15 +87,48 @@ public class QuestionFactory {
 				return new InputAnswerQuestion(form.questionText, form.questionType, grade, subject, chapters, form.subjectContent,
 						specialTags, form.explanation, currentAdmin, form.inputCorrect);
 			case CONNECT_CORRECT:
-				// prevent creating questions with unpaired left or more left than right
+				// TODO prevent creating questions with unpaired left or more left than right
 				Map<String, String> answerPairs = createAnswerPairs(form.termColumn1, form.termColumn2);
 				return new ConnectCorrectQuestion(form.questionText, form.questionType, grade, subject, chapters, form.subjectContent,
 						specialTags, form.explanation, currentAdmin, answerPairs);
+			case COMPOSED:
+				List<SubQuestion> subQuestionList = createSubQuestionList(form);				
+				return new ComposedQuestion(form.questionText, form.questionType, grade, subject, chapters, form.subjectContent,
+						specialTags, form.explanation, currentAdmin, subQuestionList);
+
+			default:
+				break;
 		}
 		
 		return null;
 	}
 	
+	private static List<SubQuestion> createSubQuestionList(QuestionForm form) {
+		List<SubQuestion> subQuestionList = new ArrayList<>();
+		
+		// TODO other subquestion types
+		int index = 0;
+		for (String questionText : form.composedQuestionText) {
+			
+			if (questionText.length() > 0) {
+				InputAnswerSubQuestion subQuestion = new InputAnswerSubQuestion();
+				
+				// TODO check if no answers are provided and cqia is null
+				String answer = form.composedQuestionInputAnswer.get(index);
+				if (answer != null && answer.length() > 0) {
+					subQuestion.questionText = questionText;
+					subQuestion.answer = form.composedQuestionInputAnswer.get(index);
+				}
+				
+				subQuestionList.add(subQuestion);
+			}
+
+			index++;
+		}
+		
+		return subQuestionList;
+	}
+
 	private static Map<String, String> createAnswerPairs(List<String> termColumn1, List<String> termColumn2) {
 		Map<String, String> answerPairs = new LinkedHashMap<String, String>();
 		

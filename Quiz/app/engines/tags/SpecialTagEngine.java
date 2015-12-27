@@ -29,6 +29,7 @@ public class SpecialTagEngine {
 	
 	/**
 	 * Method that creates special tags from user inputs in HTML.
+	 * 
 	 * @param form form containing relevant fields
 	 * @return specialTags String
 	 */
@@ -74,6 +75,13 @@ public class SpecialTagEngine {
 		}
 		
 	}
+	
+	/**
+	 * Method that creates special tag from question special tag field. It primary usage is meant for question display in active quiz.  
+	 * 
+	 * @param specialTagString special tags field in question
+	 * @return list of special tags
+	 */
 	
 	public static List<SpecialTag> createSpecialTagsFromString(String specialTagString) {
 		

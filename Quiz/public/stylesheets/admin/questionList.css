@@ -1,17 +1,16 @@
 /* Questions list css tags*/
 
-.dataTables_wrapper .dataTables_filter { float: right; text-align: right; visibility: hidden; }
 
-#question-table {
+.question-table {
 	color: #444;
 }
 
-#question-table thead tr th {
+.question-table thead tr th {
 	color: #fff;
 	background-color: #444;
 }
 
-#question-table thead tr th:hover {
+.question-table thead tr th:hover {
 	cursor: pointer;
 	color: #2CA3C4;
 }
@@ -40,10 +39,6 @@
 	width: 150px;
 }
 
-.export-panel {
-	padding-left: 20px;
-}
-
 .export-questions, .import-questions {
 	text-decoration: underline;
 	cursor: pointer;
@@ -55,4 +50,20 @@
 
 .extra {
 	padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .btn-responsive {
+    padding:2px 4px;
+    font-size:80%;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .btn-responsive {
+    padding:4px 9px;
+    font-size:90%;
+    line-height: 1.2;
+  }
 }

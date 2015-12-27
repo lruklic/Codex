@@ -22,12 +22,11 @@ function initAdmin() {
 		offColor:'danger',
 	});
 	
+	$('.extra').hide();
+	
 	// Admin page question input initialization - starting question type is Multiple Choice
 	var editId = $('[name=id]').val();
 	var editChapters = $('[name=editChapters]').val();
-	
-	// Hide all extra fields
-	$('.extra').hide();
 	
 	// Default number of answers is set to 3
 	for (var int = 2; int < 5; int++) {
@@ -44,6 +43,7 @@ function initAdmin() {
 	}
 	
 	// Set Question Type based on current question
+	$(".hidden").removeClass("hidden");
 	setQuestionType();
 	
 	// Initial subject
@@ -81,6 +81,13 @@ function initAdmin() {
 		$('.selectpicker').selectpicker('refresh');
 			
 	}
+	
+	// If question is edit and has special tags, show them
+	if (isEdit && ($("#finalExam").is(":checked") || $("#competition").is(":checked"))) {
+		$('.extra').show();
+		$('#extra-trigger').prop('checked', true);
+	}
+	
 }
 
 function setQuestionType() {
@@ -92,11 +99,13 @@ function setQuestionType() {
 	$(".true_false").hide();
 	$(".input_answer").hide();
 	$(".connect_correct").hide();
+	$(".composed").hide();
 
 	if (qType === "multiple_choice" || qType === "multiple_answer") {
 		$(".numberOfAnswers").show();
 		questionNumberChange();
 	}
+	
 	$("."+qType).show();
 	
 }
@@ -111,7 +120,7 @@ function questionNumberChange() {
     		for (var int = 2; int < 5; int++) {
         		$('.incorrect-'+int).hide();
 			}
-    		// Dynamicly show input text boxes for incorrect answers
+    		// Dynamically show input text boxes for incorrect answers
     		for (var int = 2; int < numberOfAnswers-1; int++) {
         		$('.incorrect-'+int).show();
 			}

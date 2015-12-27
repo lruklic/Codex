@@ -13,7 +13,7 @@ public enum QuestionType {
 	 */
 	MULTIPLE_CHOICE,
 	/**
-	 * Player chooses which anwers are correct from multiple offered answers.
+	 * Player chooses which answers are correct from multiple offered answers.
 	 */
 	MULTIPLE_ANSWER,
 	/**
@@ -27,7 +27,11 @@ public enum QuestionType {
 	/**
 	 * Player connects terms from one column with term other column.
 	 */
-	CONNECT_CORRECT
+	CONNECT_CORRECT,
+	/**
+	 * Question that consists of multiple sub questions.
+	 */
+	COMPOSED
 
 	
 }

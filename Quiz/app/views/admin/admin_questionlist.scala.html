@@ -45,7 +45,6 @@
 			</div>
 
 			<div class="row col-sm-12">
-				<div class="col-sm-4">@filter</div>
 				<div class="col-sm-4">@exportQuestions</div> 
 				<div class="col-sm-4">
 					<div class="col-sm-3"><span id="import" class="tooltip-custom import-questions" title="@Messages("tooltip.question.import.detailed")">@Messages("question.import")</span></div>
@@ -64,9 +63,10 @@
 			
 			<div class="col-sm-12 top-buffer">
 			
-				<table id="question-table" class="display cell-border" width="100%">
+				<table id="question-table-@session.get("username")" class="question-table display cell-border" width="100%">
 					<thead>
 						<tr>
+							<th>@Messages("question.hashtag")</th>
 							<th>@Messages("question.text")</th>
 							<th>@Messages("question.type")</th>
 							<th>@Messages("question.subject")</th>
@@ -79,6 +79,7 @@
 					<tbody class="dt-right">
 						@for(q <- questions) {
 						<tr id="question-@q.id">
+							<td class="table.questionId">@q.id</td>
 							<td class="table-questionText">@q.questionText</td>
 							<td class="table-questionType">@Messages(q.questionType.toString())</td>
 							<td class="table-subject">@Messages(q.subject.name)</td>
@@ -87,10 +88,12 @@
 							<td class="table-submitter">@q.author.getName()</td>
 	
 							<td>
-								@if(q.author.username.equals(Session.getUsername())) { 
-								<a class="tooltip-custom btn btn-primary" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")">@Messages("question.edit")</a> 
-								<!-- <a class="tooltip-custom btn btn-info" href="#" title="@Messages("tooltip.question.explanation")">@Messages("question.explanation")</a> -->
-								<a class="tooltip-custom delete-button btn btn-danger" href="@routes.QuestionController.deleteQuestion(q.id)" title="@Messages("tooltip.question.delete")">@Messages("question.delete")</a>
+								@if(q.author.username.equals(Session.getUsername())) {
+								<div class="btn-group inline pull-left">
+									<a class="tooltip-custom btn btn-responsive btn-primary" href="@routes.QuestionController.edit(q.id)" title="@Messages("tooltip.question.edit")">@Messages("question.edit")</a> 
+									<!-- <a class="tooltip-custom btn btn-info" href="#" title="@Messages("tooltip.question.explanation")">@Messages("question.explanation")</a> -->
+									<a class="tooltip-custom delete-button btn btn-responsive btn-danger" href="@routes.QuestionController.deleteQuestion(q.id)" title="@Messages("tooltip.question.delete")">@Messages("question.delete")</a>								
+								</div>
 								}
 							</td>
 						</tr>

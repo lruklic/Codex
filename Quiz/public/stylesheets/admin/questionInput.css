@@ -27,3 +27,9 @@
 .bootstrap-switch { 
 	height: 2.0em 
 }
+
+.top-buffer {
+	padding-top: 15px;
+}
+
+.hidden { display: none; }
