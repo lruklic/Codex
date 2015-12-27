@@ -54,8 +54,11 @@ news.priority=Prioritet
 
 register=Registracija
 
+date.questionTable.format=dd MMMM yyyy, hh:mm
+
 questions=Pitanja
 question.hashtag=#
+question.time.created=Vrijeme kreiranja
 question.answer=Odgovor
 question.answers=Odgovori
 question.isCorrect=Točno?
@@ -183,61 +186,5 @@ MULTIPLE_ANSWER=Višestruki odabir - više točnih
 TRUE_FALSE=Točno/netočno
 INPUT_ANSWER=Unesi odgovor
 CONNECT_CORRECT=Poveži pojmove
-
-GIMN_1ST=Prvi razred
-GIMN_2ND=Drugi razred
-GIMN_3RD=Treći razred
-GIMN_4TH=Četvrti razred
-GRADE_EXAM=Za Maturu
-
-HISTORY=Povijest
-GEOGRAPHY=Geografija
-BIOLOGY=Biologija
-CROATIAN_LITERATURE=Hrvatski: književnost
-
-# Povijest - 1. razred
-
-INTRO_TO_HISTORY=Uvod u povijest
-ANCIENT_HISTORY=Prapovijest
-EASTERN_CIVILIZATIONS=Narodi starog istoka
-OLD_GREECE=Stari Grci
-ROME_KINGS=Rim: doba kraljeva i Republika
-ROME_EMPIRE=Rim: carstvo
-
-# Geografija - 1. razred
-
-INTRO_TO_GEOGRAPHY=Uvod u geografiju
-EARTH_IN_SOLAR_SYSTEM=Zemlja u Sunčevom sustavu
-ORIENTATION_AND_POSITIONING=Orijentacija i pozicioniranje
-GEOLOGICAL_FEATURES=Geološka svojstva
-CLIMATE_ON_EARTH=Klima na Zemlji
-WATER_GROUND_LIFE=Voda, tlo i život
-
-# Hrvatski književnost
-
-LYRICS=Lirika
-EPICS=Epika
-DRAMA=Drama
-CLASSICAL_LITERATURE=Klasična književnost
-MEDIEVAL_LITERATURE=Srednjovjekovna književnost
-
-EARLY_RENAISSANCE=Predrenesansa
-RENAISSANCE=Renesansa
-BAROQUE=Barok
-CLASSICISM=Klasicizam
-ROMANTICISM=Romantizam
-
-PROTOREALISM=Protorealizam
-REALISM=Realizam
-MODERNISM=Modernizam
-MODERN=Moderna
-
-VANGUARD=Avangarda
-FIRST_PERIOD=I. razdoblje
-EXPRESSIONISM=Ekspresionizam
-SECOND_PERIOD=II. razdoblje
-SECOND_MODERN=Druga moderna
-CONTEMPORARY_LITERATURE=Suvremena književnost
-
-INTRO_TO_BIOLOGY=Uvod u biologiju
+COMPOSED=Složeno pitanje
 

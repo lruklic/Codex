@@ -1,9 +1,7 @@
 package services.impl;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +27,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 import com.google.inject.Inject;
@@ -38,12 +35,7 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 
-import engines.InputAnswerEvaluateEngine;
-import forms.QuestionForm;
-import play.data.DynamicForm;
-import play.data.Form;
 import play.i18n.Messages;
-import play.libs.Json;
 import services.PortService;
 import services.model.GradeService;
 import services.model.QuestionService;
@@ -281,7 +273,7 @@ public class PortServiceImpl implements PortService {
 		q.explanation = record.get(EXPLANATION_INDEX);
 		
 		String imagePath = record.get(PICTURE_INDEX);		// TODO add image size
-		if (imagePath != null) {
+		if (imagePath.length() > 0) {
 			q.image = new Image(imagePath);
 		}
 		
@@ -303,7 +295,6 @@ public class PortServiceImpl implements PortService {
 		question.add(q.subjectContent);
 		question.add(q.specialTags);
 		question.add(q.explanation);
-		question.add(q.author.username);
 		
 		if (q.image != null) {
 			question.add(q.image.filePath);

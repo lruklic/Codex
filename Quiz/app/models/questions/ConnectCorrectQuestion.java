@@ -19,8 +19,8 @@ import models.Subject;
 import models.enums.QuestionType;
 
 /**
- * <p> Question where user has to connect a term from first column with the appropriate
- * term from the second column.</p> 
+ * <p> Question where user has to connect terms from first column with the appropriate
+ * terms from the second column.</p> 
  * <p> First column can have more terms then the second column;
  * not all terms from the first column must have appropriate pair in the second column, 
  * some can be a distraction.</p>

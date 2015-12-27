@@ -92,8 +92,8 @@ public class QuestionController extends Controller {
 		// Create question
 		Question question = null;
 		if (user instanceof Admin) {
-			 question = questionForm.get().createQuestion((Admin) user);	// if there are any errors, .get() will throw IllegalStateException: no value
-			 question.lastEdited = System.currentTimeMillis();
+			 question = questionForm.get().createQuestion();	// if there are any errors, .get() will throw IllegalStateException: no value
+			 // question.lastEdited = System.currentTimeMillis();
 		}
 		
 		// Get uploaded picture
@@ -146,11 +146,14 @@ public class QuestionController extends Controller {
 			if (!oldQuestion.questionType.equals(question.questionType)) {
 				// If question is edited and question type has changed, delete old and create new question with same id - Hibernate can't handle this
 				questionService.delete(oldQuestion);
-				question.id = oldQuestion.id;
-				questionService.save(question);
-				
-				return redirect(routes.AdminController.adminList());
 			}
+			
+			question.id = oldQuestion.id;
+			question.created = oldQuestion.created;
+			questionService.save(question);
+				
+			return redirect(routes.AdminController.adminList());
+			
 		}
 		
 		questionService.save(question);

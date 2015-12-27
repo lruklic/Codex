@@ -109,10 +109,20 @@ public class TestDataController extends Controller {
 	
 	private static void fillChaptersGeography() {
 		
-		String[] chapterArray = {"Uvod u geografiju", "Zemlja u Sunčevu sustavu", "Orijentacija i određivanje položaja", "Predočavanje zemljine površine",
-				"Geološke značajke i reljef Zemlje", "Klima na Zemlji", "Voda, tlo i život na Zemlji"};
+		// Prvi razred
+		String[] chapterArrayGrade1 = {"Uvod u geografiju", "Zemlja u Sunčevu sustavu i svemiru", "Orijentacija i određivanje položaja", "Predočavanje zemljine površine",
+				"Geološke osobine i reljef Zemlje", "Klima", "Vode na Zemlji", "Tla", "Život na Zemlji", "Prirodno-geografska područja"};
+		String[] chapterArrayGrade2 = {"Stanovništvo kao čimbenik razvoja i prostornog ustroja", "Naselja i oblici naseljenosti", "Oblici ljudskih djelatnosti", "Ljudske djelatnosti i okoliš"};
+		String[] chapterArrayGrade3 = {"Povezivanje svjetskog gospodarstva i njegove posljedice", "Nejednaki regionalni razvoj svijeta", "Glavne integracije u svijetu", "Europska Unija i njene institucije", 
+				"Njemačka", "Ujedinjeno Kraljevstvo", "Francuska", "Italija", "SAD", "Kanada", "Japan i azijski tigrovi", "Australija", "Rusija i ostale zemlje u tranziciji", "Kina", "Latinska Amerika", 
+				"Meksiko", "Brazil", "Argentina i Čile", "Azija", "Indija", "Jugozapadna Azija", "Afrika i Južnoafrička Republika"};
+		String[] chapterArrayGrade4 = {"Uloga geografskog položaja u gospodarskom razvoju RH", "Veličina, granice i oblik teritorija RH", "Reljefna obilježja RH", "Klimatska, pedološka i vegetacijska obilježja RH", 
+				"Jadransko more", "Vode na kopnu u RH", "Stanovništvo RH", "Naselja i oblici naseljenosti RH", "Gospodarska obilježja Hrvatske"};
 		
-		chapterFactory(chapterArray, gradeService.findById((long) 1), subjectService.findByName("Geografija"));
+		chapterFactory(chapterArrayGrade1, gradeService.findById((long) 1), subjectService.findByName("Geografija"));
+		chapterFactory(chapterArrayGrade2, gradeService.findById((long) 2), subjectService.findByName("Geografija"));
+		chapterFactory(chapterArrayGrade3, gradeService.findById((long) 3), subjectService.findByName("Geografija"));
+		chapterFactory(chapterArrayGrade4, gradeService.findById((long) 4), subjectService.findByName("Geografija"));
 		
 	}
 	

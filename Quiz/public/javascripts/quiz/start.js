@@ -4,7 +4,23 @@
 
 $(document).ready(function(){
 	
-	zoomImage();
+    $('a.fancybox').fancybox({
+    	'transitionIn'	:	'elastic',
+		'transitionOut'	:	'elastic',
+        'speedIn'		: 600,
+        'speedOut'		: 200,
+    });
+    
+    $("div.fancybox").fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        nextEffect: 'none',
+        prevEffect: 'none',
+        nextSpeed: 0,
+        prevSpeed: 0,
+        preload: 3,
+        padding: 15
+    });
 	
     $( ".draggable" ).draggable({ 
     	cursor: "pointer", 
@@ -74,21 +90,6 @@ $(document).ready(function(){
 		
 	});
 });
-
-function zoomImage() {
-
-        $('img.fancybox').each(function(){
-            var src = $(this).attr('data-big') || $(this).attr('src');
-            var a = $('<a href="#" class="fancybox"></a>').attr('href', src);
-            $(this).wrap(a);
-        });
-
-        $('a.fancybox').fancybox({
-            transitionIn: 'none',
-            speedIn: 1000
-        });
-        
-}
     
 function getConnectCorrect(questionId) {
 	

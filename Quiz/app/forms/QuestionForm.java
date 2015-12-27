@@ -103,12 +103,16 @@ public class QuestionForm {
 	
 	public String competitionLevel;
 	
-	public Question createQuestion(Admin admin) {
+	public List<String> composedQuestionText;
+	
+	public List<String> composedQuestionInputAnswer;
+	
+	public Question createQuestion() {
 		
 		// this.subject = ((Subject) ModelCache.getInstance().getSet(ModelCacheType.SUBJECT, subjectName)).name;
 		// this.grade = ((Grade) ModelCache.getInstance().getSet(ModelCacheType.GRADE, gradeName)).name;
 		
-		Question question = QuestionFactory.createQuestion(this, admin);
+		Question question = QuestionFactory.createQuestion(this);
 		
 		if(id != null) {
 			try {
@@ -197,6 +201,11 @@ public class QuestionForm {
 				this.termColumn1 = termColumn1;
 				this.termColumn2 = termColumn2;
 				break;
+		case COMPOSED:
+			// TODO
+			break;
+		default:
+			break;
 		}
 			
 	}

@@ -6,16 +6,19 @@ $(document).ready(function(){
 	$("#import-button").hide();
 	
 	// Predefined method for table sorting
-	$('#question-table').DataTable( {
-		// "searching": false,
+	$('.question-table').DataTable( {
+		"searching": true,
+		"order": [[ 0, "desc" ]],
+		"colReorder": true,
+		"stateSave": true,
 		"language": {
 			"url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Croatian.json"
 		}
 	});
 	
 	// DataTable
-    var table = $('#question-table').DataTable();
-	
+    var table = $('.question-table').DataTable();
+    
 	// Method call for filtering table content on keystroke
 	$("#filter").on('change keyup paste mouseup', function() {
 		filter(table);
@@ -136,17 +139,17 @@ function filter(table) {
 function getColumnNumber(filterType) {
 	switch(filterType) {
 		case "TEXT_FILTER":
-			return 0;
+			return 1;
 		case "TYPE_FILTER":
-			return 1;
-		case "SUBJECT_FILTER":
 			return 2;
+		case "SUBJECT_FILTER":
+			return 3;
 		case "CHAPTER_FILTER":
-			return 3
+			return 4
 		case "SUBMITTER_FILTER":
-			return 4;
+			return 5;
 		default:
-			return 1;
+			return 0;
 	}
 }
 

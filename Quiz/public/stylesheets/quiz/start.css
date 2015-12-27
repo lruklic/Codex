@@ -136,6 +136,10 @@ img {
 	padding-top: 10px;
 }
 
+.padding-top-30 {
+	padding-top: 30px;
+}
+
 .padding-right-15 {
 	padding-right: 15px;
 }
@@ -144,6 +148,11 @@ img {
 	position: absolute;
 	top: 10;
 	right: 10;
+}
+
+table {
+	border-collapse:separate; 
+	border-spacing:5em;
 }
 
 .finish-button:hover {

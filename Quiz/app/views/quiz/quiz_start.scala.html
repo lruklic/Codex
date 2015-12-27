@@ -5,7 +5,9 @@
 @import enums._;
 @import models.questions._;
 @import engines.tags._;
- 
+
+@import java.lang.String; var imageLink="";
+
 <html>
 
 <head>
@@ -104,26 +106,43 @@
 	
 		<div id="q-@{ccq.id}-answers">
 		
-		<div class="draggable-container">
-			@for(term1 <- ccq.getValuesMixed()) {
-			<div id="@term1" class="draggable">
-  				<label class="custom-font">@term1</label>
+			<div class="draggable-container">
+				@for(term1 <- ccq.getValuesMixed()) {
+				<div id="@term1" class="draggable">
+	  				<label class="custom-font">@term1</label>
+				</div>
+				}
 			</div>
-			}
-		</div>
-		
-		<div class="droppable-container">
-		 	@for(term2 <- ccq.getKeysMixed()) {
-			<div id="@term2" class="droppable">
-  				<label class="custom-font">@term2</label>
-			</div>
-			}
-		</div>
 			
+			<div class="droppable-container">
+			 	@for(term2 <- ccq.getKeysMixed()) {
+				<div id="@term2" class="droppable">
+	  				<label class="custom-font">@term2</label>
+				</div>
+				}
+			</div>
+			
+		</div>
+	}
+}
+
+@composed(q: Question) = {
+	
+	@defining(q.asInstanceOf[ComposedQuestion]) { cq =>
+	
+		<div id="q-@{cq.id}-composed">
+			@for((subquestion, index) <- cq.subquestions.zipWithIndex) {
+				<div class="padding-top-30">
+					<label>@{index+1}. @subquestion.questionText</label>
+				</div>
+				<div>
+					<input type="text" name="@cq.id-@subquestion.id" autocomplete="off">
+				</div>
+			}
 		</div>
 	
 	}
-
+	
 }
 <body>
 	
@@ -146,11 +165,19 @@
 						<div><span class="label label-@tag.tagType">@tag.displayName</span></div>
 					}
 					
-					<div class="question-text custom-font font-size-20">@q.questionText</div>
-					@if(q.image != null) {
-					<div class="question-image-container">
-						<img class="fancybox landscape" alt="question-text" src="@{play.Play.application().configuration().getString("amazon.server.link")}/codeximages/images/@q.subject.name/@q.image.filePath" />
+					<div class="question-text custom-font font-size-20 @if(q.questionType == QuestionType.COMPOSED) {fancybox}">
+						@q.questionText
 					</div>
+					
+					@if(q.image != null) {
+						<div class="question-image-container">
+						
+						@{imageLink = play.Play.application().configuration().getString("amazon.server.link") + "codeximages/images/" + q.subject.name + "/" + q.image.filePath }
+						
+						<a class="fancybox" title="@q.questionText" href="@imageLink">
+							<img class="fancybox landscape" alt="question-text" src="@imageLink" />
+						</a>
+						</div>
 					} 
 					<input type="hidden" class="question-id" value="@q.id"> 
 					<input type="hidden" class="question-type" value="@q.questionType">
@@ -160,8 +187,10 @@
 						case QuestionType.MULTIPLE_ANSWER => {@multipleAnswer(q)} 
 						case QuestionType.INPUT_ANSWER => {@inputAnswer(q)} 
 						case QuestionType.TRUE_FALSE => {@trueFalse(q)} 
-						case QuestionType.CONNECT_CORRECT => {@connectCorrect(q)} 
-						case _ => {<span>Not yet implemented</span>} }
+						case QuestionType.CONNECT_CORRECT => {@connectCorrect(q)}
+						case QuestionType.COMPOSED => {@composed(q)}
+						case _ => {<span>Not yet implemented</span>} 
+					}
 				</div>
 				}
 			</div>
