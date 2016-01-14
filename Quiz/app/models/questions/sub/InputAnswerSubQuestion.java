@@ -5,10 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import models.questions.InputAnswer;
+
 @Entity
 @Table(name = "sub_input_answer")
 @PrimaryKeyJoinColumn(name="id")
-public class InputAnswerSubQuestion extends SubQuestion {
+public class InputAnswerSubQuestion extends SubQuestion implements InputAnswer {
 
 	/**
 	 * 
@@ -17,4 +19,11 @@ public class InputAnswerSubQuestion extends SubQuestion {
 
 	@Column(name = "answer")
 	public String answer;
+
+	@Override
+	public String getAnswer() {
+		return answer;
+	}
+	
+	
 }

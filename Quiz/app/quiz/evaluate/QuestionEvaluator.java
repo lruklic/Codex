@@ -5,11 +5,14 @@ import java.util.List;
 
 import models.Question;
 import models.enums.QuestionType;
+import models.questions.ComposedQuestion;
 import models.questions.ConnectCorrectQuestion;
 import models.questions.InputAnswerQuestion;
 import models.questions.MultipleAnswerQuestion;
 import models.questions.MultipleChoiceQuestion;
 import models.questions.TrueFalseQuestion;
+import models.questions.sub.InputAnswerSubQuestion;
+import models.questions.sub.SubQuestion;
 import quiz.DetailedQuestion;
 import quiz.QuestionSet;
 import quiz.Quiz;
@@ -171,6 +174,7 @@ public class QuestionEvaluator {
 				}
 				
 				for (String incorrectAnswer : maq.getIncorrectAnswers()) {
+					
 					if (givenAnswers.contains(incorrectAnswer)) {
 						qrp.isCorrect = AnswerType.INCORRECT;
 					}
@@ -211,6 +215,45 @@ public class QuestionEvaluator {
 				qrp.isCorrect = AnswerType.NOT_ANSWERED;
 			}
 			
+			break;
+		case COMPOSED:
+			qrp.isCorrect = AnswerType.CORRECT;
+			
+			if (answersNode != null) {
+				ComposedQuestion cq = (ComposedQuestion) question;
+				List<JsonNode> answersNodes = Lists.newArrayList(answersNode.elements());
+				
+				boolean unanswered = true;
+				
+				for (JsonNode answerNode : answersNodes) {
+					List<JsonNode> elements = Lists.newArrayList(answerNode.elements());
+					
+					String subquestionId = elements.get(0).asText();
+					String subquestionAnswer = elements.get(1).asText();
+					
+					if (!subquestionAnswer.equals("null")) {
+						unanswered = false;
+					}
+					
+					for (SubQuestion sq : cq.subquestions) {
+						
+						if (sq instanceof InputAnswerSubQuestion) { // TODO other types od sub questions
+ 							if (subquestionId.equals(String.valueOf(sq.id))) {
+								boolean answerCorrect = InputAnswerEvaluateEngine.evaluate(subquestionAnswer, (InputAnswerSubQuestion) sq);
+								
+								if (unanswered) {
+									qrp.isCorrect = AnswerType.NOT_ANSWERED;
+								} else if (!answerCorrect) {
+									qrp.isCorrect = AnswerType.INCORRECT;
+								}
+							}
+						}
+
+					}
+				}
+			}
+			break;
+		default:
 			break;
 		}
 		

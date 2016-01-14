@@ -1,9 +1,7 @@
 package engines;
 
 import uk.ac.shef.wit.simmetrics.similaritymetrics.JaroWinkler;
-import models.questions.InputAnswerQuestion;
-
-import com.fasterxml.jackson.databind.JsonNode;
+import models.questions.InputAnswer;
 
 /**
  * Class that implements methods that evaluate if user answer correctly to input answer question.
@@ -14,9 +12,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class InputAnswerEvaluateEngine {
 
-	public static boolean evaluate(String userAnswer, InputAnswerQuestion question) {
+	public static boolean evaluate(String userAnswer, InputAnswer question) {
 		
-		String[] viableAnswers = question.answer.split(";");
+		String[] viableAnswers = question.getAnswer().split(";");
 		
 		if (viableAnswers.length == 0) {
 			// no answer provided, error

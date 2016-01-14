@@ -24,7 +24,7 @@ import models.enums.QuestionType;
 @Entity
 @Table(name = "input_answer")
 @PrimaryKeyJoinColumn(name="id")
-public class InputAnswerQuestion extends Question {
+public class InputAnswerQuestion extends Question implements InputAnswer {
 
 	/**
 	 * 
@@ -59,6 +59,11 @@ public class InputAnswerQuestion extends Question {
 	@Override
 	public Integer getNumberOfPossibleAnswers() {
 		return Integer.MAX_VALUE;
+	}
+
+	@Override
+	public String getAnswer() {
+		return answer;
 	}
 
 }
