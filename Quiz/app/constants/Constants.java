@@ -19,4 +19,9 @@ public class Constants {
 	
 	public static int CURRENT_YEAR = 2015;
 	
+	/**
+	 * Default height that is used for every picture. Width is calculated according to image ratio.
+	 */
+	public static int SUGGESTED_BASE_HEIGHT = 200;
+	
 }

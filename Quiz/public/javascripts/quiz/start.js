@@ -4,6 +4,7 @@
 
 $(document).ready(function(){
 	
+	// Add fancybox to image
     $('a.fancybox').fancybox({
     	'transitionIn'	:	'elastic',
 		'transitionOut'	:	'elastic',
@@ -22,6 +23,7 @@ $(document).ready(function(){
         padding: 15
     });
 	
+    // Enable dragging and dropping of answers on connect correct questions
     $( ".draggable" ).draggable({ 
     	cursor: "pointer", 
     	revert: false,
@@ -90,23 +92,6 @@ $(document).ready(function(){
 		
 	});
 });
-    
-function getConnectCorrect(questionId) {
-	
-	var answerPairs = [];
-	
-	$("#q-"+questionId+"-answers>div.droppable-container>div.droppable").each(function() {
-		
-		var answerPair = [];
-		
-		answerPair[0] = $(this).attr('answer');
-		answerPair[1] = $(this).attr('id');
-	
-		answerPairs.push(answerPair);
-	});
-	
-	return answerPairs;
-}
 
 /**
  * Method that is called when player wants to evaluate his quiz answers. All answers are collected from HTML and are
@@ -167,5 +152,47 @@ function getAnswers(questionId, questionType) {
 		case "CONNECT_CORRECT":
 			var answers = getConnectCorrect(questionId);
 			return answers;
+		case "COMPOSED":
+			var answers = getComposed(questionId);
+			return answers;
 	}
+}
+
+function getComposed(questionId) {
+	
+	var answerPairs = [];
+	
+	$("#q-"+questionId+"-composed").children().each(function() {
+		if ($(this).hasClass("composed-input") ) {
+			var subquestionInput = $(this).children().first();
+			
+			var answerPair = [];
+			
+			answerPair[0] = subquestionInput.attr('name');
+			answerPair[1] = subquestionInput.val();
+			
+			answerPairs.push(answerPair);
+		}
+			
+	});
+	
+	return answerPairs;
+	
+}
+
+function getConnectCorrect(questionId) {
+	
+	var answerPairs = [];
+	
+	$("#q-"+questionId+"-answers>div.droppable-container>div.droppable").each(function() {
+		
+		var answerPair = [];
+		
+		answerPair[0] = $(this).attr('answer');
+		answerPair[1] = $(this).attr('id');
+	
+		answerPairs.push(answerPair);
+	});
+	
+	return answerPairs;
 }
