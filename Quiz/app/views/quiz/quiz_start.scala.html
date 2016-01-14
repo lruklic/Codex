@@ -135,8 +135,8 @@
 				<div class="padding-top-30">
 					<label>@{index+1}. @subquestion.questionText</label>
 				</div>
-				<div>
-					<input type="text" name="@cq.id-@subquestion.id" autocomplete="off">
+				<div class="composed-input">
+					<input type="text" name="@subquestion.id" autocomplete="off">
 				</div>
 			}
 		</div>
@@ -175,7 +175,7 @@
 						@{imageLink = play.Play.application().configuration().getString("amazon.server.link") + "codeximages/images/" + q.subject.name + "/" + q.image.filePath }
 						
 						<a class="fancybox" title="@q.questionText" href="@imageLink">
-							<img class="fancybox landscape" alt="question-text" src="@imageLink" />
+							<img class="fancybox" alt="question-text" src="@imageLink" style="height:@q.image.getSuggestedHeight; width:@q.image.getSuggestedWidth;"/>
 						</a>
 						</div>
 					} 

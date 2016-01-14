@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import constants.Constants;
+
 /**
  * Model that serves as mark for question image stored on file server.
  * 
@@ -37,4 +39,13 @@ public class Image extends BaseModel {
 	@Column(name = "width")
 	public int width;
 	
+	public int getSuggestedHeight() {
+		return Constants.SUGGESTED_BASE_HEIGHT;
+	}
+	
+	public int getSuggestedWidth() {
+		float ratio = ((float) width) / ((float) height);
+		return (int) (Constants.SUGGESTED_BASE_HEIGHT * ratio);
+	}
+
 }
