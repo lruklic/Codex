@@ -45,8 +45,8 @@ public class ComposedQuestion extends Question {
 		this.subquestions = subquestions;
 	}
 
-
-
+	
+	
 	@Override
 	public String getQuestionAnswerText() {
 		// TODO Auto-generated method stub
