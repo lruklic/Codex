@@ -37,6 +37,13 @@ login.error.password=Lozinka nije ispravna
 
 logout=Odjava
 
+register.username=Korisničko ime
+register.password=Lozinka
+register.password.retype=Lozinka još jednom
+register.firstName=Ime
+register.lastName=Prezime
+register.email=E-mail
+
 tooltip.question.edit=Uredi ovo pitanje
 tooltip.question.explanation=Dodaj objašnjenje odgovora za ovo pitanje
 tooltip.question.delete=Obriši ovo pitanje

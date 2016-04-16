@@ -11,15 +11,15 @@
 
 @head()
 
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-select.min.css")">
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionInput.css")">
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css">
-
-<script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
-<script type="text/javascript" src="@routes.Assets.at("/javascripts/bootstrap-select.min.js")"></script>
-<script type="text/javascript" src="@routes.Assets.at("/javascripts/admin/questionInput.js")"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-select.min.css")">
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/admin/questionInput.css")">
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css">
+	
+	<script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
+	<script type="text/javascript" src="@routes.Assets.at("/javascripts/bootstrap-select.min.js")"></script>
+	<script type="text/javascript" src="@routes.Assets.at("/javascripts/admin/questionInput.js")"></script>
 
 </head>
 
@@ -215,7 +215,7 @@
 						<label class="control-label">@Messages("question.type")</label> 
 						<select class="form-control" name="questionType" id="qType" value='@form("questionType").value'> 
 						@for(qType <- QuestionType.values()){
-							<option value="@qType" @if(form("questionType").value != null && form("questionType").value == qType.toString()) {selected="selected"}>@Messages(qType.toString())</option> 
+							<option value="@qType" @if(form("questionType").value != null && form("questionType").value == qType.toString()) {selected="selected"} @if(qType == QuestionType.COMPOSED) {disabled}>@Messages(qType.toString())</option> 
 						}
 						</select>
 					</div>
