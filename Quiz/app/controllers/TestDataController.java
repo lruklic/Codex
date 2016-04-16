@@ -42,7 +42,7 @@ public class TestDataController extends Controller {
 	public static Result fill() {
 		
 		fillSubjects();
-		fillGrades();
+		fillGradesHighSchool();
 		
 		fillChaptersGeography();
 		fillChaptersHistory();
@@ -96,7 +96,7 @@ public class TestDataController extends Controller {
 	
 
 	
-	private static Result fillGrades() {
+	private static Result fillGradesHighSchool() {
 		String[] gradesList = {"1. razred", "2. razred", "3. razred", "4. razred"};
 		
 		Grade grade;

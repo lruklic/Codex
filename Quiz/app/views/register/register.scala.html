@@ -8,55 +8,69 @@
 
 <head>
 
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/register/register.css")">
 	@head()
 	
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
-	
+	<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/register/register.css")">	
 	<script type="text/javascript" src="@routes.Assets.at("javascripts/register/register.js")"></script>
 	
 </head>
 
 <body>
-	
-	@helper.form(action = routes.RegisterController.submit, 'id -> "registerForm") {
-	<fieldset>
-	<legend>@Messages("register")</legend>
-	
-	<p><label>@Messages("register.username")</label></p>
-	<input class="username-input" name="username" type="text" id="username" value='@form("username").value' />
-	<p><label>@Messages("register.password")</label></p>
-	<input class="password-input" name="password" type="password" id="password" />
-	<p><label>@Messages("register.password.retype")</label></p>
-	<input class="password-input" name="retype" type="password" id="retype" />
-
-	<div>
-		<p><label>@Messages("register.userType")</label></p>	
-		<select name="userType" id="userType" value='@form("userType").value'> 
-		@for(ut <- UserType.values()){
-			<option value="@ut" @if(form("userType").value !=null && form("userType").value== ut.toString()) {selected="selected"}>@Messages(ut.toString())</option> 
-		}
-		</select>
-		<img id="userType-info" class="tooltip-info" src="@routes.Assets.at("images/info.png")" title="@Messages("info.register.player")" alt="INFO">
+	<div class="middlePage">
+		
+		<div class="col-md-12">
+			@helper.form(action = routes.RegisterController.submit, 'id -> "registerForm") {
+			<form class="form-horizontal">
+				<legend>@Messages("register")</legend>
+				
+				<div class="form-group">
+					<div class="row">
+						<div class="col-xs-4">
+							<input class="form-control username-input" name="username" type="text" id="username" value='@form("username").value' placeholder="@Messages("register.username")"/>
+						</div>
+						<div class="col-xs-4">
+							<input class="form-control password-input" name="password" type="password" id="password" placeholder="@Messages("register.password")"/>
+						</div>
+						<div class="col-xs-4">
+							<input class="form-control password-input" name="retype" type="password" id="retype" placeholder="@Messages("register.password.retype")"/>
+						</div>
+					</div>
+					
+					<div class="row top-buffer">
+						<div class="col-xs-8">
+							<select class="form-control" name="userType" id="userType" value='@form("userType").value'> 
+								@for(ut <- UserType.values()){
+									<option value="@ut" @if(form("userType").value !=null && form("userType").value== ut.toString()) {selected="selected"}>@Messages(ut.toString())</option> 
+								}
+							</select>
+						</div>
+						<div class="col-xs-4">
+							<img id="userType-info" class="tooltip-info" src="@routes.Assets.at("images/info.png")" title="@Messages("info.register.player")" alt="INFO">
+						</div>
+					</div>
+					
+					<div class="row top-buffer">
+						<div class="col-xs-4">
+							<input class="form-control firstname-input" name="firstName" type="text" id="firstName" placeholder="@Messages("register.firstName")"/>						
+						</div>
+						<div class="col-xs-4">
+							<input class="form-control lastname-input" name="lastName" type="text" id="lastName" placeholder="@Messages("register.lastName")" />
+						</div>
+						<div class="col-xs-4">
+							<input class="form-control email-input" name="email" type="email" id="email" placeholder="@Messages("register.email")" />
+						</div>
+					</div>
+					
+					
+				</div>
+			
+			</form>
+			
+			<button type="submit">@Messages("register")</button>
+			}
+		</div>
+		
 	</div>
-
-	<p><label>@Messages("register.firstName")</label></p>
-	<input class="firstname-input" name="firstName" type="text" id="firstName" />
-	
-	<p><label>@Messages("register.lastName")</label></p>
-	<input class="lastname-input" name="lastName" type="text" id="lastName" />
-	
-	<p><label>@Messages("register.email")</label></p>
-	<input class="email-input" name="email" type="email" id="email" />
-	
-	</fieldset>
-	
-	<button type="submit">@Messages("register")</button>
-	}
-	
-	
 </body>
 
 </html>
