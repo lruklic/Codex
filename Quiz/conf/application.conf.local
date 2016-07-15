@@ -35,6 +35,8 @@ application.langs="hr"
 #
 
 db.default.driver=com.mysql.jdbc.Driver
+
+# Database
 db.default.url="jdbc:mysql://localhost:3306/quizapp?characterEncoding=UTF-8"
 db.default.user=root
 db.default.password="root"
@@ -77,3 +79,19 @@ deadbolt {
         }
     }
 }
+
+# Amazon
+amazon.accessKey="" # add your own access and secret key
+amazon.secretKey=""
+amazon.imageBucketName=codeximages
+amazon.server.link="https://s3.eu-central-1.amazonaws.com/"
+
+# Facebook
+fb.appSecret="" # add your own facebook app secret
+
+# Mail
+mail.smtp.host="smtp.gmail.com"
+mail.smtp.port="587"
+
+mail.address="" # add your own gmail address and password
+mail.password=""
